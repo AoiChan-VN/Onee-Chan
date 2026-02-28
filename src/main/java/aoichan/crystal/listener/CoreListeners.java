@@ -1,4 +1,4 @@
-package aoidev.crystal;
+package aoichan.crystal;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
