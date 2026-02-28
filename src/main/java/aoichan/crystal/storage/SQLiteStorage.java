@@ -1,4 +1,4 @@
-package aoidev.crystal.storage;
+package aoichan.crystal.storage;
 
 import aoidev.crystal.gem.Gem;
 import com.zaxxer.hikari.HikariDataSource;
