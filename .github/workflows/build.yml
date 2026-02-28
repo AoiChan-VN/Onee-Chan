@@ -1,37 +1,27 @@
-name: Build (Java 17, Maven)
+name: Build Gems Ultimate
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main", "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup JDK 17
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Cache Maven local repository
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2-
-
-      - name: Build with Maven
-        run: mvn -B -DskipTests package
-
-      - name: Upload artifact (jar)
-        uses: actions/upload-artifact@v4
-        with:
-          name: gems-ultimate-jar
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+          
+          name: Gems-Ultimate
           path: target/*.jar
+           
+      - name: Build with Maven
+        run: mvn clean package --no-transfer-progress
