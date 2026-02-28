@@ -9,7 +9,7 @@
   <artifactId>gems-ultimate</artifactId>
   <version>1.0.0</version>
   <name>Gems Ultimate</name>
-  <description>Production-grade Gems plugin for Paper 1.20.4</description>
+  <description>AoiChan tới chơi Paper 1.20.4</description>
 
   <properties>
     <java.version>17</java.version>
@@ -17,7 +17,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <!-- ADD THIS | Thêm gì nữa mấy ní -->
+  <!-- ADD THIS | thêm gì thì tự bỏ zô nhé -->
   <repositories>
 
     <!-- PaperMC -->
@@ -68,7 +68,7 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>VaultAPI</artifactId>
-      <version>1.7</version>
+      <version>1.7.1</version>
       <scope>provided</scope>
     </dependency>
 
