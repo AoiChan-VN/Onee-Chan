@@ -59,8 +59,6 @@
     </dependency>
 
     <!-- Null | Cần Vault API thì add vào -->
-    <dependency>
-    <!--Vault API -->   
     </dependency>
 
     <!-- PlaceholderAPI -->
