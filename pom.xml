@@ -34,74 +34,44 @@
            
   </repositories>
 
-  </dependencies>       
+<dependencies>
+
     <!-- Paper -->
     <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>${paper.api.version}</version>
-      <scope>provided</scope>
+        <groupId>io.papermc.paper</groupId>
+        <artifactId>paper-api</artifactId>
+        <version>1.20.4-R0.1-SNAPSHOT</version>
+        <scope>provided</scope>
     </dependency>
 
     <!-- HikariCP -->
     <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>5.1.0</version>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>5.1.0</version>
     </dependency>
 
     <!-- SQLite -->
     <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>3.45.1.0</version>
+        <groupId>org.xerial</groupId>
+        <artifactId>sqlite-jdbc</artifactId>
+        <version>3.45.1.0</version>
     </dependency>
 
-    <!-- Null | Cần Vault API thì add vào -->
+    <!-- Vault API -->
+    <dependency>
+        <groupId>net.milkbowl.vault</groupId>
+        <artifactId>VaultAPI</artifactId>
+        <version>1.7</version>
+        <scope>provided</scope>
     </dependency>
 
     <!-- PlaceholderAPI -->
     <dependency>
-      <groupId>me.clip</groupId>
-      <artifactId>placeholderapi</artifactId>
-      <version>2.11.5</version>
-      <scope>provided</scope>
+        <groupId>me.clip</groupId>
+        <artifactId>placeholderapi</artifactId>
+        <version>2.11.5</version>
+        <scope>provided</scope>
     </dependency>
 
-  </dependencies>
-
-  <build>
-    <plugins>
-
-      <!-- Compiler -->
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <release>${java.version}</release>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-
-      <!-- Shade -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.4.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-    </plugins>
-  </build>
-
-</project>
+</dependencies>
