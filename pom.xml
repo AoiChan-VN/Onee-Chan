@@ -31,15 +31,9 @@
       <id>placeholderapi</id>
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
-
-    <!-- Vault (Spigot) nếu bị lỗi thì đổi qua jitpack -->
-    <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/releases/</url>
-  </repository>
            
   </repositories>
-
+  <!-- Vault | Cần thì add vào -->
   <dependencies>
 
     <!-- Paper -->
@@ -64,12 +58,9 @@
       <version>3.45.1.0</version>
     </dependency>
 
-    <!-- Vault API -->
+    <!-- Null | Cần Vault API thì add vào -->
     <dependency>
-      <groupId>com.github.MilkBowl</groupId>
-      <artifactId>VaultAPI</artifactId>
-      <version>1.7</version>
-      <scope>provided</scope>
+    <!--Vault API -->   
     </dependency>
 
     <!-- PlaceholderAPI -->
