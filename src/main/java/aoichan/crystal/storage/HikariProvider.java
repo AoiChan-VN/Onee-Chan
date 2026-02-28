@@ -9,13 +9,13 @@ public class HikariProvider {
 
     private final HikariDataSource dataSource;
 
-    public HikariProvider(File dataFolder, String dbFile) {
+    public HikariProvider(File dataFolder, String file) {
 
-        File db = new File(dataFolder, dbFile);
+        File db = new File(dataFolder, file);
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:sqlite:" + db.getAbsolutePath());
-        config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(8);
         config.setPoolName("Gems-Hikari");
         config.setConnectionTestQuery("SELECT 1");
         config.setIdleTimeout(60000);
@@ -28,6 +28,8 @@ public class HikariProvider {
     }
 
     public void shutdown() {
-        dataSource.close();
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
     }
 }
