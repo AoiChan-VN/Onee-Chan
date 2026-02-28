@@ -13,6 +13,11 @@ public class PlaceholderHook extends PlaceholderExpansion {
     }
 
     @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
     public String getIdentifier() {
         return "gems";
     }
@@ -28,10 +33,10 @@ public class PlaceholderHook extends PlaceholderExpansion {
     }
 
     @Override
-    public String onPlaceholderRequest(Player p, String params) {
+    public String onPlaceholderRequest(Player player, String params) {
 
         if (params.equalsIgnoreCase("total")) {
-            return String.valueOf(manager.getAllGems().size());
+            return String.valueOf(manager.getAll().size());
         }
 
         return "";
