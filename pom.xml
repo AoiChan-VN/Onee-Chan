@@ -66,7 +66,7 @@
 
     <!-- Vault API -->
     <dependency>
-      <groupId>com.github.milkbowl</groupId>
+      <groupId>com.github.MilkBowl</groupId>
       <artifactId>VaultAPI</artifactId>
       <version>1.7</version>
       <scope>provided</scope>
