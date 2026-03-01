@@ -1,10 +1,15 @@
 name: GemsUltimate
-version: 1.0.0
+version: 2.0.0
 main: aoichan.crystal.AoiMain
 api-version: 1.20
-author: AoiDev
+author: AoiChan
 
 commands:
   gems:
-    description: Main Gems command
+    description: Main command
     usage: /gems
+    permission: gems.admin
+
+permissions:
+  gems.admin:
+    default: op
