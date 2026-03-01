@@ -1,15 +1,31 @@
 package aoichan.crystal.core;
 
-import org.bukkit.event.Listener;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import aoichan.crystal.utils.PDCUtil;
+import org.bukkit.event.*;
+import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.ItemStack;
 
 public class AntiDupeManager implements Listener {
 
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getClick().isShiftClick()) {
-            e.setCancelled(true);
+    private final SocketManager socketManager;
+
+    public AntiDupeManager(SocketManager socketManager) {
+        this.socketManager = socketManager;
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onClick(InventoryClickEvent e) {
+
+        if (e.getCurrentItem() == null) return;
+
+        ItemStack item = e.getCurrentItem();
+
+        if (PDCUtil.hasGemTag(item)) {
+            if (e.getClick().isShiftClick() ||
+                e.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
+
+                e.setCancelled(true);
+            }
         }
     }
 }
