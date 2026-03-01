@@ -5,7 +5,7 @@ import aoichan.crystal.commands.GemsCommand;
 import aoichan.crystal.core.*;
 import aoichan.crystal.gui.GUIListener;
 import aoichan.crystal.storage.*;
-
+import aoichan.crystal.utils.PDCUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AoiMain extends JavaPlugin {
@@ -22,58 +22,47 @@ public final class AoiMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         instance = this;
 
         saveDefaultConfig();
         saveResource("gems.yml", false);
 
+        // init PDC key safely (NamespacedKey requires plugin instance)
+        PDCUtil.init(this);
+
         if (getConfig().getBoolean("banner.enabled", true))
             ConsoleBanner.show(this);
 
-        setupStorage();
-        setupManagers();
-        registerCommands();
-        registerEvents();
-    }
-
-    private void setupStorage() {
-
+        // setup DB pool and storage
         databasePool = new DatabasePool(this);
-
         String type = getConfig().getString("storage.type", "SQLITE");
 
-        if (type.equalsIgnoreCase("MYSQL"))
-            storage = new MySQLStorage(databasePool, this);
-        else
+        if ("MYSQL".equalsIgnoreCase(type)) {
+            storage = new MySQLStorage(databasePool);
+        } else {
             storage = new SQLiteStorage(databasePool);
-
+        }
         storage.initTables();
-    }
 
-    private void setupManagers() {
+        // managers
         gemsManager = new GemsManager(this);
         socketManager = new SocketManager(this);
         api = new GemsAPI(gemsManager, socketManager);
+
+        // commands & events
+        if (getCommand("gems") != null) getCommand("gems").setExecutor(new GemsCommand(this));
+        getServer().getPluginManager().registerEvents(new GUIListener(this), this);
+        getServer().getPluginManager().registerEvents(new AntiDupeManager(socketManager), this);
+
+        getLogger().info("GemsUltimate loaded.");
     }
 
-    private void registerCommands() {
-        if (getCommand("gems") != null)
-            getCommand("gems").setExecutor(new GemsCommand(this));
-    }
-
-    private void registerEvents() {
-        getServer().getPluginManager()
-                .registerEvents(new AntiDupeManager(socketManager), this);
-        getServer().getPluginManager()
-                .registerEvents(new GUIListener(this), this);
+    @Override
+    public void onDisable() {
+        if (storage != null) storage.close();
+        if (databasePool != null) databasePool.shutdown();
     }
 
     public GemsManager getGemsManager() { return gemsManager; }
     public GemsAPI getAPI() { return api; }
-
-    @Override
-    public void onDisable() {
-        if (databasePool != null) databasePool.shutdown();
-    }
 }
