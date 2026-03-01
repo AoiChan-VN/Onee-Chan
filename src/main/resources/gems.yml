@@ -1,0 +1,6 @@
+gems:
+  ruby:
+    display-name: "&cRuby Gem"
+    lore:
+      - "&7Powerful offensive crystal."
+    power: 5
