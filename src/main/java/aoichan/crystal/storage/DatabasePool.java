@@ -10,7 +10,6 @@ public class DatabasePool {
 
     public DatabasePool(AoiMain plugin) {
         HikariConfig config = new HikariConfig();
-
         String type = plugin.getConfig().getString("storage.type", "SQLITE");
 
         if ("MYSQL".equalsIgnoreCase(type)) {
@@ -19,7 +18,6 @@ public class DatabasePool {
             String db = plugin.getConfig().getString("mysql.database", "gems");
             String user = plugin.getConfig().getString("mysql.username", "root");
             String pass = plugin.getConfig().getString("mysql.password", "");
-
             config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false&serverTimezone=UTC");
             config.setUsername(user);
             config.setPassword(pass);
@@ -29,7 +27,6 @@ public class DatabasePool {
 
         config.setMaximumPoolSize(10);
         config.setPoolName("GemsPool");
-
         this.dataSource = new HikariDataSource(config);
     }
 
