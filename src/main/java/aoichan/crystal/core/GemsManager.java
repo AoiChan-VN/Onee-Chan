@@ -7,7 +7,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class GemsManager {
 
@@ -23,11 +25,10 @@ public class GemsManager {
         gems.clear();
         File file = new File(plugin.getDataFolder(), "gems.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (config.getConfigurationSection("gems") == null) return;
 
         for (String key : config.getConfigurationSection("gems").getKeys(false)) {
-            gems.put(key,
-                    config.getConfigurationSection("gems." + key)
-                            .getValues(false));
+            gems.put(key, config.getConfigurationSection("gems." + key).getValues(false));
         }
     }
 
@@ -39,8 +40,9 @@ public class GemsManager {
         Map<String, Object> data = gems.get(id);
         if (data == null) return new ItemStack(Material.BARRIER);
 
+        String name = (String) data.getOrDefault("display-name", "&fGem");
         return new ItemBuilder(Material.DIAMOND)
-                .setName((String) data.get("display-name"))
+                .setName(name)
                 .build();
     }
 }
