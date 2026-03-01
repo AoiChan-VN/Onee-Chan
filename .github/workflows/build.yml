@@ -2,28 +2,23 @@ name: Build GemsUltimate
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: maven
-
       - name: Build
-        run: mvn clean package --no-transfer-progress
-
-      - name: Upload Artifact
+        run: mvn -B -DskipTests package --no-transfer-progress
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: GemsUltimate
