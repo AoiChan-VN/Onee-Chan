@@ -1,25 +1,25 @@
 package aoichan.crystal.core;
 
-import aoichan.crystal.AoiMain;
 import aoichan.crystal.utils.PDCUtil;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
+import java.util.*;
 
 public class SocketManager {
 
-    private final AoiMain plugin;
-
-    public SocketManager(AoiMain plugin) {
-        this.plugin = plugin;
-    }
+    private static final int MAX_SLOTS = 3;
 
     public void attachGem(ItemStack item, String gemId) {
-        String unique = gemId + ":" + UUID.randomUUID();
-        PDCUtil.setGemTag(item, unique);
+
+        List<String> gems = PDCUtil.getSocketList(item);
+
+        if (gems.size() >= MAX_SLOTS) return;
+
+        gems.add(gemId);
+        PDCUtil.setSocketList(item, gems);
     }
 
-    public boolean hasGem(ItemStack item) {
-        return PDCUtil.hasGemTag(item);
+    public List<String> getGems(ItemStack item) {
+        return PDCUtil.getSocketList(item);
     }
 }
