@@ -18,12 +18,17 @@ public class SQLiteStorage implements StorageProvider {
 
             stmt.executeUpdate(
                     "CREATE TABLE IF NOT EXISTS player_gems (" +
-                    "uuid TEXT PRIMARY KEY, " +
-                    "data TEXT)"
+                            "uuid TEXT PRIMARY KEY, " +
+                            "data TEXT)"
             );
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void close() {
+        // Nothing specific; Hikari managed by DatabasePool.shutdown
     }
 }
