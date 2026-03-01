@@ -18,7 +18,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven'
+          cache: maven
 
-      - name: Build with Maven
-        run: mvn clean package
+      - name: Build
+        run: mvn clean package --no-transfer-progress
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GemsUltimate
+          path: target/*.jar
