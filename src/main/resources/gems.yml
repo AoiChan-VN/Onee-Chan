@@ -4,3 +4,8 @@ gems:
     lore:
       - "&7Powerful offensive crystal."
     power: 5
+  sapphire:
+    display-name: "&9Sapphire"
+    lore:
+      - "&7Defensive crystal."
+    power: 3
