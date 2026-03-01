@@ -1,1 +1,10 @@
+name: GemsUltimate
+version: 1.0.0
+main: aoichan.crystal.AoiMain
+api-version: 1.20
+author: AoiDev
 
+commands:
+  gems:
+    description: Main Gems command
+    usage: /gems
