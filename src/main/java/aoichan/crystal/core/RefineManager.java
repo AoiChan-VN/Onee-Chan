@@ -1,8 +1,9 @@
 package aoichan.crystal.core;
 
 import aoichan.crystal.AoiMain;
-import aoichan.crystal.utils.PDCUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,24 +12,22 @@ import java.util.Random;
 public class RefineManager {
 
     private final AoiMain plugin;
-    private final RefineSoundManager soundManager;
-    private final ProtectionManager protectionManager;
     private final Random random = new Random();
 
     public RefineManager(AoiMain plugin) {
         this.plugin = plugin;
-        this.soundManager = new RefineSoundManager(plugin);
-        this.protectionManager = new ProtectionManager(plugin);
     }
 
     public void refine(Player player,
                        ItemStack gem,
                        ItemStack item,
-                       String quality,
+                       String qualityKey,
                        int level,
                        double successRate) {
 
-        int delay = plugin.getConfig().getInt("refine.delay-ticks", 20);
+        FileConfiguration cfg = plugin.getRefineConfig();
+
+        int delay = cfg.getInt("refine.delay-ticks");
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
@@ -42,32 +41,19 @@ public class RefineManager {
 
                 announce(player, "§aDung hợp thành công!");
 
-                soundManager.playSuccess(player, quality, level);
+                playSuccessSound(player, qualityKey, level);
+
                 return;
             }
 
             gem.setAmount(0);
 
-            double breakRate = plugin.getConfig()
-                    .getDouble("qualities." + quality + ".item-break-rate", 0);
+            double breakRate = cfg.getDouble(
+                    "qualities." + qualityKey + ".item-break-rate");
 
-            boolean highTier = level >= 7;
+            boolean highTier = level >= cfg.getInt("refine.thunder.min-level");
 
             if (highTier && random.nextDouble() <= breakRate) {
-
-                if (protectionManager.isPermanentProtected(item)) {
-
-                    player.sendMessage("§bItem được bảo hộ vĩnh viễn.");
-                    soundManager.playThunder(player);
-                    return;
-                }
-
-                if (protectionManager.consumeProtection(item)) {
-
-                    player.sendMessage("§bBùa bảo vệ đã kích hoạt.");
-                    soundManager.playThunder(player);
-                    return;
-                }
 
                 item.setAmount(0);
 
@@ -75,21 +61,26 @@ public class RefineManager {
                         + player.getName()
                         + " đã bị phá hủy!");
 
-                soundManager.playExplosion(player);
+                player.playSound(player.getLocation(),
+                        Sound.ENTITY_GENERIC_EXPLODE,
+                        2f, 0.7f);
+
                 return;
             }
 
             announce(player, "§cDung hợp thất bại.");
 
-            soundManager.playFail(player, highTier);
+            player.playSound(player.getLocation(),
+                    Sound.BLOCK_ANVIL_BREAK,
+                    1f, 1f);
 
         }, delay);
     }
 
     private void announce(Player player, String msg) {
 
-        String mode = plugin.getConfig()
-                .getString("refine.broadcast-mode", "SERVER");
+        String mode = plugin.getRefineConfig()
+                .getString("refine.broadcast-mode");
 
         switch (mode.toUpperCase()) {
             case "SERVER" -> Bukkit.broadcastMessage(msg);
@@ -97,4 +88,32 @@ public class RefineManager {
             default -> {}
         }
     }
-  }
+
+    private void playSuccessSound(Player player,
+                                  String qualityKey,
+                                  int level) {
+
+        FileConfiguration cfg = plugin.getRefineConfig();
+
+        String minQuality = cfg.getString("refine.thunder.min-quality");
+        int minLevel = cfg.getInt("refine.thunder.min-level");
+
+        if (qualityKey.equalsIgnoreCase(minQuality)
+                || level >= minLevel) {
+
+            float volume = (float) cfg.getDouble("refine.thunder.volume");
+            float pitch = (float) cfg.getDouble("refine.thunder.pitch");
+
+            player.getWorld().strikeLightningEffect(player.getLocation());
+            player.playSound(player.getLocation(),
+                    Sound.ENTITY_LIGHTNING_BOLT_THUNDER,
+                    volume,
+                    pitch);
+        } else {
+            player.playSound(player.getLocation(),
+                    Sound.ENTITY_PLAYER_LEVELUP,
+                    1f,
+                    1.2f);
+        }
+    }
+}
