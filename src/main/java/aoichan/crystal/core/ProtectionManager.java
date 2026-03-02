@@ -19,7 +19,7 @@ public class ProtectionManager {
     public boolean consumeProtection(ItemStack item) {
 
         if (PDCUtil.hasKey(item, "protection")) {
-            PDCUtil.remove(item, "protection");
+            PDCUtil.hasKey(item, "protection");
             return true;
         }
         return false;
