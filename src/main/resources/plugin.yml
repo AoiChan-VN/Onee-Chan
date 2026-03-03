@@ -13,3 +13,21 @@ commands:
 permissions:
   gems.admin:
     default: op
+
+  gems.reload:
+    default: op
+
+  gems.give:
+    default: op
+
+  gems.take:
+    default: op
+
+  gems.set:
+    default: op
+
+  gems.balance:
+    default: true
+
+  gems.list:
+    default: true
