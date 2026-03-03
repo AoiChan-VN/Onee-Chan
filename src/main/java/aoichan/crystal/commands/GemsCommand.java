@@ -1,19 +1,30 @@
 package aoichan.crystal.commands;
 
 import aoichan.crystal.AoiMain;
-import aoichan.crystal.core.ReloadManager;
-import aoichan.crystal.gui.GemsGUI;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import aoichan.crystal.commands.sub.*;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+
+import java.util.*;
 
 public class GemsCommand implements CommandExecutor {
 
     private final AoiMain plugin;
+    private final Map<String, SubCommand> subCommands = new HashMap<>();
 
     public GemsCommand(AoiMain plugin) {
         this.plugin = plugin;
+
+        register(new ReloadSub(plugin));
+        register(new GiveSub(plugin));
+        register(new TakeSub(plugin));
+        register(new SetSub(plugin));
+        register(new BalanceSub(plugin));
+        register(new ListSub(plugin));
+    }
+
+    private void register(SubCommand sub) {
+        subCommands.put(sub.getName().toLowerCase(), sub);
     }
 
     @Override
@@ -22,44 +33,37 @@ public class GemsCommand implements CommandExecutor {
                              String label,
                              String[] args) {
 
-        // =========================
-        // Console Mode
-        // =========================
-        if (!(sender instanceof Player)) {
-
-            if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-                ReloadManager.reload(plugin);
-                sender.sendMessage("Gems reloaded.");
-                return true;
-            }
-
-            sender.sendMessage("Console usage: /gems reload");
-            return true;
-        }
-
-        Player player = (Player) sender;
-
-        // =========================
-        // Player Mode
-        // =========================
         if (args.length == 0) {
-            player.openInventory(GemsGUI.create(plugin));
-            return true;
-        }
-
-        if (args[0].equalsIgnoreCase("reload")) {
-
-            if (!player.hasPermission("gems.admin")) {
-                player.sendMessage("No permission.");
-                return true;
+            if (sender instanceof Player player) {
+                player.openInventory(
+                    aoichan.crystal.gui.GemsGUI.create(plugin)
+                );
+            } else {
+                sender.sendMessage("Use /gems list");
             }
-
-            ReloadManager.reload(plugin);
-            player.sendMessage("Gems reloaded.");
             return true;
         }
 
-        player.sendMessage("Usage: /gems or /gems reload");
+        SubCommand sub = subCommands.get(args[0].toLowerCase());
+
+        if (sub == null) {
+            sender.sendMessage("Unknown subcommand.");
+            return true;
+        }
+
+        if (sub.isPlayerOnly() && !(sender instanceof Player)) {
+            sender.sendMessage("Player only.");
+            return true;
+        }
+
+        if (sub.getPermission() != null &&
+            !sender.hasPermission(sub.getPermission())) {
+
+            sender.sendMessage("No permission.");
+            return true;
+        }
+
+        sub.execute(sender, Arrays.copyOfRange(args, 1, args.length));
         return true;
     }
 }
