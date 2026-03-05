@@ -1,130 +1,81 @@
 package aoichan.crystal;
 
-import aoichan.crystal.api.GemsAPI;
-import aoichan.crystal.commands.GemsCommand;
-import aoichan.crystal.core.*;
-import aoichan.crystal.gui.GUIListener;
-import aoichan.crystal.storage.*;
-import aoichan.crystal.utils.PDCUtil;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import aoichan.crystal.core.autosave.AutoSaveManager;
+import aoichan.crystal.core.cache.DirtyTracker;
+import aoichan.crystal.core.cache.GemCache;
+import aoichan.crystal.core.language.LangManager;
+import aoichan.crystal.core.manager.GemsManager;
+import aoichan.crystal.storage.StorageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
-public final class AoiMain extends JavaPlugin {
+// [!] Code: Main Plugin Class - Crystal Ultimate Production
+public class AoiMain extends JavaPlugin {
 
     private static AoiMain instance;
 
-    private DatabasePool databasePool;
-    private StorageProvider storage;
+    private GemCache gemCache;
+    private DirtyTracker dirtyTracker;
+    private StorageManager storageManager;
     private GemsManager gemsManager;
-    private SocketManager socketManager;
-    private GemsAPI api;
+    private AutoSaveManager autoSaveManager;
+    private LangManager langManager;
 
-    // Refine
-    private File refineFile;
-    private FileConfiguration refineConfig;
-    private RefineManager refineManager;
-
-    public static AoiMain get() {
+    public static AoiMain getInstance() {
         return instance;
     }
 
     @Override
     public void onEnable() {
-
         instance = this;
 
         saveDefaultConfig();
-        saveResource("gems.yml", false);
 
-        // Save refine.yml
-        refineFile = new File(getDataFolder(), "refine.yml");
-        if (!refineFile.exists()) {
-            saveResource("refine.yml", false);
-        }
-        refineConfig = YamlConfiguration.loadConfiguration(refineFile);
+        // [!] Core Systems Init
+        this.gemCache = new GemCache();
+        this.dirtyTracker = new DirtyTracker();
+        this.storageManager = new StorageManager(this);
+        this.langManager = new LangManager(this);
+        this.gemsManager = new GemsManager(this, gemCache, dirtyTracker, storageManager);
+        this.autoSaveManager = new AutoSaveManager(this, dirtyTracker, storageManager);
 
-        // MUST init early
-        PDCUtil.init(this);
+        storageManager.initialize();
+        langManager.loadLanguage();
 
-        if (getConfig().getBoolean("banner.enabled", true)) {
-            ConsoleBanner.show(this);
-        }
-
-        // ========================
-        // Database & Storage
-        // ========================
-
-        databasePool = new DatabasePool(this);
-
-        String type = getConfig().getString("storage.type", "SQLITE");
-        if ("MYSQL".equalsIgnoreCase(type)) {
-            storage = new MySQLStorage(databasePool);
-        } else {
-            storage = new SQLiteStorage(databasePool);
-        }
-
-        storage.initTables();
-
-        // ========================
-        // Managers & API
-        // ========================
-
-        gemsManager = new GemsManager(this);
-        socketManager = new SocketManager(this);
-        refineManager = new RefineManager(this);
-
-        api = new GemsAPI(gemsManager, socketManager);
-
-        // ========================
-        // Commands & Events
-        // ========================
-
-        if (getCommand("gems") != null) {
-            getCommand("gems").setExecutor(new GemsCommand(this));
-        }
-
-        getServer().getPluginManager().registerEvents(new GUIListener(this), this);
-        getServer().getPluginManager().registerEvents(new AntiDupeManager(socketManager), this);
-
-        getLogger().info("Crystal Ultimate loaded successfully.");
+        Bukkit.getConsoleSender().sendMessage("§a[Crystal Ultimate] Plugin Enabled.");
     }
 
     @Override
     public void onDisable() {
 
-        if (storage != null) {
-            storage.close();
-        }
+        // [!] Safe Shutdown Save
+        autoSaveManager.shutdownSaveSync();
+        storageManager.shutdown();
 
-        if (databasePool != null) {
-            databasePool.shutdown();
-        }
+        Bukkit.getConsoleSender().sendMessage("§c[Crystal Ultimate] Plugin Disabled Safely.");
     }
 
-    // ========================
-    // Getters
-    // ========================
+    public GemCache getGemCache() {
+        return gemCache;
+    }
+
+    public DirtyTracker getDirtyTracker() {
+        return dirtyTracker;
+    }
+
+    public StorageManager getStorageManager() {
+        return storageManager;
+    }
 
     public GemsManager getGemsManager() {
         return gemsManager;
     }
 
-    public GemsAPI getAPI() {
-        return api;
+    public AutoSaveManager getAutoSaveManager() {
+        return autoSaveManager;
     }
 
-    public RefineManager getRefineManager() {
-        return refineManager;
-    }
-
-    public FileConfiguration getRefineConfig() {
-        return refineConfig;
-    }
-
-    public void reloadRefineConfig() {
-        refineConfig = YamlConfiguration.loadConfiguration(refineFile);
+    public LangManager getLangManager() {
+        return langManager;
     }
 }
