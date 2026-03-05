@@ -11,5 +11,8 @@ mysql:
   username: root
   password: password
 
-socket:
-  max-slots: 3
+auto-save:
+  delay-seconds: 5
+  console-log: true
+
+language: vi
