@@ -5,7 +5,7 @@ import aoichan.crystal.api.GemData;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-// [!] Code: Gem Cache (Lazy Loading Storage)
+// [!] Code: Lazy Load Cache Storage
 public class GemCache {
 
     private final ConcurrentHashMap<UUID, GemData> cache = new ConcurrentHashMap<>();
@@ -29,4 +29,4 @@ public class GemCache {
     public ConcurrentHashMap<UUID, GemData> getAll() {
         return cache;
     }
-} 
+}
