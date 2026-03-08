@@ -1,22 +1,442 @@
-tu_tieu_than_loi:
-  name: "&5Tử Tiêu Thần Lôi"
-  material: AMETHYST_SHARD   # để show icon trong GUI
-  rarity: MYTHIC
-  element: THUNDER
-  success-rate: 75
+# =========================
+# Crystal Ultimate Gems
+# =========================
+
+# =========================
+# WEAPON GEMS
+# =========================
+
+berserker_core:
+  name: "&cBerserker Core"
+  rarity: RARE
+  tier: 2
+  element: NONE
+  success-rate: 85
+
+  allowed-items:
+    - SWORD
+    - AXE
+
+  stack-limit: 3
+
+  stats:
+    STR: 8
+    CRIT_DAMAGE: 10
+
+  lore:
+    - "&7Tăng sức mạnh cuồng bạo."
+    - "&7Sát thương chí mạng cao hơn."
+
+sharp_wind:
+  name: "&fSharp Wind"
+  rarity: RARE
+  tier: 2
+  element: WIND
+  success-rate: 85
+
+  allowed-items:
+    - SWORD
+
+  stack-limit: 3
+
+  stats:
+    CRIT: 12
+
+  lore:
+    - "&7Lưỡi kiếm nhanh như gió."
+
+blood_drinker:
+  name: "&4Blood Drinker"
+  rarity: EPIC
+  tier: 3
+  element: DARK
+  success-rate: 70
+
+  allowed-items:
+    - SWORD
+    - AXE
+
+  stack-limit: 2
+
   stats:
     STR: 10
+    LIFESTEAL: 4
+
+  effects:
+    - LIFESTEAL
+
+  lore:
+    - "&7Hút máu kẻ địch."
+
+storm_edge:
+  name: "&bStorm Edge"
+  rarity: EPIC
+  tier: 3
+  element: THUNDER
+  success-rate: 70
+
+  allowed-items:
+    - SWORD
+
+  stats:
+    CRIT: 10
+    ELEMENT_DAMAGE: 12
+
+  effects:
+    - LIGHTNING
+
+  lore:
+    - "&7Sấm sét đánh trúng kẻ thù."
+
+inferno_blade:
+  name: "&6Inferno Blade"
+  rarity: LEGENDARY
+  tier: 4
+  element: FIRE
+  success-rate: 55
+
+  allowed-items:
+    - SWORD
+
+  stack-limit: 1
+
+  stats:
+    STR: 15
+    ELEMENT_DAMAGE: 20
+
+  effects:
+    - BURN
+
+  lore:
+    - "&7Ngọn lửa địa ngục."
+
+# =========================
+# ARMOR GEMS
+# =========================
+
+guardian_core:
+  name: "&9Guardian Core"
+  rarity: RARE
+  tier: 2
+  element: NONE
+  success-rate: 90
+
+  allowed-items:
+    - HELMET
+    - CHESTPLATE
+    - LEGGINGS
+    - BOOTS
+
+  stack-limit: 4
+
+  stats:
+    DEF: 10
+
+  lore:
+    - "&7Tăng phòng thủ."
+
+frost_guard:
+  name: "&bFrost Guard"
+  rarity: EPIC
+  tier: 3
+  element: ICE
+  success-rate: 70
+
+  stats:
+    DEF: 12
+
+  effects:
+    - SLOW
+
+  lore:
+    - "&7Đóng băng kẻ tấn công."
+
+holy_aegis:
+  name: "&eHoly Aegis"
+  rarity: LEGENDARY
+  tier: 4
+  element: HOLY
+  success-rate: 60
+
+  stats:
+    DEF: 15
+
+  effects:
+    - HOLY_HEAL
+
+  lore:
+    - "&7Ánh sáng thần thánh bảo hộ."
+
+stone_skin:
+  name: "&7Stone Skin"
+  rarity: RARE
+  tier: 2
+  element: EARTH
+  success-rate: 85
+
+  stats:
+    DEF: 8
+    LIFESTEAL: 1
+
+  lore:
+    - "&7Da cứng như đá."
+
+iron_will:
+  name: "&8Iron Will"
+  rarity: EPIC
+  tier: 3
+  element: NONE
+  success-rate: 70
+
+  stats:
+    DEF: 12
+    CRIT_DAMAGE: 5
+
+  lore:
+    - "&7Ý chí kiên cường."
+
+# =========================
+# ELEMENTAL GEMS
+# =========================
+
+flame_core:
+  name: "&6Flame Core"
+  rarity: RARE
+  tier: 2
+  element: FIRE
+  success-rate: 80
+
+  stats:
+    ELEMENT_DAMAGE: 10
+
+  effects:
+    - BURN
+
+  lore:
+    - "&7Ngọn lửa bùng cháy."
+
+frost_core:
+  name: "&bFrost Core"
+  rarity: RARE
+  tier: 2
+  element: ICE
+  success-rate: 80
+
+  stats:
+    ELEMENT_DAMAGE: 10
+
+  effects:
+    - SLOW
+
+  lore:
+    - "&7Hơi lạnh vĩnh cửu."
+
+thunder_core:
+  name: "&eThunder Core"
+  rarity: EPIC
+  tier: 3
+  element: THUNDER
+  success-rate: 65
+
+  stats:
+    ELEMENT_DAMAGE: 15
+
+  effects:
+    - LIGHTNING
+
+  lore:
+    - "&7Sức mạnh sấm sét."
+
+earth_core:
+  name: "&2Earth Core"
+  rarity: RARE
+  tier: 2
+  element: EARTH
+  success-rate: 80
+
+  stats:
+    DEF: 8
+    STR: 4
+
+  lore:
+    - "&7Sức mạnh từ lòng đất."
+
+wind_core:
+  name: "&fWind Core"
+  rarity: RARE
+  tier: 2
+  element: WIND
+  success-rate: 80
+
+  stats:
+    CRIT: 10
+
+  lore:
+    - "&7Nhanh như gió."
+
+# =========================
+# UTILITY GEMS
+# =========================
+
+hunter_eye:
+  name: "&aHunter Eye"
+  rarity: RARE
+  tier: 2
+  success-rate: 85
+
+  stats:
+    CRIT: 10
+
+  lore:
+    - "&7Đòn đánh chính xác."
+
+vampire_fang:
+  name: "&5Vampire Fang"
+  rarity: EPIC
+  tier: 3
+  success-rate: 65
+
+  stats:
+    LIFESTEAL: 5
+
+  effects:
+    - LIFESTEAL
+
+  lore:
+    - "&7Hút máu kẻ địch."
+
+rage_core:
+  name: "&cRage Core"
+  rarity: EPIC
+  tier: 3
+  success-rate: 70
+
+  stats:
+    STR: 12
+
+  lore:
+    - "&7Cơn thịnh nộ chiến binh."
+
+precision_core:
+  name: "&dPrecision Core"
+  rarity: RARE
+  tier: 2
+  success-rate: 85
+
+  stats:
+    CRIT: 12
+
+  lore:
+    - "&7Đòn đánh hoàn hảo."
+
+life_bloom:
+  name: "&aLife Bloom"
+  rarity: EPIC
+  tier: 3
+  success-rate: 70
+
+  effects:
+    - HOLY_HEAL
+
+  stats:
+    LIFESTEAL: 3
+
+  lore:
+    - "&7Sức sống hồi sinh."
+
+# =========================
+# MYTHIC GEMS
+# =========================
+
+tu_tieu_than_loi:
+  name: "&dTử Tiêu Thần Lôi"
+  rarity: MYTHIC
+  tier: 5
+  element: THUNDER
+  success-rate: 40
+
+  stack-limit: 1
+
+  stats:
+    STR: 20
     CRIT: 15
-    THUNDER_DAMAGE: 55
-  effect:
-    type: LIGHTNING
-    chance: 15   # percent
+    ELEMENT_DAMAGE: 55
+
+  effects:
+    - LIGHTNING
+
   lore:
     - "&8▬▬▬▬▬▬▬๑۩NGỌC۩๑▬▬▬▬▬▬▬"
     - "&d✦ &5Tử Tiêu Thần Lôi"
     - ""
-    - "&7+10 Sát thương"
+    - "&7+20 Sát thương"
     - "&7+15% Chí mạng"
     - "&7+55% Sát thương sấm sét"
     - ""
     - "&8▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+
+phoenix_heart:
+  name: "&6Phoenix Heart"
+  rarity: MYTHIC
+  tier: 5
+  element: FIRE
+  success-rate: 40
+
+  stats:
+    STR: 18
+    LIFESTEAL: 8
+
+  effects:
+    - BURN
+    - HOLY_HEAL
+
+  lore:
+    - "&6Trái tim phượng hoàng."
+
+void_core:
+  name: "&5Void Core"
+  rarity: MYTHIC
+  tier: 5
+  element: DARK
+  success-rate: 35
+
+  stats:
+    STR: 22
+    CRIT_DAMAGE: 25
+
+  lore:
+    - "&5Sức mạnh hư không."
+
+celestial_star:
+  name: "&bCelestial Star"
+  rarity: MYTHIC
+  tier: 5
+  element: HOLY
+  success-rate: 35
+
+  stats:
+    DEF: 20
+    LIFESTEAL: 5
+
+  effects:
+    - HOLY_HEAL
+
+  lore:
+    - "&bÁnh sao thiên giới."
+
+dragon_soul:
+  name: "&cDragon Soul"
+  rarity: MYTHIC
+  tier: 5
+  element: FIRE
+  success-rate: 30
+
+  stats:
+    STR: 25
+    CRIT_DAMAGE: 30
+
+  effects:
+    - BURN
+
+  lore:
+    - "&cLinh hồn của rồng cổ đại."
