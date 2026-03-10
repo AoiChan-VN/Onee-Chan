@@ -1,44 +1,48 @@
 package aoichan.crystal.platform.command;
 
-import aoichan.crystal.bootstrap.CrystalPlugin;
-import aoichan.crystal.gameplay.gem.GemItemFactory;
-import aoichan.crystal.gameplay.gem.GemModule;
-import aoichan.crystal.api.gem.GemDefinition;
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import aoichan.crystal.platform.command.sub.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CrystalCommand implements CommandExecutor {
 
-    // [!] Code: /crystal command
+    private final Map<String, SubCommand> commands = new HashMap<>();
+
+    public CrystalCommand() {
+
+        // [!] Code: Register subcommands
+        commands.put("help", new HelpCommand());
+        commands.put("forge", new ForgeCommand());
+        commands.put("give", new GiveCommand());
+        commands.put("socket", new SocketCommand());
+        commands.put("reload", new ReloadCommand());
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+                             Command command,
+                             String label,
+                             String[] args) {
 
-        if (args.length < 3) {
-            sender.sendMessage("/crystal give <player> <gem>");
+        if (args.length == 0) {
+
+            commands.get("help").execute(sender, args);
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("give")) {
+        SubCommand sub = commands.get(args[0].toLowerCase());
 
-            Player target = Bukkit.getPlayer(args[1]);
+        if (sub == null) {
 
-            if (target == null) {
-                sender.sendMessage("Player not found.");
-                return true;
-            }
-
-            String gemId = args[2];
-
-            GemModule module = (GemModule)
-                    CrystalPlugin.get().getModuleLoader()
-                            .getClass(); // placeholder
-
-            // NOTE: phase sau sẽ làm module access sạch hơn
-
+            sender.sendMessage("§cUnknown command.");
             return true;
         }
+
+        sub.execute(sender, args);
 
         return true;
     }
