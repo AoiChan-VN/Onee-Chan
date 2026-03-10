@@ -1,6 +1,6 @@
 package aoichan.crystal.bootstrap;
 
-import aoichan.crystal.command.CrystalCommand;
+import aoichan.crystal.platform.command.CrystalCommand;
 import aoichan.crystal.gameplay.gem.GemRegistry;
 import aoichan.crystal.platform.listener.CombatListener;
 import aoichan.crystal.platform.listener.EquipmentChangeListener;
