@@ -1,64 +1,58 @@
 package aoichan.crystal.bootstrap;
 
-import aoichan.crystal.core.module.ModuleLoader;
-import aoichan.crystal.infrastructure.config.ConfigLoader;
-import aoichan.crystal.infrastructure.scheduler.TaskScheduler;
+import aoichan.crystal.command.CrystalCommand;
+import aoichan.crystal.gameplay.gem.GemRegistry;
+import aoichan.crystal.platform.listener.CombatListener;
+import aoichan.crystal.platform.listener.EquipmentChangeListener;
+import aoichan.crystal.platform.listener.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CrystalPlugin extends JavaPlugin {
+public final class CrystalPlugin extends JavaPlugin {
 
+    // [!] Code: Plugin instance
     private static CrystalPlugin instance;
 
-    private ModuleLoader moduleLoader;
-    private ConfigLoader configLoader;
-    private TaskScheduler scheduler;
+    public static CrystalPlugin get() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
 
         instance = this;
 
-        // [!] Code: Plugin Startup
-        getLogger().info("Crystal Ultimate is awakening...");
+        // [!] Code: Load configs
+        saveDefaultConfig();
 
-        // [!] Code: Load Config System
-        this.configLoader = new ConfigLoader(this);
-        configLoader.load();
+        // [!] Code: Load gem registry
+        GemRegistry.load();
 
-        // [!] Code: Scheduler System
-        this.scheduler = new TaskScheduler(this);
+        // [!] Code: Register command
+        getCommand("crystal").setExecutor(new CrystalCommand());
 
-        // [!] Code: Module Loader
-        this.moduleLoader = new ModuleLoader();
-        moduleLoader.loadModules();
+        // [!] Code: Register listeners
+        registerListeners();
 
-        getLogger().info("Crystal Ultimate loaded successfully.");
+        getLogger().info("Crystal Ultimate enabled.");
     }
 
     @Override
     public void onDisable() {
 
-        // [!] Code: Plugin Shutdown
-        getLogger().info("Crystal Ultimate shutting down...");
-
-        if (moduleLoader != null) {
-            moduleLoader.shutdown();
-        }
+        getLogger().info("Crystal Ultimate disabled.");
     }
 
-    public static CrystalPlugin get() {
-        return instance;
+    // [!] Code: Listener registration
+    private void registerListeners() {
+
+        getServer().getPluginManager()
+                .registerEvents(new PlayerJoinListener(), this);
+
+        getServer().getPluginManager()
+                .registerEvents(new EquipmentChangeListener(), this);
+
+        getServer().getPluginManager()
+                .registerEvents(new CombatListener(), this);
     }
 
-    public ModuleLoader getModuleLoader() {
-        return moduleLoader;
-    }
-
-    public ConfigLoader getConfigLoader() {
-        return configLoader;
-    }
-
-    public TaskScheduler getScheduler() {
-        return scheduler;
-    }
 }
