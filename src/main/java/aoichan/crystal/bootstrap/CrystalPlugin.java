@@ -2,6 +2,8 @@ package aoichan.crystal.bootstrap;
 
 import aoichan.crystal.platform.command.CrystalCommand;
 
+import aoichan.crystal.core.gem.GemParser;
+
 import aoichan.crystal.gameplay.gem.GemRegistry;
 import aoichan.crystal.gameplay.drop.GemDropManager;
 
