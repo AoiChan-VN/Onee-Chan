@@ -1,5 +1,6 @@
 package aoichan.crystal.api;
 
+import aoichan.crystal.core.item.GemItemBuilder;
 import aoichan.crystal.core.gem.Gem;
 import aoichan.crystal.core.gem.GemRegistry;
 
@@ -24,8 +25,9 @@ public class GemServiceImpl implements GemService {
 
         // [!] Code: create gem item
         ItemStack item =
-                new ItemStack(
-                        org.bukkit.Material.EMERALD
+                GemItemBuilder.buildGem(
+                        gem,
+                        level
                 );
 
         player.getInventory().addItem(item);
