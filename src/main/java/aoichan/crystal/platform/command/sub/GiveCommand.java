@@ -26,8 +26,12 @@ public class GiveCommand implements SubCommand {
         String gemId = args[2];
         int level = Integer.parseInt(args[3]);
 
-        // [!] Code: TODO create gem item
+        // [!] Code: Create gem item
+        ItemStack gem =
+                GemFactory.create(gemId, level);
 
+        target.getInventory().addItem(gem);
+        
         sender.sendMessage("Gem given.");
     }
 } 
