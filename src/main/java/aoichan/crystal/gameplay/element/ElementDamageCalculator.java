@@ -1,26 +1,39 @@
 package aoichan.crystal.gameplay.element;
 
-// [!] Code: Element damage logic
+// [!] Code: Element damage calculator
 public class ElementDamageCalculator {
 
     public static double applyElementBonus(
-            double damage,
+            double baseDamage,
             ElementType element
     ) {
 
-        return switch (element) {
+        switch (element) {
 
-            case FIRE -> damage * 1.15;
+            case FIRE:
 
-            case FROST -> damage * 1.10;
+                return baseDamage * 1.15;
 
-            case THUNDER -> damage * 1.20;
+            case FROST:
 
-            case HOLY -> damage * 1.12;
+                return baseDamage * 1.10;
 
-            case VOID -> damage * 1.25;
+            case THUNDER:
 
-            default -> damage;
-        };
+                return baseDamage * 1.20;
+
+            case HOLY:
+
+                return baseDamage * 1.12;
+
+            case VOID:
+
+                return baseDamage * 1.25;
+
+            default:
+
+                return baseDamage;
+        }
     }
-} 
+
+}
