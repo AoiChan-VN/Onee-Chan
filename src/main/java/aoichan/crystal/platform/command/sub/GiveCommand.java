@@ -1,5 +1,7 @@
 package aoichan.crystal.platform.command.sub;
 
+import aoichan.crystal.gameplay.gem.GemFactory;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
