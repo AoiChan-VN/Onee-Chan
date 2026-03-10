@@ -3,6 +3,7 @@ package aoichan.crystal.platform.command.sub;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class GiveCommand implements SubCommand {
 
