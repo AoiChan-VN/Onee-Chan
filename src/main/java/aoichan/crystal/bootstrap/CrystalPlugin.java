@@ -33,6 +33,9 @@ public final class CrystalPlugin extends JavaPlugin {
         // [!] Code: Register listeners
         registerListeners();
 
+        // [!] Code: Drop gem
+        GemDropManager.load();
+        
         getLogger().info("Crystal Ultimate enabled.");
     }
 
@@ -53,6 +56,9 @@ public final class CrystalPlugin extends JavaPlugin {
 
         getServer().getPluginManager()
                 .registerEvents(new CombatListener(), this);
+
+        getServer().getPluginManager()
+                .registerEvents(new MobDeathListener(), this);
     }
 
 }
