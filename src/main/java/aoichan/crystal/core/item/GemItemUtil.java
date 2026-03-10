@@ -27,7 +27,7 @@ public class GemItemUtil {
 
         NamespacedKey key =
                 new NamespacedKey(
-                        CrystalPlugin.getInstance(),
+                        CrystalPlugin.get(),
                         "gem_id"
                 );
 
@@ -53,7 +53,7 @@ public class GemItemUtil {
 
         NamespacedKey key =
                 new NamespacedKey(
-                        CrystalPlugin.getInstance(),
+                        CrystalPlugin.get(),
                         "gem_level"
                 );
 
