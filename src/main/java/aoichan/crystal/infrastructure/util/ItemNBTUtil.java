@@ -1,6 +1,7 @@
 package aoichan.crystal.infrastructure.util;
 
-import aoichan.crystal.CrystalPlugin;
+import aoichan.crystal.bootstrap.CrystalPlugin;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
