@@ -1,3 +1,9 @@
+# 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋
+
+📦![Release](https://img.shields.io/github/v/release/AoiChan-Dev/AoiDev?label=release)
+⚙️![build](https://img.shields.io/github/actions/workflow/status/AoiChan-Dev/AoiDev/build.yml)
+📜![License](https://img.shields.io/github/license/AoiChan-Dev/AoiDev)
+
 #【Crystal Ultimate】
 
 ## 💡 Đặc trưng
@@ -17,8 +23,3 @@ https://github.com/AoiChan-Dev/AoiDev/releases/latest
 1. 📥 Tải xuống Plugins
 2. 📁 Đặt vào thư mục `/plugins/`
 3. 🔄 Khởi động lại Server
-
-## 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋
-📦![Release](https://img.shields.io/github/v/release/AoiChan-Dev/AoiDev?label=release)
-⚙️![build](https://img.shields.io/github/actions/workflow/status/AoiChan-Dev/AoiDev/build.yml)
-📜![License](https://img.shields.io/github/license/AoiChan-Dev/AoiDev)
