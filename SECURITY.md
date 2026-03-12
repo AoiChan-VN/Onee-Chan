@@ -9,9 +9,9 @@
 
 ## Báo cáo lỗi:
 
-Nêu rõ lỗi đang xảy ra.
-Có thể kèm hình ảnh hoặc video báo lỗi.
-Phiên bản nào đang lỗi.
+- Nêu rõ lỗi đang xảy ra
+- Có thể kèm hình ảnh hoặc video báo lỗi
+- Phiên bản nào đang lỗi
 
 ## Liên hệ: ↓
 
