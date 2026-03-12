@@ -2,7 +2,7 @@
 
 📦|![Release](https://img.shields.io/github/v/release/AoiChan-Dev/AoiDev)|
 ⚙|![Build](https://img.shields.io/github/actions/workflow/status/AoiChan-Dev/AoiDev/build.yml)|
-⚖|[License](https://img.shields.io/github/license/AoiChan-Dev/AoiDev)|
+⚖|![License](https://img.shields.io/github/license/AoiChan-Dev/AoiDev)|
 
 ## 💎 Plugins:【Crystal MMORPG】
 
