@@ -1,4 +1,4 @@
-name: 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃 ➪【Release】
+name: 🚀 Release
 
 on:
   push:
@@ -13,41 +13,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+
+      - name: 📥 Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: ☕ Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
           cache: maven
 
-      - name: Build plugin
-        run: mvn -B package -DskipTests
+      - name: 🔨 Build plugin
+        run: mvn -B clean package -DskipTests
 
-      - name: Get version
+      - name: 🧾 Get project version
         id: version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
 
-      - name: Prepare release file
+      - name: 📦 Prepare release artifact
         run: |
           mkdir release
-          cp target/*.jar release/AoiDev-${{ steps.version.outputs.VERSION }}.jar
+          cp target/*.jar release/CrystalUltimate-${{ steps.version.outputs.VERSION }}.jar
 
-      - name: Generate changelog
+      - name: 📝 Generate changelog
         id: changelog
         run: |
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
           git log $(git describe --tags --abbrev=0 HEAD^)..HEAD --pretty=format:"- %s" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Create Release
+      - name: 📤 Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: release/*.jar
+          fail_on_unmatched_files: false
           body: |
-            🚀 **AoiDev ${{ steps.version.outputs.VERSION }}**
+            ## 💎 CrystalUltimate v${{ steps.version.outputs.VERSION }}
 
-            ### Changes
-            ${{ steps.changelog.outputs.CHANGELOG }}
+            ### ✨ Changes
+            ${{ steps.changelog.outputs.CHANGELOG }} 
