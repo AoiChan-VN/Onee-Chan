@@ -2,7 +2,7 @@ name: 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋 ➪【Crystal💎】
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, release ]
     paths:
       - "src/**"
       - "pom.xml"
