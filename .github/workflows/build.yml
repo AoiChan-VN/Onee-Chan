@@ -26,6 +26,13 @@ jobs:
       - name: 【🔎Kiểm tra】
         uses: actions/checkout@v4
 
+      # Cài đặt Actions Node.js
+      - name: 【🅽🅾🅳🅴】
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Cài đặt JavaScript
       - name: 【⚙️🅹🅰🆅🅰📚】
         uses: actions/setup-java@v4
         with:
@@ -33,9 +40,11 @@ jobs:
           java-version: 17
           cache: maven
 
-      - name: 【🖥️🆆🅾🆁🅺🅵🅻🅾🆆🆂🏗️】
+      # Xây dựng cấu trúc
+      - name: 【🖥️🅱🆄🅸🅻🅳🏗️】
         run: mvn -B package -DskipTests
 
+      # Đóng gói thành file .jar
       - name: 【📦🅹🅰🆁】
         uses: actions/upload-artifact@v4
         with:
