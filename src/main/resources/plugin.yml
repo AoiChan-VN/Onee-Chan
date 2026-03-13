@@ -1,10 +1,10 @@
-name: CrystalUltimate
-version: 2.1.0
+name: Crystal-MMORPG
+version: 1.0.0
 main: aiochan.crystal.bootstrap.CrystalPlugin
 api-version: 1.20
 
 author: AoiChan
-description: Crystal Framework MMORPG
+description: Crystal-MMORPG
 
 commands:
 
