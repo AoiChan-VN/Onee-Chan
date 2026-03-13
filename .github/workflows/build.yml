@@ -45,6 +45,16 @@ jobs:
       - name: 📦🅱🆄🅸🅻🅳🏗️
         run: mvn -B package -DskipTests
 
+      # Hiện avatar + thông tin build
+      - name: 📊 Build Summary
+        run: |
+          echo "## 🚀 AoiDev Build Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "👤 Author:" >> $GITHUB_STEP_SUMMARY
+          echo "![avatar](https://github.com/AoiChan-Dev.png)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Artifact: plugin.jar" >> $GITHUB_STEP_SUMMARY
+      
       # Đóng gói thành file .jar
       - name: 📦🅹🅰🆁
         uses: actions/upload-artifact@v4
