@@ -1,4 +1,4 @@
-name: 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋 ➪【Build】
+name: 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋 ➪【Crystal💎】
 
 on:
   push:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    name: 【💋𝓐𝓸𝓲𝓒𝓱𝓪𝓷👅】
     runs-on: ubuntu-latest
 
     permissions:
@@ -27,13 +28,13 @@ jobs:
         uses: actions/checkout@v4
 
       # Cài đặt Actions Node.js
-      - name: 【🅽🅾🅳🅴】
+      - name: 【🟢🅽🅾🅳🅴】
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
       # Cài đặt JavaScript
-      - name: 【⚙️🅹🅰🆅🅰📚】
+      - name: 【☕🅹🅰🆅🅰】
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -41,7 +42,7 @@ jobs:
           cache: maven
 
       # Xây dựng cấu trúc
-      - name: 【🖥️🅱🆄🅸🅻🅳🏗️】
+      - name: 【📦🅱🆄🅸🅻🅳🏗️】
         run: mvn -B package -DskipTests
 
       # Đóng gói thành file .jar
