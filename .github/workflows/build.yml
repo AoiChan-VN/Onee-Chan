@@ -23,28 +23,28 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout
+      - name: 【🔎Kiểm tra】
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: 【⚙️🅹🅰🆅🅰📚】
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
           cache: maven
 
-      - name: Build
+      - name: 【🖥️🆆🅾🆁🅺🅵🅻🅾🆆🆂🏗️】
         run: mvn -B package -DskipTests
 
-      - name: Tạo file jar
+      - name: 【📦🅹🅰🆁】
         uses: actions/upload-artifact@v4
         with:
           name: Crystal-Core
           path: target/*.jar
           retention-days: 1
 
-      # 🧹 Tự động dọn dẹp Workflows Runs
-      - name: Giữ lại 5 Runs còn lại xóa hết
+      # Tự động dọn dẹp Workflows Runs
+      - name: 【🗑️Dọn Dẹp】
         if: success()
         run: |
           echo "Dọn dẹp Workflows Runs..."
