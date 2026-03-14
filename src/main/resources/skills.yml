@@ -1,0 +1,25 @@
+sword_slash:
+
+  name: "Kiếm Khí"
+
+  type: damage
+
+  mana: 20
+
+  cooldown: 5
+
+  damage-scale: 1.2
+
+
+heaven_strike:
+
+  name: "Thiên Lôi Kiếm"
+
+  type: damage
+
+  mana: 40
+
+  cooldown: 10
+
+  damage-scale: 2.0
+ 
