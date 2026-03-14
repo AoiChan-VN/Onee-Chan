@@ -5,13 +5,11 @@ on:
     branches: [ main ]
     paths:
       - "src/**"
-      - "pom.xml"
       - ".github/workflows/**"
 
   pull_request:
     paths:
       - "src/**"
-      - "pom.xml"
       - ".github/workflows/**"
 
 jobs:
