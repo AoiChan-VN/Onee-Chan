@@ -4,11 +4,11 @@ import aoichan.crystal.infrastructure.config.ConfigManager;
 import aoichan.crystal.infrastructure.util.LogUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class AoiEngine {
+public class CrystalEngine {
 
     private final JavaPlugin plugin;
 
-    public AoiEngine(JavaPlugin plugin) {
+    public CrystalEngine(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -17,13 +17,13 @@ public class AoiEngine {
         // 【!】Code: Load config
         ConfigManager.load(plugin);
 
-        LogUtil.info("Crystal Engine Bật");
+        LogUtil.info("Engine đang bật");
 
     }
 
     public void shutdown() {
 
-        LogUtil.info("Crystal Engine Tắt");
+        LogUtil.info("Engine đang tắt");
 
     }
 
