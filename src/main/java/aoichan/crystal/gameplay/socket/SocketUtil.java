@@ -7,6 +7,6 @@ public class SocketUtil {
 
     // 【!】Code: key lưu socket
     public static final NamespacedKey SOCKET_KEY =
-            new NamespacedKey(CrystalPlugin.get(), "crystal_sockets");
+            new NamespacedKey(AoiMain.get(), "crystal_sockets");
 
 } 
