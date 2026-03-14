@@ -4,11 +4,11 @@ import aoichan.crystal.infrastructure.config.ConfigManager;
 import aoichan.crystal.infrastructure.util.LogUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CrystalEngine {
+public class AoiEngine {
 
     private final JavaPlugin plugin;
 
-    public CrystalEngine(JavaPlugin plugin) {
+    public AoiEngine(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
