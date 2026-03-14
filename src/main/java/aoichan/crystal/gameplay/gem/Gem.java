@@ -2,13 +2,13 @@ package aoichan.crystal.gameplay.gem;
 
 import java.util.Map;
 
-public class Crystal {
+public class Gem {
 
     private final String id;
     private final String name;
-    private final Map<CrystalStat, Double> stats;
+    private final Map<GemStat, Double> stats;
 
-    public Crystal(String id, String name, Map<CrystalStat, Double> stats) {
+    public Gem(String id, String name, Map<GemStat, Double> stats) {
 
         // 【!】Code: id của gem
         this.id = id;
@@ -29,7 +29,7 @@ public class Crystal {
         return name;
     }
 
-    public Map<CrystalStat, Double> getStats() {
+    public Map<GemStat, Double> getStats() {
         return stats;
     }
 
