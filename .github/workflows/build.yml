@@ -3,14 +3,14 @@ name: 🍀𝓐𝓸𝒾𝒞𝒽𝒶𝓃💋 ➪【Crystal💎】
 on:
   push:
     branches: [ main ]
-    paths:
-      - "src/**"
-      - ".github/workflows/**"
+    #paths:
+      #- "src/**"
+      #- ".github/workflows/**"
 
   pull_request:
-    paths:
-      - "src/**"
-      - ".github/workflows/**"
+    #paths:
+      #- "src/**"
+      #- ".github/workflows/**"
 
 jobs:
   build:
