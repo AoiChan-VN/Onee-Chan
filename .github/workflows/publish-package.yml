@@ -1,4 +1,4 @@
-name: Publish Package
+name: Upload Package
 
 on:
   push:
