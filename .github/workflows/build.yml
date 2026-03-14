@@ -47,7 +47,7 @@ jobs:
       - name: 📦🅹🅰🆁
         uses: actions/upload-artifact@v4
         with:
-          name: crystal-core
+          name: crystal-mmorpg
           path: target/*.jar
           retention-days: 1
 
