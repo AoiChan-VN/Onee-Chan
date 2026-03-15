@@ -24,6 +24,10 @@ public class EngineCore {
 
     public void shutdown(){
 
+        if(moduleLoader != null){
+            moduleLoader.disableModules();
+        }
+
         plugin.getLogger().info("EngineCore stopped.");
     }
 
@@ -31,4 +35,4 @@ public class EngineCore {
         return moduleLoader;
     }
 
-} 
+}
