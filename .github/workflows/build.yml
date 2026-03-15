@@ -29,19 +29,19 @@ jobs:
       - name: 📒 𝓝𝓸𝓭𝓮
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: '24'
 
       # Cài đặt JavaScript
       - name: ☕ ｊａｖａ
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 21
+          distribution: 'temurin'
+          java-version: '21'
           cache: maven
 
       # Xây dựng cấu trúc
       - name: ⚒ 𝓑𝓾𝓲𝓵𝓭 🏗️
-        run: mvn clean package
+        run: mvn -B package
       
       # Đóng gói thành file .jar
       - name: 📦 𝓤𝓹𝓵𝓸𝓪𝓻𝓭 𝓳𝓪𝓻
