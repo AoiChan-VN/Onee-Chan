@@ -47,7 +47,7 @@ jobs:
       - name: 📦 𝓤𝓹𝓵𝓸𝓪𝓻𝓭 𝓳𝓪𝓻
         uses: actions/upload-artifact@v4
         with:
-          name: crystal-mmorpg
+          name: crystal-engine
           path: target/*.jar
           retention-days: 1
 
