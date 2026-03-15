@@ -4,3 +4,7 @@ version: 1.0.0
 api-version: 1.21
 author: AoiChan
 description: Core Engine cho hệ thống Crystal plugins
+
+commands:
+  crystal:
+    description: CrystalEngine Command
