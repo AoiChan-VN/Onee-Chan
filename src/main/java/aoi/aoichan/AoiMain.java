@@ -1,29 +1,37 @@
-
 package aoi.aoichan;
 
+import aoi.aoichan.api.EngineAPI;
+import aoi.aoichan.command.CommandManager;
 import aoi.aoichan.core.EngineBootstrap;
 import aoi.aoichan.core.EngineConfig;
 import aoi.aoichan.core.EngineLogger;
+import aoi.aoichan.module.ModuleLoader;
+import aoi.aoichan.reload.ReloadManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /*
- * CrystalEngine - Core Plugin
- * Paper 1.21.1
- * Java 21
- */
+ CrystalEngine Core
+ Paper 1.21.1
+ Java 21
+*/
 
 public final class AoiMain extends JavaPlugin {
 
     private static AoiMain instance;
 
+    private EngineLogger logger;
+    private EngineConfig config;
+
+    private ModuleLoader moduleLoader;
+    private CommandManager commandManager;
+    private ReloadManager reloadManager;
+
     private EngineBootstrap bootstrap;
-    private EngineConfig engineConfig;
-    private EngineLogger engineLogger;
 
     @Override
     public void onEnable() {
 
-        // 【!】Code: Khởi tạo instance plugin
+        // 【!】Code: lưu instance plugin
         instance = this;
 
         // 【!】Code: Khởi tạo logger của Engine
@@ -33,41 +41,61 @@ public final class AoiMain extends JavaPlugin {
         engineLogger.info("CrystalEngine đang khởi động...");
         engineLogger.info("Phiên bản: " + getDescription().getVersion());
         engineLogger.info("=================================");
-
-        // 【!】Code: Load config
+        
+        // 【!】Code: load config
         saveDefaultConfig();
-        engineConfig = new EngineConfig(this);
+        config = new EngineConfig(this);
 
-        // 【!】Code: Bootstrap hệ thống Engine
+        // 【!】Code: bootstrap engine
         bootstrap = new EngineBootstrap(this);
         bootstrap.start();
 
-        engineLogger.info("CrystalEngine đã khởi động thành công!");
+        // 【!】Code: khởi tạo module loader
+        moduleLoader = new ModuleLoader(this);
+
+        // 【!】Code: command system
+        commandManager = new CommandManager(this);
+
+        // 【!】Code: reload system
+        reloadManager = new ReloadManager(this);
+
+        // 【!】Code: đăng ký command
+        commandManager.registerCommands();
+
+        // 【!】Code: expose API
+        EngineAPI.initialize(this);
+
+        logger.info("CrystalEngine đã khởi động thành công.");
     }
 
     @Override
     public void onDisable() {
 
-        // 【!】Code: Shutdown engine
-        if (bootstrap != null) {
-            bootstrap.shutdown();
+        // 【!】Code: tắt module
+        if (moduleLoader != null) {
+            moduleLoader.shutdownModules();
         }
 
-        engineLogger.info("CrystalEngine đã tắt.");
+        logger.info("CrystalEngine đã tắt.");
     }
 
-    // 【!】Code: Getter Instance
     public static AoiMain getInstance() {
         return instance;
     }
 
-    // 【!】Code: Getter Config
-    public EngineConfig getEngineConfig() {
-        return engineConfig;
+    public EngineLogger getEngineLogger() {
+        return logger;
     }
 
-    // 【!】Code: Getter Logger
-    public EngineLogger getEngineLogger() {
-        return engineLogger;
+    public EngineConfig getEngineConfig() {
+        return config;
+    }
+
+    public ModuleLoader getModuleLoader() {
+        return moduleLoader;
+    }
+
+    public ReloadManager getReloadManager() {
+        return reloadManager;
     }
 }
