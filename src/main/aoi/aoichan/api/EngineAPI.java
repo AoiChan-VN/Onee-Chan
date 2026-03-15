@@ -7,9 +7,7 @@ public class EngineAPI {
 
     // 【!】Code: lấy engine core
     public static EngineCore getEngine(){
-
         return AoiMain.getInstance().getEngineCore();
-
     }
 
-} 
+}
