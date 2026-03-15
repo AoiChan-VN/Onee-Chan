@@ -63,4 +63,8 @@ public class EngineBootstrap {
         return dataRegistry;
     }
 
+    public ConfigSystem config() {
+        return configSystem;
+    }
+
 }
