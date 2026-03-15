@@ -1,17 +1,13 @@
 package aoi.aoichan.module;
 
 /*
- Interface module cho CrystalEngine
- Các plugin Phase sau sẽ implement cái này
+ Interface module
 */
 
 public interface EngineModule {
 
-    void onLoad();
+    void enable();
 
-    void onEnable();
+    void disable();
 
-    void onDisable();
-
-    String getName();
-} 
+}
