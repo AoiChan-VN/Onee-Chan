@@ -1,1 +1,6 @@
-
+name: AoiEngine
+version: 1.0
+main: aoi.aoichan.AoiMain
+api-version: 1.21
+author: AoiChan
+description: AoiEngine MMORPG Core
