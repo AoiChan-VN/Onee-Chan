@@ -73,7 +73,7 @@ jobs:
       - name: 🗑️ 𝓒𝓵𝓮𝓪𝓻 𝓒𝓪𝓬𝓱𝓮
         run: |
           gh cache list --limit 100 | awk '{print $1}' | tail -n +6 | while read key; do
-            gh đã xóa ✂ "$key"
+            gh cache delete "$key"
           done
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
