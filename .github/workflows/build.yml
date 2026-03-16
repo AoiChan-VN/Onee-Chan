@@ -45,7 +45,7 @@ jobs:
 
       # Xây dựng cấu trúc
       - name: ⚒ 𝓑𝓾𝓲𝓵𝓭 🏗️
-        run: mvn -B -ntp package
+        run: mvn -B -ntp package -Xlint:none -proc:none
       
       # Đóng gói file .jar
       - name: 📦 𝓤𝓹𝓵𝓸𝓪𝓻𝓭 𝓳𝓪𝓻
