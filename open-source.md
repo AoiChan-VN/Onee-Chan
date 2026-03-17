@@ -18,7 +18,6 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
 
 ## 🧠 Triết lý thiết kế
 
-* RAM = dữ liệu runtime
 * Database = lưu trữ lâu dài
 * Tuyệt đối không truy cập DB trên main thread
 * Cache-first architecture
@@ -30,48 +29,62 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
 có thể bổ sung thêm nếu cần
 ```
 AoiCore
-├── AoiMain
-├── core/
+├── bootstrap/
+│   └── AoiMain.java
+├── lifecycle/
+│   └── LifecycleManager.java
 ├── player/
+│   ├── PlayerManager.java
+│   ├── PlayerSession.java
 ├── data/
+│   ├── DataContainer.java
+│   ├── DataRegistry.java
+├── cache/
+│   ├── CacheManager.java
 ├── database/
-├── system/
-├── hook/
+│   ├── DatabaseProvider.java
+│   ├── AsyncQueue.java
+├── scheduler/
+│   ├── TaskScheduler.java
 ├── event/
+├── hook/
 ├── util/
 ```
 
 ## 🧍 PlayerData Design
 ## 📦 DataContainer System (Improved)
+
 ### 🔐 Type-safe nâng cao
+•Key system (namespace)
+•Versioning
+•Serializer strategy
+
 ## 🔌 Hook System
 ## ⚡ Player Flows
 ## 🗃️ Database Design
 
 ### Format JSON
-
 ### Ưu điểm
 * Không cần migration schema
 * Dễ mở rộng
 * Linh hoạt plugin
 
 ## ⚙️ Cache System
+
 ## 🔄 Save System
-### Cách hoạt động
-* Khi data thay đổi → set dirty
-* Scheduler chạy mỗi X giây
-* Batch save các player dirty
 
 ### Bổ sung an toàn
 * Save ngay khi player quit
 * Flush toàn bộ khi server shutdown
 
 ## ⏱️ Scheduler System
+
 ## ⚙️ Config System
 * Load config.yml vào RAM
 * Có thể reload bằng command
 * Không cần restart server
-* 
+
+## Lifecycle
 ---
 
 🧠 Advanced Pack
