@@ -1,5 +1,6 @@
 package aoi.aoichan.core;
 
+import aoi.aoichan.api.EngineAPI;
 import aoi.aoichan.module.ModuleManager;
 import aoi.aoichan.scheduler.EngineThreadPool;
 import aoi.aoichan.service.ServiceRegistry;
@@ -21,6 +22,8 @@ public class EngineLifecycle {
     }
 
     public void start() {
+        plugin.getLogger().info("[EngineLifecycle] Initializing core systems...");
+
         // 1. Init thread pool
         this.threadPool = new EngineThreadPool();
 
@@ -30,17 +33,19 @@ public class EngineLifecycle {
         // 3. Register core services
         registerCoreServices();
 
-        // 4.
-        EngineAPI.init(this);
-
         // 4. Load modules
         this.moduleManager = new ModuleManager(serviceRegistry);
         this.moduleManager.loadModules();
+
+        // 5. Init API
+        EngineAPI.init(this);
 
         plugin.getLogger().info("[EngineLifecycle] All systems initialized.");
     }
 
     public void shutdown() {
+        plugin.getLogger().info("[EngineLifecycle] Shutting down systems...");
+
         if (moduleManager != null) {
             moduleManager.unloadModules();
         }
@@ -60,4 +65,4 @@ public class EngineLifecycle {
     public ServiceRegistry getServiceRegistry() {
         return serviceRegistry;
     }
-} 
+}
