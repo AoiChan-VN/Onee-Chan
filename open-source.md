@@ -12,6 +12,7 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
   * AoiWorld
   * AoiCrystal
   * AoiClass
+  * AoiCrystal
 
 ---
 
@@ -61,98 +62,17 @@ AoiCore
 ├── util/
 ```
 
----
-
 ## 🧍 PlayerData Design
-
-```java
-class PlayerData {
-    UUID uuid;
-    Map<String, DataContainer> containers;
-    boolean dirty;
-}
-```
-
-### Giải thích
-
-* `containers`: nơi plugin lưu data riêng
-* `dirty`: đánh dấu cần save
-
----
 
 ## 📦 DataContainer System (Improved)
 
-```java
-class DataContainer {
-    private Map<String, Object> data;
-
-    public int getInt(String key);
-    public String getString(String key);
-    public <T> T get(String key, Class<T> type);
-
-    public void set(String key, Object value);
-}
-```
-
-### 🔐 Type-safe nâng cao (khuyến nghị)
-
-```java
-class DataKey<T> {
-    private final String key;
-    private final Class<T> type;
-}
-```
-
-```java
-DataKey<Integer> LEVEL = new DataKey<>("level", Integer.class);
-int level = container.get(LEVEL);
-```
-
-### Ví dụ dữ liệu
-
-```yaml
-AoiClass
-key: "class"
-data:
-  level: 10
-  exp: 2500
-
-AoiCrystal
-key: "crystal"
-data:
-  slots: 3
-  gems: [...]
-
-AoiWorld
-key: "world"
-data:
-  bossDamage: 5000
-```
-
----
+### 🔐 Type-safe nâng cao
 
 ## 🔌 Hook System
-
-```java
-interface CoreHook {
-    String getKey();
-
-    DataContainer createDefault(UUID uuid);
-
-    default void onLoad(PlayerData data) {}
-    default void onSave(PlayerData data) {}
-}
-```
 
 ### Cơ chế hoạt động
 
 Khi player load:
-
-* Core gọi tất cả hook
-* Tạo container mặc định
-* Attach vào PlayerData
-
----
 
 ## ⚡ Player Flow
 
@@ -175,24 +95,10 @@ Khi player load:
 * Mark dirty
 * Save async
 * Remove khỏi cache
-
----
-
+* 
 ## 🗃️ Database Design
 
 ### Format JSON
-
-```json
-{
-  "uuid": "player-uuid",
-  "version": 1,
-  "data": {
-    "class": {...},
-    "crystal": {...},
-    "world": {...}
-  }
-}
-```
 
 ### Ưu điểm
 
@@ -200,25 +106,7 @@ Khi player load:
 * Dễ mở rộng
 * Linh hoạt plugin
 
----
-
 ## ⚙️ Cache System
-
-```java
-Map<UUID, PlayerData> cache;
-```
-
-### Nguyên tắc
-
-* Runtime = cache
-* DB chỉ dùng load/save
-
-### Bổ sung
-
-* Remove khi player quit
-* Có thể thêm timeout eviction
-
----
 
 ## 🔄 Save System
 
@@ -233,24 +121,7 @@ Map<UUID, PlayerData> cache;
 * Save ngay khi player quit
 * Flush toàn bộ khi server shutdown
 
-```java
-void flushAll();
-```
-
----
-
 ## ⏱️ Scheduler System
-
-Wrapper cho BukkitScheduler:
-
-```java
-runAsync();
-runSync();
-runLater();
-runTimer();
-```
-
----
 
 ## ⚙️ Config System
 
@@ -262,28 +133,9 @@ runTimer();
 
 ## 📡 API Usage
 
-```java
-CoreAPI api = CoreProvider.get();
-
-PlayerData data = api.getPlayer(uuid);
-DataContainer container = data.get("class");
-
-int level = container.getInt("level");
-container.set("level", level + 1);
-```
-
----
-
-## 📡 Event System (New)
-
-```java
-PlayerDataLoadEvent
-PlayerDataSaveEvent
-```
+## 📡 Event System
 
 → Cho phép plugin hook vào lifecycle
-
----
 
 ## 🚀 Mở rộng plugin
 
