@@ -28,15 +28,15 @@
 ```
 AoiCore/
 ├── api/
-│   ├── AoiCoreAPI.java
-│   ├── AoiCoreProvider.java
+│   ├── CoreAPI.java
+│   ├── CoreProvider.java
 │   ├── player/PlayerData.java
 │   └── event/
-│       ├── AoiPlayerLoadEvent.java
-│       └── AoiPlayerSaveEvent.java
+│       ├── PlayerLoadEvent.java
+│       └── PlayerSaveEvent.java
 │
 ├── core/
-│   ├── bootstrap/AoiCorePlugin.java
+│   ├── bootstrap/AoiMain.java
 │   ├── player/PlayerManager.java
 │   ├── cache/CacheService.java
 │   ├── scheduler/TaskService.java
@@ -62,80 +62,10 @@ AoiCore/
 └── pom.xml
 ```
 
----
-
-## ⚙️ Maven (pom.xml)
-
-```xml
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>dev.aoi</groupId>
-  <artifactId>AoiCore</artifactId>
-  <version>1.0.0</version>
-
-  <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
-  </properties>
-
-  <dependencies>
-    <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>1.21.1-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>5.1.0</version>
-    </dependency>
-  </dependencies>
-</project>
-```
-
----
-
-## 🤖 GitHub Actions (.github/workflows/build.yml)
-
-```yaml
-name: Build AoiCore
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Build
-        run: mvn -B clean package
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: AoiCore
-          path: target/*.jar
-```
-
----
-
 ## 🧠 API (Ổn định cho plugin khác)
 
 ```java
-public interface AoiCoreAPI {
+public interface CoreAPI {
 
     PlayerData getPlayer(UUID uuid);
 
@@ -150,14 +80,14 @@ public interface AoiCoreAPI {
 ```
 
 ```java
-public final class AoiCoreProvider {
-    private static AoiCoreAPI instance;
+public final class CoreProvider {
+    private static CoreAPI instance;
 
-    public static void set(AoiCoreAPI api) {
+    public static void set(CoreAPI api) {
         instance = api;
     }
 
-    public static AoiCoreAPI get() {
+    public static CoreAPI get() {
         return instance;
     }
 }
@@ -212,14 +142,14 @@ public class CacheService {
 JOIN
  → async load DB
  → put cache
- → fire AoiPlayerLoadEvent
+ → fire PlayerLoadEvent
 
 RUNTIME
  → đọc 100% từ cache
 
 QUIT / AUTOSAVE
  → async save DB
- → fire AoiPlayerSaveEvent
+ → fire PlayerSaveEvent
 ```
 
 ---
@@ -301,13 +231,13 @@ mysql:
 ## 🔌 Custom Events
 
 ```java
-public class AoiPlayerLoadEvent extends Event {
+public class PlayerLoadEvent extends Event {
     private final PlayerData data;
 }
 ```
 
 ```java
-public class AoiPlayerSaveEvent extends Event {
+public class PlayerSaveEvent extends Event {
     private final PlayerData data;
 }
 ```
@@ -333,7 +263,7 @@ public class AoiPlayerSaveEvent extends Event {
 ## 🔌 Ví dụ plugin khác dùng API
 
 ```java
-AoiCoreAPI api = AoiCoreProvider.get();
+CoreAPI api = CoreProvider.get();
 PlayerData data = api.getPlayer(player.getUniqueId());
 
 data.set("mana", 100);
@@ -345,7 +275,7 @@ data.set("mana", 100);
 
 ```yaml
 name: AoiCore
-main: dev.aoi.core.bootstrap.AoiCorePlugin
+main: aoi.aoichan.bootstrap.AoiMain
 version: 1.0
 api-version: 1.21
 ```
