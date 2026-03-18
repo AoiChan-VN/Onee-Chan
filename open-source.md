@@ -16,11 +16,7 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
 
 ---
 
-## 🧠 Triết lý thiết kế
-
-* Database = lưu trữ lâu dài
 * Tuyệt đối không truy cập DB trên main thread
-* Cache-first architecture
 * Core không phụ thuộc plugin con
 
 ---
@@ -36,55 +32,51 @@ AoiCore
 ├── player/
 │   ├── PlayerManager.java
 │   ├── PlayerSession.java
+│   ├── PlayerState.java
+│   ├── PlayerPipeline.java
 ├── data/
 │   ├── DataContainer.java
 │   ├── DataRegistry.java
+├── pool/
+│   ├── PacketPool
+│   ├── DataContainerPool
 ├── cache/
 │   ├── CacheManager.java
+│   ├── CacheEntry.java
+│   ├── CachePolicy.java
 ├── database/
 │   ├── DatabaseProvider.java
 │   ├── AsyncQueue.java
+│   ├── driver/
+│        ├── SQLiteDriver.java
+│        ├── MySQLDriver.java
+│        ├── RedisDriver.java
 ├── scheduler/
-│   ├── TaskScheduler.java
+│   ├── SyncScheduler.java
+│   ├── AsyncScheduler.java
+├──metrics/
+│   ├── TPSMonitor
+│   ├── CacheStats
+│   ├── DBStats
 ├── event/
+│   ├── AoiEventBus.java
+│   ├── events/
+│       ├── PlayerDataLoadEvent
+│       ├── PlayerDataSaveEvent
 ├── hook/
 ├── util/
 ```
-
-## 🧍 PlayerData Design
-## 📦 DataContainer System (Improved)
 
 ### 🔐 Type-safe nâng cao
 •Key system (namespace)
 •Versioning
 •Serializer strategy
 
-## 🔌 Hook System
-## ⚡ Player Flows
-## 🗃️ Database Design
-
 ### Format JSON
-### Ưu điểm
-* Không cần migration schema
-* Dễ mở rộng
-* Linh hoạt plugin
 
-## ⚙️ Cache System
-
-## 🔄 Save System
-
-### Bổ sung an toàn
-* Save ngay khi player quit
-* Flush toàn bộ khi server shutdown
-
+## 🔄 Batch Save | Save System | Auto Save Scheduler
 ## ⏱️ Scheduler System
-
-## ⚙️ Config System
-* Load config.yml vào RAM
-* Có thể reload bằng command
-* Không cần restart server
-
-## Lifecycle
+## ⚙️ Hot Reload Engine
 ---
 
 🧠 Advanced Pack
@@ -99,10 +91,7 @@ Packet-level optimization
 
 Async write queue (non-blocking IO)
 Binary serialize (MessagePack)
-Cache metrics (TPS impact monitor)
-
-## 📡 API Usage
-## 📡 Event System
+Cache metrics (TPS impact monitor
 
 → Cho phép plugin hook vào lifecycle
 
@@ -115,11 +104,6 @@ Cache metrics (TPS impact monitor)
 ## 🧱 Tiêu chuẩn "Premium"
 
 * Không block main thread
-* Async DB 100%
-* Cache-first
-* Dirty save system
-* Type-safe data
-* Event-driven
 * Không phụ thuộc gameplay
 * Reload không restart
 
@@ -127,23 +111,11 @@ Cache metrics (TPS impact monitor)
 
 ## ❌ Những điều cần tránh
 
-* Hardcode data vào PlayerData
+* Hardcode data vào PlayerData 
 * Query DB liên tục
 * Sync IO trên main thread
 * Coupling giữa plugins
 ---
-
-## 🎯 Kết luận
-
-AoiCore không chỉ là một plugin core.
-
-Nó là nền tảng backend cho toàn bộ hệ sinh thái plugin:
-
-* Mở rộng dễ dàng
-* Hiệu năng cao
-* Thiết kế sạch
-
-👉 Sẵn sàng cho production server quy mô lớn 🚀
  
 ## Quan trọng:
 • No Code test, lỗi, bug ẩn
