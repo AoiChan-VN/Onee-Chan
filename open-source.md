@@ -96,8 +96,10 @@ src/main/java/aoichan
 * không spam load, save,...
 * Không phụ thuộc gameplay
 * HOT-Reload không restart
-* PlayerData System ( SQLite / MySQL )
+* PlayerData System Interface Storage ( SQLite / MySQL )
 * Module Auto Save
+* Dirty Flag System
+* Lifencycle
 
 ---
 
@@ -105,6 +107,7 @@ src/main/java/aoichan
 
 * Hardcode data vào PlayerData 
 * Query DB liên tục
+* Không bao giờ query DB trực tiếp từ module
 * Sync IO trên main thread
 * Coupling giữa plugins
 ---
