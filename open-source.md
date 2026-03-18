@@ -15,7 +15,7 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
   * AoiCrystal
 
 ## Cấu trúc tổng thể
-
+```
 src/main/java/aoichan
 │
 ├── AoiMain.java
@@ -82,14 +82,12 @@ src/main/java/aoichan
 │   ├── ThreadUtil.java
 │   ├── TimeUtil.java
 
----
+```
 
+---
 * Tuyệt đối không truy cập DB trên main thread
 * Core không phụ thuộc plugin con
-
-
-## Mở rộng plugin 👉 Không cần sửa Core
-
+* Mở rộng plugin 👉 Không cần sửa Core
 ---
 
 ## 🧱 Tiêu chuẩn "Premium"
@@ -114,3 +112,4 @@ src/main/java/aoichan
 ## Quan trọng:
 • No Code test, lỗi, bug ẩn
 • File + Code Comment // 【❅】:
+
