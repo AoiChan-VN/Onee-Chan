@@ -14,6 +14,74 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) với mục tiêu:
   * AoiClass
   * AoiCrystal
 
+## Cấu trúc tổng thể
+
+src/main/java/aoichan
+│
+├── AoiMain.java
+│
+├── bootstrap/
+│   ├── Loader.java
+│   ├── Shutdown.java
+│
+├── engine/
+│   ├── Engine.java
+│   ├── TickScheduler.java
+│   ├── AsyncExecutor.java
+│
+├── service/
+│   ├── ServiceManager.java
+│   ├── IService.java
+│
+│   ├── player/
+│   │   ├── PlayerService.java
+│   │   ├── PlayerSession.java
+│
+│   ├── data/
+│   │   ├── DataService.java
+│   │   ├── DataCache.java
+│
+│   ├── module/
+│   │   ├── ModuleService.java
+│   │   ├── ModuleLoader.java
+│
+├── module/
+│   ├── Module.java
+│   ├── ModuleMeta.java
+│   ├── ModuleState.java
+│
+├── data/
+│   ├── repository/
+│   │   ├── PlayerRepository.java
+│   │   ├── AbstractRepository.java
+│
+│   ├── model/
+│   │   ├── PlayerData.java
+│
+│   ├── storage/
+│   │   ├── StorageType.java
+│   │   ├── MySQLStorage.java
+│   │   ├── SQLiteStorage.java
+│
+├── api/
+│   ├── API.java
+│   ├── event/
+│   │   ├── Event.java
+│   │   ├── PlayerDataLoadEvent.java
+│   │   ├── PlayerDataSaveEvent.java
+│
+├── config/
+│   ├── ConfigManager.java
+│   ├── HotReloadService.java
+│
+├── autosave/
+│   ├── AutoSaveService.java
+│
+├── util/
+│   ├── Logger.java
+│   ├── ThreadUtil.java
+│   ├── TimeUtil.java
+
 ---
 
 * Tuyệt đối không truy cập DB trên main thread
