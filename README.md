@@ -7,19 +7,18 @@
 💎 Plugins:【AoiEngine】
 
 🧱 Phiên bản: Spigot / Paper 1.21.x
-```
-💡 Giới thiệu:
 
-Hệ thống: Server MMORPG
-Hỗ trợ lưu trữ SQLite và MySQL
-Nhanh gọn, nhẹ nhàng dễ sử dụng
-```
+<div align="center">
 📥 Tải xuống:
+  
 https://github.com/AoiChan-Dev/AoiDev/releases/latest
-```
+
 📋 Hướng dẫn:
 
+<div align="center">
 📥 Tải xuống Plugins
+<div align="center">
 📁 Đặt vào thư mục `/plugins/`
+<div align="center">
 🔄 Khởi động lại Server
-```
+</div>
