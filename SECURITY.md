@@ -1,18 +1,21 @@
-# Security policy
+# ◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
 
-## Hỗ trợ:
+## ꧁𝓐𝓸𝓲𝓬𝓱𝓪𝓷꧂:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
-| ------- | ------------------ |
+|    Máy chủ    ||   phiên bản   |       Hỗ trợ       |
+|---------------||---------------|--------------------|
+|     Spigot    ||   1.0.x       | :white_check_mark: |
+|     Paper     ||               |                    |
+|---------------||---------------|--------------------|
 
-## Báo cáo lỗi:
+## ⚠Báo lỗi:
 
 - Nêu rõ lỗi đang xảy ra
 - Có thể kèm hình ảnh hoặc video báo lỗi
 - Phiên bản nào đang lỗi
 
-## Liên hệ: ↓
+## 📧Liên hệ:
 
-- Email: 24HouStreamer@gmail.com
+➥ Email: 24HouStreamer@gmail.com
+
+## ◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
