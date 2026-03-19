@@ -2,7 +2,7 @@ package aoichan.service.data;
 
 import aoichan.thread.AsyncPool;
 
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SaveQueue {
@@ -13,12 +13,16 @@ public class SaveQueue {
         queue.add(saveTask);
     }
 
-    public void flush() {
-        AsyncPool.run(() -> {
-            Runnable r;
-            while ((r = queue.poll()) != null) {
-                r.run();
-            }
-        });
+    public void flushBatch() {
+        List<Runnable> batch = new ArrayList<>();
+
+        Runnable r;
+        while ((r = queue.poll()) != null) {
+            batch.add(r);
+        }
+
+        if (batch.isEmpty()) return;
+
+        AsyncPool.run(() -> batch.forEach(Runnable::run));
     }
-} 
+}
