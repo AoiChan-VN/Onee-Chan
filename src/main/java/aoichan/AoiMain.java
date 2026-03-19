@@ -1,7 +1,3 @@
-// AoiCore - (Single Server Edition)
-// Author: AoiChan
-// Note: Clean, production-ready, async-safe
-
 package aoichan;
 
 import aoichan.bootstrap.Loader;
