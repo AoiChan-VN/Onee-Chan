@@ -28,4 +28,16 @@ public class EventBus {
                 e.printStackTrace();
             }
         }
-    } 
+    }
+
+    private static class ListenerMethod {
+        Object owner;
+        Method method;
+
+        ListenerMethod(Object o, Method m) {
+            owner = o;
+            method = m;
+            method.setAccessible(true);
+        }
+    }
+}
