@@ -1,14 +1,13 @@
 package aoichan.thread;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class AsyncPool {
 
     private static ExecutorService pool;
 
     public static void init() {
-        pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        pool = Executors.newWorkStealingPool();
     }
 
     public static void run(Runnable task) {
@@ -18,4 +17,4 @@ public class AsyncPool {
     public static void shutdown() {
         pool.shutdown();
     }
-} 
+}
