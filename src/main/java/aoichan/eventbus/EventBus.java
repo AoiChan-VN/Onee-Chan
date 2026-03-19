@@ -11,17 +11,23 @@ public class EventBus {
         for (Method m : obj.getClass().getDeclaredMethods()) {
             if (!m.isAnnotationPresent(Subscribe.class)) continue;
 
-            Class<?> param = m.getParameterTypes()[0];
-            listeners.computeIfAbsent(param, k -> new ArrayList<>())
-                    .add(new ListenerMethod(obj, m));
+            Class<?> type = m.getParameterTypes()[0];
+            Subscribe meta = m.getAnnotation(Subscribe.class);
+
+            listeners.computeIfAbsent(type, k -> new ArrayList<>())
+                    .add(new ListenerMethod(obj, m, meta.priority()));
         }
+
+        listeners.values().forEach(list -> list.sort(Comparator.comparing(l -> l.priority)));
     }
 
-    public static void post(Object event) {
+    public static void post(Event event) {
         List<ListenerMethod> list = listeners.get(event.getClass());
         if (list == null) return;
 
         for (ListenerMethod lm : list) {
+            if (event.isCancelled()) break;
+
             try {
                 lm.method.invoke(lm.owner, event);
             } catch (Exception e) {
@@ -29,15 +35,3 @@ public class EventBus {
             }
         }
     }
-
-    private static class ListenerMethod {
-        Object owner;
-        Method method;
-
-        ListenerMethod(Object o, Method m) {
-            owner = o;
-            method = m;
-            method.setAccessible(true);
-        }
-    }
-}
