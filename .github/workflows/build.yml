@@ -54,7 +54,6 @@ jobs:
         with:
           name: AoiEngine
           path: target/*.jar
-          retention-days: 1
 
       # Tự động dọn dẹp Workflows Runs 【 5 Runs 】
       - name: 🗑️ 𝓒𝓵𝓮𝓪𝓻 𝓦𝓸𝓻𝓴𝓯𝓸𝔀𝓼
