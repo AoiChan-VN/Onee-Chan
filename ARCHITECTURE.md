@@ -11,9 +11,9 @@ AoiCore là core engine cho server Minecraft (Spigot/Paper) được thiết k�
 * Không chứa gameplay
 * Là nền tảng cho:
 
-  * AoiWorld
-  * AoiCrystal
-  * AoiClass
+  * AoiMobs
+  * AoiItems
+  * AoiCombat
 
 ---
 
