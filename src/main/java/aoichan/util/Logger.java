@@ -6,4 +6,3 @@ public class Logger {
         System.out.println("[AoiCore] " + msg);
     }
 }
- 
