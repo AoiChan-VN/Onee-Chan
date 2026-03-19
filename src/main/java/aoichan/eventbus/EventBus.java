@@ -35,3 +35,17 @@ public class EventBus {
             }
         }
     }
+
+    private static class ListenerMethod {
+        Object owner;
+        Method method;
+        EventPriority priority;
+
+        ListenerMethod(Object o, Method m, EventPriority p) {
+            owner = o;
+            method = m;
+            priority = p;
+            method.setAccessible(true);
+        }
+    }
+}
