@@ -52,7 +52,7 @@ jobs:
         if: ${{ env.ENABLE_ARTIFACT == 'true' }}
         uses: actions/upload-artifact@v4
         with:
-          name: AoiEngine
+          name: AoiChan
           path: target/*.jar
 
       # Tự động dọn dẹp Workflows Runs 【 5 Runs 】
