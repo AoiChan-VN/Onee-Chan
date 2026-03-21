@@ -5,12 +5,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>aoichan</groupId>
-    <artifactId>AoiEngine</artifactId>
+    <groupId>vn.aoi.onii</groupId>
+    <artifactId>AoiChan</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>AoiEngine</name>
+    <name>AoiChan</name>
 
     <properties>
         <java.version>21</java.version>
