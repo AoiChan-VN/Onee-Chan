@@ -1,20 +1,6 @@
-package vn.aoi.onii.skill.config;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.*;
-
 public class SkillConfigManager {
 
     private final Map<String, SkillConfig> configs = new HashMap<>();
-    
-public SkillConfig get(String id) {
-    if (id == null) return null;
-    return configs.get(id.toLowerCase());
-}
 
     public void load(File file) {
         configs.clear();
@@ -33,12 +19,20 @@ public SkillConfig get(String id) {
 
                 if (list != null) {
                     for (SkillConfig cfg : list) {
-                        configs.put(cfg.id.toLowerCase(), cfg);
+                        if (cfg.id != null) {
+                            configs.put(cfg.id.toLowerCase(), cfg);
+                        }
                     }
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public SkillConfig get(String id) {
+        if (id == null) return null;
+        return configs.get(id.toLowerCase());
     }
 }
