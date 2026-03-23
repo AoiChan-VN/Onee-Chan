@@ -10,7 +10,14 @@ public class PlayerData {
 
     private transient boolean dirty;
     
-    private String playerclass;
+    private String playerClass;
+
+    public String getPlayerClass() { return playerClass; }
+
+    public void setPlayerClass(String playerClass) {
+        this.playerClass = playerClass;
+        this.dirty = true;
+    }
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
