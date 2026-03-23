@@ -1,3 +1,12 @@
+package vn.aoi.onii.skill.config;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.*;
+
 public class SkillConfigManager {
 
     private final Map<String, SkillConfig> configs = new HashMap<>();
@@ -30,7 +39,6 @@ public class SkillConfigManager {
             e.printStackTrace();
         }
     }
-
     public SkillConfig get(String id) {
         if (id == null) return null;
         return configs.get(id.toLowerCase());
