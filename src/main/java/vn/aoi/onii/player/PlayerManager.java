@@ -52,6 +52,10 @@ public class PlayerManager implements Listener {
         return cache.get(p.getUniqueId());
     }
 
+    public Collection<PlayerData> getOnline() {
+        return cache.values();
+    }
+
     public void shutdown() {
         for (PlayerData d : cache.values()) {
             if (d.isDirty()) repo.save(d);
