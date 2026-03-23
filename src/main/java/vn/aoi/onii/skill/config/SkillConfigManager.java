@@ -12,6 +12,8 @@ public class SkillConfigManager {
     private final Map<String, SkillConfig> configs = new HashMap<>();
 
     public void load(File file) {
+        configs.clear(); // FIX reload
+
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
@@ -33,9 +35,5 @@ public class SkillConfigManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public SkillConfig get(String id) {
-        return configs.get(id.toLowerCase());
     }
 }
