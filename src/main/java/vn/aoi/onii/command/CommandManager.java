@@ -3,7 +3,9 @@ package vn.aoi.onii.command;
 
 import org.bukkit.command.*;
 import vn.aoi.onii.Main;
+
 import vn.aoi.onii.player.PlayerManager;
+import vn.aoi.onii.classsystem.ClassManager;
 
 public class CommandManager {
 
