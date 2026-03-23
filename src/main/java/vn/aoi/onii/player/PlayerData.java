@@ -16,6 +16,8 @@ public class PlayerData {
 
     private transient boolean dirty;
 
+    public PlayerData() {} // FIX Gson
+
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
     }
@@ -29,9 +31,7 @@ public class PlayerData {
         dirty = true;
     }
 
-    public boolean hasMana(int amount) {
-        return mana >= amount;
-    }
+    public boolean hasMana(int amount) { return mana >= amount; }
 
     public void consumeMana(int amount) {
         mana -= amount;
