@@ -1,6 +1,3 @@
-// =========================
-//        Main Plugin
-// =========================
 package vn.aoi.onii;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,8 +9,8 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.bootstrap = new Bootstrap(this);
-        this.bootstrap.init();
+        bootstrap = new Bootstrap(this);
+        bootstrap.init();
     }
 
     @Override
