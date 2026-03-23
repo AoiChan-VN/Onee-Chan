@@ -18,4 +18,4 @@ public class CooldownManager {
         cooldowns.computeIfAbsent(uuid, k -> new HashMap<>())
                 .put(skill, System.currentTimeMillis() + delay);
     }
-} 
+}
