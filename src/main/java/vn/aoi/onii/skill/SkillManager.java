@@ -37,4 +37,4 @@ public class SkillManager {
 
         cooldown.setCooldown(player.getUniqueId(), skillId, skill.getCooldown());
     }
-} 
+}
