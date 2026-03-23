@@ -7,11 +7,6 @@ import vn.aoi.onii.player.PlayerManager;
 import vn.aoi.onii.scheduler.AsyncExecutor;
 import vn.aoi.onii.command.CommandManager;
 
-import vn.aoi.onii.classsystem.ClassRegistry;
-import vn.aoi.onii.classsystem.ClassManager;
-import vn.aoi.onii.classsystem.impl.WarriorClass;
-import vn.aoi.onii.classsystem.impl.MageClass;
-
 public class Bootstrap {
 
     private final Main plugin;
@@ -38,12 +33,6 @@ public class Bootstrap {
         this.playerManager = new PlayerManager(plugin, database, executor);
         playerManager.init();
 
-        ClassRegistry registry = new ClassRegistry();
-        registry.register(new WarriorClass());
-        registry.register(new MageClass());
-        
-        ClassManager classManager = new ClassManager(playerManager, registry);
-        
         this.commandManager = new CommandManager(plugin, playerManager);
         commandManager.register();
     }
