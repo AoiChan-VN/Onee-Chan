@@ -13,4 +13,4 @@ public class SkillRegistry {
     public Skill get(String id) {
         return skills.get(id.toLowerCase());
     }
-} 
+}
