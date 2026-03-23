@@ -9,15 +9,17 @@ import vn.aoi.onii.classsystem.ClassManager;
 public class CommandManager {
 
     private final Main plugin;
-    private final PlayerManager PlayerManager;
+    private final PlayerManager playerManager;
+    private final ClassManager ClassManager;
 
-    public CommandManager(Main plugin, PlayerManager pm) {
+    public CommandManager(Main plugin, PlayerManager pm, ClassManager cl) {
         this.plugin = plugin;
-        this.PlayerManager = pm;
+        this.playerManager = pm;
+        this.classManager = cl;
     }
 
     public void register() {
-        plugin.getCommand("onii").setExecutor(new RootCommand(PlayerManager));
-        plugin.getCommand("class").setExecutor(new ClassCommand(ClassManager));
+        plugin.getCommand("onii").setExecutor(new RootCommand(playerManager));
+        plugin.getCommand("class").setExecutor(new ClassCommand(classManager));
     }
 }
