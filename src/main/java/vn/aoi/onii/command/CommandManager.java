@@ -1,4 +1,3 @@
-// File: command/CommandManager.java
 package vn.aoi.onii.command;
 
 import org.bukkit.command.*;
@@ -10,15 +9,15 @@ import vn.aoi.onii.classsystem.ClassManager;
 public class CommandManager {
 
     private final Main plugin;
-    private final PlayerManager playerManager;
+    private final PlayerManager PlayerManager;
 
     public CommandManager(Main plugin, PlayerManager pm) {
         this.plugin = plugin;
-        this.playerManager = pm;
+        this.PlayerManager = pm;
     }
 
     public void register() {
-        plugin.getCommand("onii").setExecutor(new RootCommand(playerManager));
-        plugin.getCommand("class").setExecutor(new ClassCommand(classManager));
+        plugin.getCommand("onii").setExecutor(new RootCommand(PlayerManager));
+        plugin.getCommand("class").setExecutor(new ClassCommand(ClassManager));
     }
 }
