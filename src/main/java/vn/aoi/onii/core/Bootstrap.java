@@ -7,10 +7,10 @@ import vn.aoi.onii.player.PlayerManager;
 import vn.aoi.onii.scheduler.AsyncExecutor;
 import vn.aoi.onii.command.CommandManager;
 
-import vn.aoi.onii.playerclass.ClassRegistry;
-import vn.aoi.onii.playerclass.ClassManager;
-import vn.aoi.onii.playerclass.WarriorClass;
-import vn.aoi.onii.playerclass.MageClass;
+import vn.aoi.onii.classsystem.ClassRegistry;
+import vn.aoi.onii.classsystem.ClassManager;
+import vn.aoi.onii.classsystem.impl.WarriorClass;
+import vn.aoi.onii.classsystem.impl.MageClass;
 
 public class Bootstrap {
 
