@@ -15,4 +15,4 @@ public class ClassContext {
 
     public Player getPlayer() { return player; }
     public PlayerData getData() { return data; }
-} 
+}
