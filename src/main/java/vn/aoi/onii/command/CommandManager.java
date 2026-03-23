@@ -18,4 +18,4 @@ public class CommandManager {
     public void register() {
         plugin.getCommand("onii").setExecutor(new RootCommand(playerManager));
     }
-} 
+}
