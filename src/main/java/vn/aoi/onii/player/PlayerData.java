@@ -16,7 +16,7 @@ public class PlayerData {
 
     private transient boolean dirty;
 
-    public PlayerData() {} // FIX Gson
+    public PlayerData() {}
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
