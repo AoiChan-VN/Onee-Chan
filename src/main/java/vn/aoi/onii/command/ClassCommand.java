@@ -28,4 +28,3 @@ public class ClassCommand implements CommandExecutor {
         return true;
     }
 }
- 
