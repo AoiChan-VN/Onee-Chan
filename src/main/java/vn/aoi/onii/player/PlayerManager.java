@@ -58,4 +58,4 @@ public class PlayerManager implements Listener {
             if (d.isDirty()) repo.save(d);
         }
     }
-} 
+}
