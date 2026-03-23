@@ -1,6 +1,3 @@
-// =========================
-//        Main  Skill
-// =========================
 package vn.aoi.onii.skill;
 
 import org.bukkit.entity.Player;
@@ -13,4 +10,4 @@ public interface Skill {
     long getCooldown(); // ms
 
     void execute(ClassContext ctx);
-} 
+}
