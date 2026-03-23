@@ -1,4 +1,6 @@
-// File: src/main/java/vn/aoi/onii/Main.java
+// =========================
+//        Main Plugin
+// =========================
 package vn.aoi.onii;
 
 import org.bukkit.plugin.java.JavaPlugin;
