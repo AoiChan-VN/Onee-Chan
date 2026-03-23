@@ -33,4 +33,4 @@ public class RootCommand implements CommandExecutor {
 
         return true;
     }
-} 
+}
