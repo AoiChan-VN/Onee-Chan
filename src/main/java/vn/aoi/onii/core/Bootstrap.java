@@ -7,6 +7,11 @@ import vn.aoi.onii.player.PlayerManager;
 import vn.aoi.onii.scheduler.AsyncExecutor;
 import vn.aoi.onii.command.CommandManager;
 
+import vn.aoi.onii.playerclass.ClassRegistry;
+import vn.aoi.onii.playerclass.ClassManager;
+import vn.aoi.onii.playerclass.WarriorClass;
+import vn.aoi.onii.playerclass.MageClass;
+
 public class Bootstrap {
 
     private final Main plugin;
