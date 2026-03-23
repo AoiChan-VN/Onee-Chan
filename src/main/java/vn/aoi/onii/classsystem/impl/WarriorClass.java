@@ -21,4 +21,3 @@ public class WarriorClass implements PlayerClass {
         ctx.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
     }
 }
- 
