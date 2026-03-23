@@ -27,4 +27,4 @@ public class WarriorSlash implements Skill {
         p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10);
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 1);
     }
-} 
+}
