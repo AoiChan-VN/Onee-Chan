@@ -1,4 +1,3 @@
-// File: player/repository/SQLitePlayerRepository.java
 package vn.aoi.onii.player.repository.impl;
 
 import com.google.gson.Gson;
