@@ -1,6 +1,3 @@
-// =========================
-//     LISTENER TRIGGER
-// =========================
 package vn.aoi.onii.skill.listener;
 
 import org.bukkit.event.*;
@@ -37,4 +34,4 @@ public class SkillListener implements Listener {
             case "mage" -> skillManager.use(p, "fireball");
         }
     }
-} 
+}
