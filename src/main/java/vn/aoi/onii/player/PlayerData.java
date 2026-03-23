@@ -30,10 +30,4 @@ public class PlayerData {
 
     public UUID getUuid() { return uuid; }
     public int getLevel() { return level; }
-    
-    public String getPlayerClass() { return playerClass; }
-
-    public void setPlayerClass(String playerClass) {
-        this.playerClass = playerClass;
-        this.dirty = true;
 }
