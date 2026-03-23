@@ -1,4 +1,3 @@
-// File: command/RootCommand.java
 package vn.aoi.onii.command;
 
 import org.bukkit.command.*;
