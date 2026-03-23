@@ -1,4 +1,3 @@
-// File: config/ConfigManager.java
 package vn.aoi.onii.config;
 
 import org.bukkit.configuration.file.*;
