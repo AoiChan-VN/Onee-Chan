@@ -20,3 +20,9 @@ public class ElementProfile {
     public void addAttack(ElementType type, double value) { attack.put(type, attack.get(type) + value); }
     public void addResist(ElementType type, double value) { resist.put(type, resist.get(type) + value); }
 }
+
+public class DamageResult {
+    public double damage;
+    public boolean crit;
+    public ElementType element;
+}
