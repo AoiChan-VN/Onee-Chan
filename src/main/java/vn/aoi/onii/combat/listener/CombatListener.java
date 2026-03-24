@@ -1,18 +1,22 @@
 package vn.aoi.onii.combat.listener;
 
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.Listener;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import vn.aoi.onii.combat.*;
+
 import vn.aoi.onii.player.PlayerManager;
+import vn.aoi.onii.combat.*;
 
 public class CombatListener implements Listener {
 
     private final PlayerManager playerManager;
-    private final BuffManager buffManager = new BuffManager();
+    private final BuffManager buffManager;
 
-    public CombatListener(PlayerManager pm) {
-        this.playerManager = pm;
+    public CombatListener(PlayerManager playerManager, BuffManager buffManager) {
+        this.playerManager = playerManager;
+        this.buffManager = buffManager;
     }
 
     @EventHandler
@@ -24,9 +28,7 @@ public class CombatListener implements Listener {
         var attackerData = playerManager.get(attacker);
         if (attackerData == null) return;
 
-        StatProfile atkBase = attackerData.getStats();
-        StatProfile atk = buffManager.apply(attacker.getUniqueId(), atkBase);
-
+        StatProfile atk = buffManager.apply(attacker.getUniqueId(), attackerData.getStats());
         ElementProfile atkElem = attackerData.getElements();
 
         StatProfile def = new StatProfile();
@@ -45,15 +47,15 @@ public class CombatListener implements Listener {
                 def,
                 atkElem,
                 defElem,
-                e.getDamage()
+                e.getDamage(),
+                DamageType.PHYSICAL
         );
 
         e.setDamage(result.damage);
 
         if (result.crit) attacker.sendMessage("CRIT " + (int) result.damage);
-
         if (result.element != ElementType.NONE) {
             attacker.sendMessage("ELEMENT " + result.element.name());
         }
     }
-}
+} 
