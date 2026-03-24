@@ -14,6 +14,7 @@ import vn.aoi.onii.skill.*;
 import vn.aoi.onii.skill.config.SkillConfigManager;
 import vn.aoi.onii.skill.impl.*;
 import vn.aoi.onii.skill.listener.SkillListener;
+import vn.aoi.onii.combat.listener.CombatListener;
 
 import java.io.File;
 
@@ -66,6 +67,7 @@ public class Bootstrap {
         );
 
         Bukkit.getPluginManager().registerEvents(new SkillListener(skillManager, classManager), plugin);
+        Bukkit.getPluginManager().registerEvents(new CombatListener(playerManager), plugin);
 
         new ManaRegenTask(plugin, playerManager);
 
