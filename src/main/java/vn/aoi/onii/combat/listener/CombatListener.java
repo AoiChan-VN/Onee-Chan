@@ -37,7 +37,7 @@ public class CombatListener implements Listener {
             }
         }
 
-        DamageResult result = DamageEngine.calculate(
+        DamageResult result = FinalDamageEngine.calculate(
                 atk,
                 def,
                 atkElem,
