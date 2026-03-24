@@ -1,22 +1,30 @@
 package vn.aoi.onii.skill.impl;
 
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SmallFireball;
-import vn.aoi.onii.skill.Skill;
 import vn.aoi.onii.classsystem.ClassContext;
+import vn.aoi.onii.skill.Skill;
+import vn.aoi.onii.skill.SkillScaling;
+import vn.aoi.onii.combat.*;
 
 public class MageFireball implements Skill {
 
     @Override
-    public String getId() { return "fireball"; }
-
-    @Override
-    public long getCooldown() { return 5000; }
+    public String getId() {
+        return "fireball";
+    }
 
     @Override
     public void execute(ClassContext ctx) {
+
         Player p = ctx.getPlayer();
-        SmallFireball fb = p.launchProjectile(SmallFireball.class);
-        fb.setYield(1);
+
+        double damage = SkillScaling.scale(ctx.getData(), 10);
+
+        Buff buff = new Buff("fire_power", 5000);
+        buff.intel = 5;
+
+        ctx.getData().getStats().add(StatType.INT, buff.intel);
+
+        p.sendMessage("Fireball dmg: " + (int) damage);
     }
 }
