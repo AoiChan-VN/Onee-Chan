@@ -29,4 +29,4 @@ public class ElementProfile {
     public void addResist(ElementType type, double value) {
         resist.put(type, resist.get(type) + value);
     }
-} 
+}
