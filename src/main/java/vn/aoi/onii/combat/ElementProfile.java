@@ -14,19 +14,9 @@ public class ElementProfile {
         }
     }
 
-    public double getAttack(ElementType type) {
-        return attack.get(type);
-    }
+    public double getAttack(ElementType type) { return attack.get(type); }
+    public double getResist(ElementType type) { return resist.get(type); }
 
-    public double getResist(ElementType type) {
-        return resist.get(type);
-    }
-
-    public void addAttack(ElementType type, double value) {
-        attack.put(type, attack.get(type) + value);
-    }
-
-    public void addResist(ElementType type, double value) {
-        resist.put(type, resist.get(type) + value);
-    }
+    public void addAttack(ElementType type, double value) { attack.put(type, attack.get(type) + value); }
+    public void addResist(ElementType type, double value) { resist.put(type, resist.get(type) + value); }
 }
