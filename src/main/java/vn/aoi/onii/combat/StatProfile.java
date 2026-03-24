@@ -23,4 +23,4 @@ public class StatProfile {
     public void add(StatType type, double value) {
         stats.put(type, stats.get(type) + value);
     }
-} 
+}
