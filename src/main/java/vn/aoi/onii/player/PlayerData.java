@@ -59,4 +59,15 @@ public class PlayerData {
     public void saved() { dirty = false; }
 
     public UUID getUuid() { return uuid; }
+
+    public int getLevel() { return level; }
+
+    public void addExp(int amount) {
+        exp += amount;
+        while (exp >= level * 100) {
+            exp -= level * 100;
+            level++;
+        }
+        dirty = true;
+    }
 }
