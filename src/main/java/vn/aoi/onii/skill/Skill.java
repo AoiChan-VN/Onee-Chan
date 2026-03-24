@@ -7,7 +7,5 @@ public interface Skill {
 
     String getId();
 
-    long getCooldown(); // ms
-
     void execute(ClassContext ctx);
 }
