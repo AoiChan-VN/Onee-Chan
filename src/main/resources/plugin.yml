@@ -1,9 +1,0 @@
-name: AoiChan
-version: 1.0
-main: vn.aoi.onii.Main
-api-version: 1.20
-
-commands:
-  onii:
-  class:
-    description: Bạn đang gọi tui à?
