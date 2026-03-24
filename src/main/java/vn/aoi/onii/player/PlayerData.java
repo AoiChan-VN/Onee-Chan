@@ -1,5 +1,6 @@
 package vn.aoi.onii.player;
 
+import vn.aoi.onii.combat.StatProfile;
 import java.util.UUID;
 
 public class PlayerData {
@@ -14,12 +15,19 @@ public class PlayerData {
 
     private String playerClass;
 
+    private StatProfile stats = new StatProfile();
+
     private transient boolean dirty;
 
     public PlayerData() {}
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public StatProfile getStats() {
+        if (stats == null) stats = new StatProfile();
+        return stats;
     }
 
     public void addExp(int amount) {
