@@ -1,15 +1,13 @@
 package vn.aoi.onii.skill.impl;
 
 import org.bukkit.entity.Player;
-import vn.aoi.onii.classsystem.ClassContext;
+
 import vn.aoi.onii.skill.Skill;
 import vn.aoi.onii.skill.SkillScaling;
-import vn.aoi.onii.combat.*;
+import vn.aoi.onii.classsystem.ClassContext;
+import vn.aoi.onii.combat.Buff;
 
 public class MageFireball implements Skill {
-
-    @Override
-    public long 
 
     @Override
     public String getId() {
@@ -26,7 +24,7 @@ public class MageFireball implements Skill {
         Buff buff = new Buff("fire_power", 5000);
         buff.intel = 5;
 
-        ctx.getData().getStats().add(StatType.INT, buff.intel);
+        ctx.getBuffManager().addBuff(p.getUniqueId(), buff);
 
         p.sendMessage("Fireball dmg: " + (int) damage);
     }
