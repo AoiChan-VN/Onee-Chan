@@ -1,9 +1,10 @@
-package vn.aoi.onii.skill.config;
+package vn.aoi.onii.skill;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -12,35 +13,24 @@ public class SkillConfigManager {
     private final Map<String, SkillConfig> configs = new HashMap<>();
 
     public void load(File file) {
-        configs.clear();
-
         try {
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                try (Writer w = new FileWriter(file)) {
-                    w.write("[]");
-                }
-            }
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<SkillConfig>>(){}.getType();
 
-            try (Reader reader = new FileReader(file)) {
-                Type type = new TypeToken<List<SkillConfig>>(){}.getType();
-                List<SkillConfig> list = new Gson().fromJson(reader, type);
+            List<SkillConfig> list = gson.fromJson(new FileReader(file), type);
 
-                if (list != null) {
-                    for (SkillConfig cfg : list) {
-                        if (cfg.id != null) {
-                            configs.put(cfg.id.toLowerCase(), cfg);
-                        }
-                    }
-                }
+            for (SkillConfig cfg : list) {
+                if (cfg.id == null) continue;
+                if (cfg.cooldown < 0) cfg.cooldown = 0;
+                configs.put(cfg.id, cfg);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public SkillConfig get(String id) {
-        if (id == null) return null;
-        return configs.get(id.toLowerCase());
+        return configs.get(id);
     }
 }
