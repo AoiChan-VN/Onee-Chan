@@ -81,56 +81,69 @@
 
             <!-- ⚔️ Shade (build fat jar + fix warning META-INF) -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.5.0</version>
 
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
 
-                        <configuration>
+            <configuration>
 
-                            <!-- ❌ không tạo dependency-reduced-pom -->
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                <createDependencyReducedPom>false</createDependencyReducedPom>
 
-                            <!-- 🧹 dọn META-INF warning -->
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <exclude>module-info.class</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
+                <!-- 💀 XÓA sạch META-INF gây warning -->
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
 
-                            <!-- 🔥 relocate tránh conflict plugin khác -->
-                            <relocations>
+                            <!-- chữ ký -->
+                            <exclude>META-INF/*.SF</exclude>
+                            <exclude>META-INF/*.DSA</exclude>
+                            <exclude>META-INF/*.RSA</exclude>
 
-                                <relocation>
-                                    <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>vn.aoi.libs.hikari</shadedPattern>
-                                </relocation>
+                            <!-- module Java 9 -->
+                            <exclude>module-info.class</exclude>
+                            <exclude>META-INF/versions/**</exclude>
 
-                                <relocation>
-                                    <pattern>org.sqlite</pattern>
-                                    <shadedPattern>vn.aoi.libs.sqlite</shadedPattern>
-                                </relocation>
+                            <!-- manifest trùng -->
+                            <exclude>META-INF/MANIFEST.MF</exclude>
 
-                            </relocations>
+                        </excludes>
+                    </filter>
+                </filters>
 
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                <!-- 🔥 Relocate -->
+                <relocations>
 
-        </plugins>
-    </build>
+                    <relocation>
+                        <pattern>com.zaxxer.hikari</pattern>
+                        <shadedPattern>vn.aoi.libs.hikari</shadedPattern>
+                    </relocation>
 
-</project>
+                    <relocation>
+                        <pattern>org.sqlite</pattern>
+                        <shadedPattern>vn.aoi.libs.sqlite</shadedPattern>
+                    </relocation>
+
+                    <relocation>
+                        <pattern>org.slf4j</pattern>
+                        <shadedPattern>vn.aoi.libs.slf4j</shadedPattern>
+                    </relocation>
+
+                </relocations>
+
+                <!-- 🧠 tránh warning duplicate -->
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+                </transformers>
+
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
