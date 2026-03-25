@@ -10,30 +10,25 @@
     <packaging>jar</packaging>
 
     <name>AoiChan</name>
-    <description>Plugin cho Server Minecraft 1.21.1</description>
-
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <repositories>
-        <!-- Spigot Repo -->
+        <!-- Spigot Repo - URL chuẩn -->
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org</url>
         </repository>
-        <!-- PlaceholderAPI (Để dùng biến %aoichan_rank% cho Chat/Scoreboard) -->
+        <!-- PlaceholderAPI - Thêm fallback repo -->
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com</url>
         </repository>
-        <!-- JitPack (Dùng cho các Lib phụ nếu cần) -->
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org</url>
         </repository>
     </repositories>
 
@@ -46,15 +41,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Lombok (Giúp code Class nhân vật/Data cực nhanh, sạch sẽ) -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- PlaceholderAPI API -->
+        <!-- PlaceholderAPI -->
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
@@ -62,11 +49,18 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- SQLite đã có sẵn trong Spigot, không cần thêm dependency để tránh nặng file -->
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>${project.artifactId}</finalName>
+        <defaultGoal>clean package</defaultGoal>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -79,12 +73,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <!-- Tối ưu hóa compile cho Java hiện đại -->
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -97,14 +87,9 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <!-- Nén jar tối đa -->
-                            <minimizeJar>true</minimizeJar>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-</project> 
+</project>
