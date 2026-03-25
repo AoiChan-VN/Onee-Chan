@@ -1,10 +1,10 @@
 name: AoiChan
-version: 1.0.0
+version: 1.0
 main: vn.aoi.onii.Main
 api-version: 1.21
-author: AoiChan
-description: Plugin
 
 commands:
-  tuvi:
-    description: Xem tu vi
+  aoi:
+    description: Aoi main command
+    usage: /aoi
+    permission: aoi.admin
