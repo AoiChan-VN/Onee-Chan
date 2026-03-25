@@ -15,20 +15,25 @@
     </properties>
 
     <repositories>
-        <!-- Paper Repo -->
+        <!-- Paper Repo (Ổn định nhất cho GitHub Actions) -->
         <repository>
             <id>papermc</id>
-            <url>https://repo.papermc.io</url>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <!-- PlaceholderAPI Repo -->
+        <!-- PlaceholderAPI Repo (URL mới chuẩn 2025) -->
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com</url>
         </repository>
+        <!-- Sonatype cho các dependency phụ -->
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org</url>
+        </repository>
     </repositories>
 
     <dependencies>
-        <!-- Paper API 1.21.1 (Tương thích 100% Spigot) -->
+        <!-- Paper API 1.21.1 (Dùng thay Spigot API, chạy tốt trên cả Spigot/Paper server) -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -44,7 +49,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Lombok -->
+        <!-- Lombok (Giúp code Class sạch hơn) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -72,6 +77,7 @@
                     <target>21</target>
                 </configuration>
             </plugin>
+            <!-- Shade Plugin để đóng gói file Jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
