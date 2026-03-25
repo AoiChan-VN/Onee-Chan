@@ -1,4 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vn.aoi</groupId>
@@ -7,11 +11,15 @@
     <packaging>jar</packaging>
 
     <name>AoiChan</name>
+    <description>Tu tiên plugin</description>
 
+    <!-- ⚙️ PROPERTIES -->
     <properties>
-        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
+    <!-- 📚 REPOSITORIES -->
     <repositories>
         <repository>
             <id>papermc</id>
@@ -19,7 +27,9 @@
         </repository>
     </repositories>
 
+    <!-- 📦 DEPENDENCIES -->
     <dependencies>
+
         <!-- Paper API -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -41,22 +51,86 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.1.0</version>
         </dependency>
+
     </dependencies>
 
+    <!-- 🔨 BUILD -->
     <build>
+        <finalName>AoiChan</finalName>
+
         <plugins>
-            <!-- Shade -->
+
+            <!-- 🧠 Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+
+                <configuration>
+                    <release>21</release>
+                    <encoding>UTF-8</encoding>
+
+                    <!-- 🔕 Tắt warning -->
+                    <compilerArgs>
+                        <arg>-Xlint:none</arg>
+                    </compilerArgs>
+
+                    <showWarnings>false</showWarnings>
+                </configuration>
+            </plugin>
+
+            <!-- ⚔️ Shade (build fat jar + fix warning META-INF) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.0</version>
+
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>shade</goal></goals>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+
+                        <configuration>
+
+                            <!-- ❌ không tạo dependency-reduced-pom -->
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+
+                            <!-- 🧹 dọn META-INF warning -->
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+
+                            <!-- 🔥 relocate tránh conflict plugin khác -->
+                            <relocations>
+
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>vn.aoi.libs.hikari</shadedPattern>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>org.sqlite</pattern>
+                                    <shadedPattern>vn.aoi.libs.sqlite</shadedPattern>
+                                </relocation>
+
+                            </relocations>
+
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
+
 </project>
