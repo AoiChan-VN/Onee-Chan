@@ -1,10 +1,27 @@
 shop:
   title: "Vạn Bảo Lâu"
+
   items:
-    example:
-      name: "Công pháp"
-      lore:
-       - ""
-       - ""
+    pham:
+      material: BOOK
+      name: "§fCông Pháp Phàm"
       tier: PHAM
       price: 100
+
+    linh:
+      material: ENCHANTED_BOOK
+      name: "§aCông Pháp Linh"
+      tier: LINH
+      price: 500
+
+    huyen:
+      material: BLAZE_ROD
+      name: "§bCông Pháp Huyền"
+      tier: HUYEN
+      price: 1500
+
+    thien:
+      material: NETHER_STAR
+      name: "§6Công Pháp Thiên"
+      tier: THIEN
+      price: 5000
