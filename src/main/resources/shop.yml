@@ -4,7 +4,7 @@ shop:
     example:
       name: "Công pháp"
       lore:
-      - ""
-      - ""
+       - ""
+       - ""
       tier: PHAM
       price: 100
