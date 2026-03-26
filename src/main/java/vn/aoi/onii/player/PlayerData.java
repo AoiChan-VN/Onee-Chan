@@ -12,6 +12,7 @@ public class PlayerData {
     private Realm realm;
     private Stage stage;
     private String sect;
+    private String technique;
 
     public PlayerData(UUID uuid, String name) {
         this.uuid = uuid;
@@ -19,6 +20,7 @@ public class PlayerData {
         this.realm = Realm.PHAM_NHAN;
         this.stage = Stage.SO_KY;
         this.sect = "Không có";
+        this.technique = "NONE";
     }
 
     public UUID getUuid() { return uuid; }
@@ -32,4 +34,7 @@ public class PlayerData {
 
     public String getSect() { return sect; }
     public void setSect(String sect) { this.sect = sect; }
+
+    public String getTechnique() { return technique; }
+    public void setTechnique(String technique) { this.technique = technique; }
 }
