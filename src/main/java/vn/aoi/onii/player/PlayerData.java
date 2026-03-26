@@ -19,7 +19,7 @@ public class PlayerData {
         this.uuid = uuid;
         this.name = name;
         this.realm = Realm.PHAM_NHAN;
-        this.stage = Stage.SO_KY;
+        this.stage = Stage.NHAP_MON;
         this.sect = "Tán Tu";
         this.technique = "NONE";
         this.exp = 0;
