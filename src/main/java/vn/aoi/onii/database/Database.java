@@ -35,6 +35,7 @@ public class Database {
                 stage TEXT,
                 sect TEXT,
                 technique TEXT
+                exp INTEGER
             )
             """);
         } catch (Exception e) {
