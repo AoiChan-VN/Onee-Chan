@@ -1,37 +1,10 @@
-Title: "§0§lVạn Bảo Lâu"
-Items:
-  '1':
-    Slot: 11
-    Material: BOOK
-    Name: "§e§lCông Pháp: §fLuyện Khí Quyết"
-    Lore:
-      - "§7Cấp bậc: §fPhàm cấp"
+shop:
+  title: "Vạn Bảo Lâu"
+  items:
+    example:
+      name: "Công pháp"
+      lore:
       - ""
-      - "§7Giá: §61000 Tiền"
-      - "§eClick để mua"
-    Price: 1000
-    Command: "give %player% book 1 name:&eLuyện_Khí_Quyết"
- 
-  '2':
-    Slot: 13
-    Material: NETHERITE_SWORD
-    Name: "§b§lPháp Bảo: §fThanh Vân Kiếm"
-    Lore:
-      - "§7Cấp bậc: §bPháp khí"
       - ""
-      - "§7Giá: §65000 Tiền"
-      - "§eClick để mua"
-    Price: 5000
-    Command: "give %player% netherite_sword 1 name:&bThanh_Vân_Kiếm"
-
-  '3':
-    Slot: 15
-    Material: ENCHANTED_BOOK
-    Name: "§d§lBí Tịch: §fTrúc Cơ Đan Phương"
-    Lore:
-      - "§7Cấp bậc: §dĐịa cấp"
-      - ""
-      - "§7Giá: §620000 Tiền"
-      - "§eClick để mua"
-    Price: 20000
-    Command: "give %player% enchanted_book 1 name:&dTrúc_Cơ_Đan_Phương"
+      tier: PHAM
+      price: 100
