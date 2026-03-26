@@ -5,14 +5,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import vn.aoi.onii.commands.AoiCommand;
-
 import vn.aoi.onii.database.Database;
-
 import vn.aoi.onii.listeners.ChatListener;
-
 import vn.aoi.onii.player.PlayerManager;
-
 import vn.aoi.onii.shop.ShopListener;
+import vn.aoi.onii.quest.QuestManager;
 import vn.aoi.onii.quest.QuestListener;
 
 import java.io.File;
