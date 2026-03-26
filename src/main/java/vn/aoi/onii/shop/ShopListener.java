@@ -6,9 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import vn.aoi.onii.Main;
-import vn.aoi.onii.player.PlayerData;
-import vn.aoi.onii.player.PlayerManager;
+import vn.aoi.onii.player.*;
 
 public class ShopListener implements Listener {
 
@@ -36,17 +34,13 @@ public class ShopListener implements Listener {
         ItemStack item = e.getCurrentItem();
         if (item == null || !item.hasItemMeta()) return;
 
-        // next page
-        if (item.getItemMeta().getDisplayName().contains("Trang sau")) {
-            int page = getPage(title) + 1;
-            player.openInventory(shop.createShop(page));
+        if (item.getItemMeta().getDisplayName().equals("§e➡")) {
+            player.openInventory(shop.createShop(getPage(title) + 1));
             return;
         }
 
-        // prev page
-        if (item.getItemMeta().getDisplayName().contains("Trang trước")) {
-            int page = Math.max(1, getPage(title) - 1);
-            player.openInventory(shop.createShop(page));
+        if (item.getItemMeta().getDisplayName().equals("§e⬅")) {
+            player.openInventory(shop.createShop(Math.max(1, getPage(title) - 1)));
             return;
         }
 
@@ -61,14 +55,13 @@ public class ShopListener implements Listener {
 
             PlayerData data = manager.get(player.getUniqueId(), player.getName());
 
-            // đã học rồi
             if (data.getTechnique().equalsIgnoreCase(tier)) {
-                player.sendMessage("§eBạn đã học công pháp này rồi!");
+                player.sendMessage("§eĐã học rồi!");
                 return;
             }
 
             if (!econ.has(player, price)) {
-                player.sendMessage("§cKhông đủ linh thạch!");
+                player.sendMessage("§cKhông đủ tiền!");
                 return;
             }
 
@@ -77,7 +70,7 @@ public class ShopListener implements Listener {
             data.setTechnique(tier);
             manager.save(data);
 
-            player.sendMessage("§aBạn đã lĩnh ngộ công pháp §e" + tier);
+            player.sendMessage("§aĐã học " + tier);
             return;
         }
     }
