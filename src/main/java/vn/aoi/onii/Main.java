@@ -26,8 +26,6 @@ public class Main extends JavaPlugin {
 
         getCommand("aoi").setExecutor(new AoiCommand(playerManager));
         getServer().getPluginManager().registerEvents(new ChatListener(playerManager), this);
-
-        saveResource("shop.yml", false);
     }
 
     @Override
