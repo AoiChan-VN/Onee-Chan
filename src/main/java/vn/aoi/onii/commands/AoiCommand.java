@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import vn.aoi.onii.database.Database;
+import vn.aoi.onii.gui.ProfileGUI;
 import vn.aoi.onii.leaderboard.TopGUI;
 import vn.aoi.onii.player.*;
 import vn.aoi.onii.realm.RealmProgression;
@@ -26,6 +27,20 @@ public class AoiCommand implements CommandExecutor {
 
         PlayerData data = manager.get(player.getUniqueId(), player.getName());
 
+        // PROFILE
+        if (args.length == 1 && args[0].equalsIgnoreCase("profile")) {
+            player.openInventory(ProfileGUI.create(data));
+            return true;
+        }
+
+        // SET SECT (ADMIN)
+        if (args.length == 2 && args[0].equalsIgnoreCase("setsect")) {
+            data.setSect(args[1]);
+            manager.save(data);
+            player.sendMessage("§aĐã gia nhập tông môn: " + args[1]);
+            return true;
+        }
+
         // SHOP
         if (args.length == 1 && args[0].equalsIgnoreCase("shop")) {
             player.openInventory(new ShopManager().createShop(1));
@@ -38,19 +53,9 @@ public class AoiCommand implements CommandExecutor {
             return true;
         }
 
-        // INFO
-        if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
-            player.sendMessage("【❅】Thông Tin【❅】");
-            player.sendMessage("§6Đạo hữu: §f" + data.getName());
-            player.sendMessage("§6Cảnh giới: §f" + data.getRealm().getDisplay());
-            player.sendMessage("§6Tu vi: §f" + data.getStage().getDisplay());
-            player.sendMessage("§6EXP: §f" + data.getExp());
-            player.sendMessage("§6Công pháp: §f" + data.getTechnique());
-            return true;
-        }
-
         // BREAK
         if (args.length == 1 && args[0].equalsIgnoreCase("break")) {
+
             int req = RealmProgression.getRequiredExp(data.getRealm(), data.getStage());
 
             if (data.getExp() < req) {
@@ -77,16 +82,7 @@ public class AoiCommand implements CommandExecutor {
             return true;
         }
 
-        // EXP
-        if (args.length == 2 && args[0].equalsIgnoreCase("addexp")) {
-            int exp = Integer.parseInt(args[1]);
-            data.setExp(data.getExp() + exp);
-            manager.save(data);
-            player.sendMessage("§a+" + exp + " EXP");
-            return true;
-        }
-
-        player.sendMessage("/aoi shop | top | break | addexp");
+        player.sendMessage("/aoi profile | shop | top | break");
         return true;
     }
 }
