@@ -30,6 +30,13 @@
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+
+        <!-- jitpack -->     
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
     </repositories>
 
     <!-- 📦 DEPENDENCIES -->
