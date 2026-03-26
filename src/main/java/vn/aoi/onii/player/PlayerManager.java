@@ -31,6 +31,7 @@ public class PlayerManager {
                 data.setStage(Stage.valueOf(rs.getString("stage")));
                 data.setSect(rs.getString("sect"));
                 data.setTechnique(rs.getString("technique"));
+                data.setExp(rs.getInt("exp"));
 
                 cache.put(uuid, data);
                 return data;
@@ -49,8 +50,8 @@ public class PlayerManager {
     public void save(PlayerData data) {
         try {
             PreparedStatement ps = db.getConnection().prepareStatement("""
-            INSERT OR REPLACE INTO players(uuid,name,realm,stage,sect,technique)
-            VALUES(?,?,?,?,?,?)
+            INSERT OR REPLACE INTO players(uuid,name,realm,stage,sect,technique,exp)
+            VALUES(?,?,?,?,?,?,?)
             """);
 
             ps.setString(1, data.getUuid().toString());
@@ -59,6 +60,7 @@ public class PlayerManager {
             ps.setString(4, data.getStage().name());
             ps.setString(5, data.getSect());
             ps.setString(6, data.getTechnique());
+            ps.setInt(7, data.getExp());
 
             ps.executeUpdate();
 
