@@ -67,4 +67,4 @@ public class Main extends JavaPlugin {
     public Economy getEcon() {
         return econ;
     }
-            }
+}
