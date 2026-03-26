@@ -13,6 +13,7 @@ public class PlayerData {
     private Stage stage;
     private String sect;
     private String technique;
+    private int exp;
 
     public PlayerData(UUID uuid, String name) {
         this.uuid = uuid;
@@ -21,6 +22,7 @@ public class PlayerData {
         this.stage = Stage.SO_KY;
         this.sect = "Không có";
         this.technique = "NONE";
+        this.exp = 0;
     }
 
     public UUID getUuid() { return uuid; }
@@ -37,4 +39,7 @@ public class PlayerData {
 
     public String getTechnique() { return technique; }
     public void setTechnique(String technique) { this.technique = technique; }
+
+    public int getExp() { return exp; }
+    public void setExp(int exp) { this.exp = exp; }
 }
