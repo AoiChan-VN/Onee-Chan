@@ -35,13 +35,11 @@ public class AoiCommand implements CommandExecutor {
 
         // TOP | Bảng xếp hạng
         if (args.length == 1 && args[0].equalsIgnoreCase("top")) {
-            
             player.openInventory(new TopGUI(Main.getInstance().getDatabase()).create());
-           
             return true;
         }
         
-        // BREAKTHROUGH | ⇮ Kinh nghiệm
+        // BREAKTHROUGH | ⇮
         if (args.length == 1 && args[0].equalsIgnoreCase("break")) {
 
             int required = RealmProgression.getRequiredExp(data.getRealm(), data.getStage());
@@ -51,7 +49,7 @@ public class AoiCommand implements CommandExecutor {
                 return true;
             }
 
-            // STAGE | ⇮ Tu vi
+            // STAGE | ⇮
             var nextStage = RealmProgression.nextStage(data.getStage());
 
             if (nextStage != null) {
@@ -63,7 +61,7 @@ public class AoiCommand implements CommandExecutor {
                 return true;
             }
 
-            // REALM | ⇮ Cảnh giới
+            // REALM | ⇮
             var nextRealm = RealmProgression.nextRealm(data.getRealm());
 
             if (nextRealm != null) {
@@ -80,7 +78,7 @@ public class AoiCommand implements CommandExecutor {
             return true;
         }
 
-        // TEST ADD EXP
+        // EXP | ⇮
         if (args.length == 2 && args[0].equalsIgnoreCase("addexp")) {
             int amount = Integer.parseInt(args[1]);
             data.setExp(data.getExp() + amount);
