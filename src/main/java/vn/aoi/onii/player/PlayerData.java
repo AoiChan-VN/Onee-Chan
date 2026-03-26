@@ -18,7 +18,7 @@ public class PlayerData {
     public PlayerData(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
-        this.realm = Realm.LUYEN_THE;
+        this.realm = Realm.PHAM_NHAN;
         this.stage = Stage.SO_KY;
         this.sect = "Tán Tu";
         this.technique = "NONE";
