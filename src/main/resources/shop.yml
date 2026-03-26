@@ -1,27 +1,39 @@
 shop:
-  title: "Vạn Bảo Lâu"
+  title: "Cửa Hàng Công Pháp"
 
   items:
     pham:
       material: BOOK
-      name: "§fCông Pháp Phàm"
+      name: "§fPhàm Công"
       tier: PHAM
       price: 100
 
     linh:
       material: ENCHANTED_BOOK
-      name: "§aCông Pháp Linh"
+      name: "§aLinh Công"
       tier: LINH
       price: 500
 
     huyen:
       material: BLAZE_ROD
-      name: "§bCông Pháp Huyền"
+      name: "§bHuyền Công"
       tier: HUYEN
       price: 1500
 
+    dia:
+      material: DIAMOND
+      name: "§dĐịa Công"
+      tier: DIA
+      price: 3000
+
     thien:
       material: NETHER_STAR
-      name: "§6Công Pháp Thiên"
+      name: "§6Thiên Công"
       tier: THIEN
       price: 5000
+
+    than:
+      material: TOTEM_OF_UNDYING
+      name: "§cThần Công"
+      tier: THAN
+      price: 10000
