@@ -1,7 +1,6 @@
 package vn.aoi.onii.shop;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,45 +11,59 @@ import java.util.*;
 
 public class ShopManager {
 
-    private YamlConfiguration config;
+    private final YamlConfiguration cfg;
 
     public ShopManager() {
-        File file = Main.getInstance().getShopFile();
-        config = YamlConfiguration.loadConfiguration(file);
+        File file = new File(Main.getInstance().getDataFolder(), "shop.yml");
+        cfg = YamlConfiguration.loadConfiguration(file);
     }
 
-    public Inventory createShop() {
-        String title = config.getString("shop.title");
-        Inventory inv = Bukkit.createInventory(null, 27, title);
+    public Inventory createShop(int page) {
 
-        for (String key : config.getConfigurationSection("shop.items").getKeys(false)) {
+        List<String> keys = new ArrayList<>(cfg.getConfigurationSection("shop.items").getKeys(false));
 
-            String path = "shop.items." + key;
+        Inventory inv = Bukkit.createInventory(null, 54, cfg.getString("shop.title") + " [" + page + "]");
 
-            Material mat = Material.valueOf(config.getString(path + ".material"));
-            String name = config.getString(path + ".name");
-            double price = config.getDouble(path + ".price");
-            String tier = config.getString(path + ".tier");
+        int start = (page - 1) * 28;
+        int end = Math.min(start + 28, keys.size());
+
+        int slot = 10;
+
+        for (int i = start; i < end; i++) {
+
+            String path = "shop.items." + keys.get(i);
+
+            Material mat = Material.valueOf(cfg.getString(path + ".material"));
+            String name = cfg.getString(path + ".name");
 
             ItemStack item = new ItemStack(mat);
             ItemMeta meta = item.getItemMeta();
 
             meta.setDisplayName(name);
-
-            meta.setLore(Arrays.asList(
-                    "§7Cấp: §e" + tier,
-                    "§7Giá: §a" + price,
-                    "§8Click để mua"
-            ));
+            meta.setLore(Arrays.asList("§7Click để mua"));
 
             item.setItemMeta(meta);
-            inv.addItem(item);
+            inv.setItem(slot, item);
+
+            slot++;
+            if (slot % 9 == 8) slot += 2;
         }
+
+        inv.setItem(45, arrow("§eTrang trước"));
+        inv.setItem(53, arrow("§eTrang sau"));
 
         return inv;
     }
 
-    public YamlConfiguration getConfig() {
-        return config;
+    private ItemStack arrow(String name) {
+        ItemStack i = new ItemStack(Material.ARROW);
+        var m = i.getItemMeta();
+        m.setDisplayName(name);
+        i.setItemMeta(m);
+        return i;
+    }
+
+    public YamlConfiguration getCfg() {
+        return cfg;
     }
 }
