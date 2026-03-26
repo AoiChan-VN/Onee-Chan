@@ -1,0 +1,16 @@
+quests:
+  kill_zombie:
+    type: KILL
+    target: ZOMBIE
+    amount: 10
+    reward:
+      money: 200
+      exp: 100
+
+  break_stone:
+    type: BREAK
+    target: STONE
+    amount: 20
+    reward:
+      money: 150
+      exp: 80 
