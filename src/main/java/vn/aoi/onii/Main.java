@@ -32,9 +32,13 @@ public class Main extends JavaPlugin {
         database.createTable();
 
         playerManager = new PlayerManager(database);
+        
+        QuestManager questManager = new QuestManager();
 
         getCommand("aoi").setExecutor(new AoiCommand(playerManager));
 
+        getServer().getPluginManager().registerEvents(new QuestListenerquestManager, playerManager, econ), this);
+        
         getServer().getPluginManager().registerEvents(new ChatListener(playerManager), this);
         getServer().getPluginManager().registerEvents(new ShopListener(playerManager, econ), this);
     }
