@@ -11,18 +11,18 @@ import java.util.*;
 
 public class ShopManager {
 
-    private final YamlConfiguration cfg;
+    private final YamlConfiguration config;
 
     public ShopManager() {
-        File file = new File(Main.getInstance().getDataFolder(), "shop.yml");
-        cfg = YamlConfiguration.loadConfiguration(file);
+        config = YamlConfiguration.loadConfiguration(Main.getInstance().getShopFile());
     }
 
     public Inventory createShop(int page) {
 
-        List<String> keys = new ArrayList<>(cfg.getConfigurationSection("shop.items").getKeys(false));
+        List<String> keys = new ArrayList<>(config.getConfigurationSection("shop.items").getKeys(false));
 
-        Inventory inv = Bukkit.createInventory(null, 54, cfg.getString("shop.title") + " [" + page + "]");
+        int size = 54;
+        Inventory inv = Bukkit.createInventory(null, size, config.getString("shop.title") + " §7[" + page + "]");
 
         int start = (page - 1) * 28;
         int end = Math.min(start + 28, keys.size());
@@ -31,16 +31,23 @@ public class ShopManager {
 
         for (int i = start; i < end; i++) {
 
-            String path = "shop.items." + keys.get(i);
+            String key = keys.get(i);
+            String path = "shop.items." + key;
 
-            Material mat = Material.valueOf(cfg.getString(path + ".material"));
-            String name = cfg.getString(path + ".name");
+            Material mat = Material.valueOf(config.getString(path + ".material"));
+            String name = config.getString(path + ".name");
+            double price = config.getDouble(path + ".price");
+            String tier = config.getString(path + ".tier");
 
             ItemStack item = new ItemStack(mat);
             ItemMeta meta = item.getItemMeta();
 
             meta.setDisplayName(name);
-            meta.setLore(Arrays.asList("§7Click để mua"));
+            meta.setLore(Arrays.asList(
+                    "§7Cấp: §e" + tier,
+                    "§7Giá: §a" + price,
+                    "§8Click để lĩnh ngộ"
+            ));
 
             item.setItemMeta(meta);
             inv.setItem(slot, item);
@@ -49,21 +56,22 @@ public class ShopManager {
             if (slot % 9 == 8) slot += 2;
         }
 
-        inv.setItem(45, arrow("§eTrang trước"));
-        inv.setItem(53, arrow("§eTrang sau"));
+        // nút điều hướng
+        inv.setItem(45, createButton("§e⬅ Trang trước"));
+        inv.setItem(53, createButton("§eTrang sau ➡"));
 
         return inv;
     }
 
-    private ItemStack arrow(String name) {
-        ItemStack i = new ItemStack(Material.ARROW);
-        var m = i.getItemMeta();
-        m.setDisplayName(name);
-        i.setItemMeta(m);
-        return i;
+    private ItemStack createButton(String name) {
+        ItemStack item = new ItemStack(Material.ARROW);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        item.setItemMeta(meta);
+        return item;
     }
 
-    public YamlConfiguration getCfg() {
-        return cfg;
+    public YamlConfiguration getConfig() {
+        return config;
     }
 }
