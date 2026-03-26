@@ -27,6 +27,7 @@ public class AoiCommand implements CommandExecutor {
 
             PlayerData data = manager.getPlayer(target.getUniqueId(), target.getName());
 
+            sender.sendMessage("§a༒【Thông tin】༒");
             sender.sendMessage("§6Đạo hữu: §f" + data.getName());
             sender.sendMessage("§6Cảnh giới: §f" + data.getCanhGioi());
             sender.sendMessage("§6Tu vi: §f" + data.getTuVi());
