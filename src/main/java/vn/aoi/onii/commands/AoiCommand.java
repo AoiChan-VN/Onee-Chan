@@ -21,7 +21,7 @@ public class AoiCommand implements CommandExecutor {
 
         PlayerData data = manager.get(player.getUniqueId(), player.getName());
 
-        // INFO
+        // INFO | Thông tin chi tiết
         if (args.length == 1 && args[0].equalsIgnoreCase("info")) {
 
             sender.sendMessage("〖❀〗Thông Tin〖❀〗");
@@ -33,7 +33,15 @@ public class AoiCommand implements CommandExecutor {
             return true;
         }
 
-        // BREAKTHROUGH
+        // TOP | Bảng xếp hạng
+        if (args.length == 1 && args[0].equalsIgnoreCase("top")) {
+            
+            player.openInventory(new TopGUI(Main.getInstance().getDatabase()).create());
+           
+            return true;
+        }
+        
+        // BREAKTHROUGH | ⇮ Kinh nghiệm
         if (args.length == 1 && args[0].equalsIgnoreCase("break")) {
 
             int required = RealmProgression.getRequiredExp(data.getRealm(), data.getStage());
@@ -43,7 +51,7 @@ public class AoiCommand implements CommandExecutor {
                 return true;
             }
 
-            // lên stage
+            // STAGE | ⇮ Tu vi
             var nextStage = RealmProgression.nextStage(data.getStage());
 
             if (nextStage != null) {
@@ -55,7 +63,7 @@ public class AoiCommand implements CommandExecutor {
                 return true;
             }
 
-            // lên realm
+            // REALM | ⇮ Cảnh giới
             var nextRealm = RealmProgression.nextRealm(data.getRealm());
 
             if (nextRealm != null) {
