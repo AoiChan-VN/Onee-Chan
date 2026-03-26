@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import vn.aoi.onii.Main;
 import vn.aoi.onii.player.*;
 import vn.aoi.onii.realm.RealmProgression;
-import vn.aoi.onii.TopGUI;
+import vn.aoi.onii.leaderboard.*;
 
 public class AoiCommand implements CommandExecutor {
 
