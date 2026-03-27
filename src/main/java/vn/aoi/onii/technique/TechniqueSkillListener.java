@@ -45,7 +45,7 @@ public class TechniqueSkillListener implements Listener {
 
             case "HUYEN":
                 p.addPotionEffect(new PotionEffect(
-                        PotionEffectType.INCREASE_DAMAGE, 100, 1));
+                        PotionEffectType.getByName("INCREASE_DAMAGE"), 100, 1));
                 break;
 
             case "DIA":
@@ -54,7 +54,7 @@ public class TechniqueSkillListener implements Listener {
 
             case "THIEN":
                 p.addPotionEffect(new PotionEffect(
-                        PotionEffectType.REGENERATION, 100, 2));
+                        PotionEffectType.getByName("REGENERATION"), 100, 2));
                 break;
 
             case "THAN":
