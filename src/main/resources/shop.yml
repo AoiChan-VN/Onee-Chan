@@ -3,7 +3,9 @@ shop:
 
   items:
 
+    # ===== VŨ KHÍ =====
     than_kiem:
+      type: WEAPON
       material: NETHERITE_SWORD
       name: "§cThần Kiếm"
       tier: THAN_KHI
@@ -11,6 +13,7 @@ shop:
       price: 10000
 
     thien_kiem:
+      type: WEAPON
       material: DIAMOND_SWORD
       name: "§6Thiên Kiếm"
       tier: THIEN_KHI
@@ -18,8 +21,34 @@ shop:
       price: 5000
 
     linh_truong:
+      type: WEAPON
       material: BLAZE_ROD
       name: "§aLinh Trượng"
       tier: LINH_KHI
       effects: "POISON,WEAKNESS"
       price: 2000
+
+    # ===== CÔNG PHÁP =====
+    linh_cong:
+      type: TECHNIQUE
+      name: "§aLinh Công"
+      tech: LINH
+      price: 1000
+
+    huyen_cong:
+      type: TECHNIQUE
+      name: "§bHuyền Công"
+      tech: HUYEN
+      price: 2500
+
+    thien_cong:
+      type: TECHNIQUE
+      name: "§6Thiên Công"
+      tech: THIEN
+      price: 5000
+
+    than_cong:
+      type: TECHNIQUE
+      name: "§cThần Công"
+      tech: THAN
+      price: 10000
