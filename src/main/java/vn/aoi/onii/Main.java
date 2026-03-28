@@ -2,15 +2,21 @@ package vn.aoi.onii;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import vn.aoi.onii.commands.*;
+import vn.aoi.onii.commands.AoiCommand;
+import vn.aoi.onii.commands.AoiTabComplete;
 import vn.aoi.onii.database.Database;
 import vn.aoi.onii.listeners.ChatListener;
 import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.quest.*;
+import vn.aoi.onii.quest.QuestManager;
+import vn.aoi.onii.quest.QuestListener;
 import vn.aoi.onii.shop.ShopListener;
+
+import java.io.File;
 
 public class Main extends JavaPlugin {
 
@@ -20,6 +26,7 @@ public class Main extends JavaPlugin {
     private PlayerManager playerManager;
     private QuestManager questManager;
     private Economy economy;
+
     private File shopFile;
     private FileConfiguration shopConfig;
 
@@ -40,7 +47,7 @@ public class Main extends JavaPlugin {
         registerCommands();
         registerListeners();
 
-        getLogger().info("Onii plugin enabled successfully!");
+        getLogger().info("Onii plugin enabled!");
     }
 
     @Override
@@ -51,19 +58,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Onii plugin disabled.");
     }
 
-    // ===================== INIT SECTIONS =====================
-
-    private void loadConfigs() {
-        saveDefaultConfig();
-        saveResource("shop.yml", false);
-        saveResource("quests.yml", false);
-    }
-
-    private void initDatabase() {
-        database = new Database(this);
-        database.connect();
-        database.createTable();
-    }
+    // ================= CONFIG =================
 
     private void loadConfigs() {
         saveDefaultConfig();
@@ -76,6 +71,14 @@ public class Main extends JavaPlugin {
         shopConfig = YamlConfiguration.loadConfiguration(shopFile);
     }
 
+    // ================= INIT =================
+
+    private void initDatabase() {
+        database = new Database(this);
+        database.connect();
+        database.createTable();
+    }
+
     private void initManagers() {
         playerManager = new PlayerManager(database);
         questManager = new QuestManager();
@@ -83,8 +86,9 @@ public class Main extends JavaPlugin {
 
     private void registerCommands() {
         PluginCommand cmd = getCommand("aoi");
+
         if (cmd == null) {
-            getLogger().severe("Command 'aoi' not found in plugin.yml!");
+            getLogger().severe("Command 'aoi' not found!");
             return;
         }
 
@@ -106,30 +110,24 @@ public class Main extends JavaPlugin {
         RegisteredServiceProvider<Economy> rsp =
                 getServer().getServicesManager().getRegistration(Economy.class);
 
-        if (rsp == null) {
-            return false;
-        }
+        if (rsp == null) return false;
 
         economy = rsp.getProvider();
         return economy != null;
     }
 
-    // ===================== GETTERS =====================
+    // ================= GETTER =================
 
     public static Main getInstance() {
         return instance;
     }
 
-    public Database getDatabase() {
-        return database;
+    public FileConfiguration getShopConfig() {
+        return shopConfig;
     }
 
     public Economy getEconomy() {
         return economy;
-    }
-
-    public FileConfiguration getShopConfig() {
-        return shopConfig;
     }
 
     public PlayerManager getPlayerManager() {
