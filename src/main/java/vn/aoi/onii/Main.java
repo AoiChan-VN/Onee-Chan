@@ -66,6 +66,9 @@ public class Main extends JavaPlugin {
 
     // đăng ký subcommands
     manager.register(new HelpCommand());
+    manager.register(new InfoCommand());
+    manager.register(new BXHCommand());
+    manager.register(new AoiCommand());    
 
     PluginCommand cmd = getCommand("aoi");
 
