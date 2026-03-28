@@ -9,9 +9,8 @@ import vn.aoi.onii.commands.*;
 import vn.aoi.onii.database.Database;
 import vn.aoi.onii.listeners.ChatListener;
 import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.quest.QuestManager;
+import vn.aoi.onii.quest.*;
 import vn.aoi.onii.shop.ShopListener;
-import vn.aoi.onii.quest.QuestListener;
 
 public class Main extends JavaPlugin {
 
