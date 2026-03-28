@@ -4,7 +4,7 @@
 👅
 <div>
 
-💎 Plugins:【AoiEngine】
+💎 Plugins:【👻AoiChan💦】
 
 🧱 Phiên bản: Spigot / Paper 1.21.x
 
