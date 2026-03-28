@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
         playerManager = new PlayerManager(database);
         questManager = new QuestManager();
 
-        getCommand("aoi").setExecutor(new AoiCommand(playerManager, database));
+        getCommand("aoi").setExecutor(new AoiCommand(playerManager));
         getCommand("aoi").setExecutor(new AoiCommand(playerManager));
         getCommand("aoi").setTabCompleter(new AoiTabComplete());
         
