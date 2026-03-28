@@ -6,6 +6,7 @@ import org.bukkit.event.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.*;
+import vn.aoi.onii.enums.WeaponTier;
 import vn.aoi.onii.nbt.NBTManager;
 
 import java.util.Random;
@@ -22,58 +23,42 @@ public class WeaponEffectListener implements Listener {
 
         ItemStack item = p.getInventory().getItemInMainHand();
 
+        String tierStr = NBTManager.get(item, "tier");
         String effects = NBTManager.get(item, "effects");
-        if (effects == null) return;
+
+        if (tierStr == null || effects == null) return;
+
+        WeaponTier tier = WeaponTier.fromString(tierStr);
+        int bonus = tier.getLevel() * 5;
 
         for (String effect : effects.split(",")) {
 
             switch (effect.toUpperCase()) {
 
                 case "LIFESTEAL":
-                    if (rand.nextInt(100) < 25) {
-                        p.setHealth(Math.min(p.getHealth() + 2, p.getMaxHealth()));
+                    if (rand.nextInt(100) < 20 + bonus) {
+                        p.setHealth(Math.min(p.getHealth() + 2 + tier.getLevel(), p.getMaxHealth()));
                     }
                     break;
 
                 case "BURN":
-                    if (rand.nextInt(100) < 30) {
-                        target.setFireTicks(60);
-                    }
-                    break;
-
-                case "FREEZE":
-                    if (rand.nextInt(100) < 25) {
-                        target.addPotionEffect(new PotionEffect(
-                                PotionEffectType.getByName("SLOW"), 60, 2));
-                    }
-                    break;
-
-                case "POISON":
-                    if (rand.nextInt(100) < 25) {
-                        target.addPotionEffect(new PotionEffect(
-                                PotionEffectType.POISON, 60, 1));
+                    if (rand.nextInt(100) < 20 + bonus) {
+                        target.setFireTicks(40 + tier.getLevel() * 20);
                     }
                     break;
 
                 case "CRIT":
-                    if (rand.nextInt(100) < 20) {
-                        e.setDamage(e.getDamage() * 1.5);
+                    if (rand.nextInt(100) < 15 + bonus) {
+                        e.setDamage(e.getDamage() * (1.3 + tier.getLevel() * 0.1));
                     }
                     break;
 
                 case "LIGHTNING":
-                    if (rand.nextInt(100) < 10) {
+                    if (rand.nextInt(100) < 5 + tier.getLevel()) {
                         target.getWorld().strikeLightning(target.getLocation());
-                    }
-                    break;
-
-                case "WEAKNESS":
-                    if (rand.nextInt(100) < 30) {
-                        target.addPotionEffect(new PotionEffect(
-                                PotionEffectType.WEAKNESS, 80, 1));
                     }
                     break;
             }
         }
     }
-} 
+}
