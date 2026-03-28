@@ -60,16 +60,14 @@ public class Main extends JavaPlugin {
     }
 
     private void registerCommands() {
+        CommandManager manager = new CommandManager();
+        manager.register(new HelpCommand());
+
         PluginCommand cmd = getCommand("aoi");
-
-        if (cmd == null) {
-            getLogger().severe("Command 'aoi' not found!");
-            return;
+        if (cmd != null) {
+            cmd.setExecutor(manager);
+            cmd.setTabCompleter(manager);
         }
-
-        cmd.setExecutor(new AoiCommand(playerManager, questManager));
-        cmd.setTabCompleter(new AoiTabComplete());
-    }
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(
