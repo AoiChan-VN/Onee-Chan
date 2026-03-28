@@ -30,6 +30,7 @@ public class AoiCommand implements CommandExecutor {
             sender.sendMessage("§e/aoi top §7→ BXH");
             sender.sendMessage("§e/aoi break §7→ Đột phá");
             sender.sendMessage("§e/aoi info [player]");
+            
             if (sender.hasPermission("aoi.admin")) {
                 sender.sendMessage("§c§l--- ADMIN ---");
                 sender.sendMessage("§e/aoi setexp <p> <amount>");
