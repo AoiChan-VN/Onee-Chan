@@ -1,15 +1,3 @@
-package vn.aoi.onii.commands;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import org.bukkit.entity.Player;
-import vn.aoi.onii.Main;
-import vn.aoi.onii.enums.*;
-import vn.aoi.onii.gui.ProfileGUI;
-import vn.aoi.onii.leaderboard.TopGUI;
-import vn.aoi.onii.player.*;
-import vn.aoi.onii.realm.RealmProgression;
-
 public class AoiCommand implements CommandExecutor {
 
     private final PlayerManager manager;
