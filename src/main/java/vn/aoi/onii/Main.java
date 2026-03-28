@@ -38,7 +38,6 @@ public class Main extends JavaPlugin {
         questManager = new QuestManager();
 
         getCommand("aoi").setExecutor(new AoiCommand(playerManager));
-        getCommand("aoi").setExecutor(new AoiCommand(playerManager));
         getCommand("aoi").setTabCompleter(new AoiTabComplete());
         
         getServer().getPluginManager().registerEvents(new ChatListener(playerManager), this);
