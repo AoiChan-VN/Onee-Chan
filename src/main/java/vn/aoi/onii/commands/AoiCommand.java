@@ -9,7 +9,6 @@ import vn.aoi.onii.gui.ProfileGUI;
 import vn.aoi.onii.leaderboard.TopGUI;
 import vn.aoi.onii.player.*;
 import vn.aoi.onii.realm.RealmProgression;
-import vn.aoi.onii.shop.ShopManager;
 
 public class AoiCommand implements CommandExecutor {
 
@@ -26,7 +25,6 @@ public class AoiCommand implements CommandExecutor {
         if (args.length == 0) {
             sender.sendMessage("§6§l=== AOI SYSTEM ===");
             sender.sendMessage("§e/aoi profile §7→ Thông tin");
-            sender.sendMessage("§e/aoi shop §7→ Cửa hàng");
             sender.sendMessage("§e/aoi top §7→ BXH");
             sender.sendMessage("§e/aoi break §7→ Đột phá");
             sender.sendMessage("§e/aoi info [player]");
@@ -55,10 +53,6 @@ public class AoiCommand implements CommandExecutor {
 
             case "profile":
                 player.openInventory(ProfileGUI.create(data));
-                break;
-
-            case "shop":
-                player.openInventory(new ShopManager().createShop(1));
                 break;
 
             case "top":
