@@ -2,21 +2,14 @@ package vn.aoi.onii;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import vn.aoi.onii.commands.AoiCommand;
-import vn.aoi.onii.commands.AoiTabComplete;
+import vn.aoi.onii.commands.*;
 import vn.aoi.onii.database.Database;
 import vn.aoi.onii.listeners.ChatListener;
 import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.quest.QuestManager;
-import vn.aoi.onii.quest.QuestListener;
-import vn.aoi.onii.shop.ShopListener;
-
-import java.io.File;
+import vn.aoi.onii.quest.*;
 
 public class Main extends JavaPlugin {
 
@@ -57,20 +50,7 @@ public class Main extends JavaPlugin {
         }
         getLogger().info("Onii plugin disabled.");
     }
-
-    // ================= CONFIG =================
-
-    private void loadConfigs() {
-        saveDefaultConfig();
-
-        shopFile = new File(getDataFolder(), "shop.yml");
-        if (!shopFile.exists()) {
-            saveResource("shop.yml", false);
-        }
-
-        shopConfig = YamlConfiguration.loadConfiguration(shopFile);
-    }
-
+    
     // ================= INIT =================
 
     private void initDatabase() {
@@ -98,7 +78,6 @@ public class Main extends JavaPlugin {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new ChatListener(playerManager), this);
-        getServer().getPluginManager().registerEvents(new ShopListener(playerManager, economy), this);
         getServer().getPluginManager().registerEvents(new QuestListener(questManager, playerManager, economy), this);
     }
 
@@ -120,10 +99,6 @@ public class Main extends JavaPlugin {
 
     public static Main getInstance() {
         return instance;
-    }
-
-    public FileConfiguration getShopConfig() {
-        return shopConfig;
     }
 
     public Economy getEconomy() {
