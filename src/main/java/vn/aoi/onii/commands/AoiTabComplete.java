@@ -1,11 +1,3 @@
-package vn.aoi.onii.commands;
-
-import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import vn.aoi.onii.enums.*;
-
-import java.util.*;
-
 public class AoiTabComplete implements TabCompleter {
 
     @Override
