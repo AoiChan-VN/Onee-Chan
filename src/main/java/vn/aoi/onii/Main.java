@@ -6,13 +6,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import vn.aoi.onii.commands.core.CommandManager;
-import vn.aoi.onii.commands.sub.HelpCommand;
-import vn.aoi.onii.commands.sub.InfoCommand;
+import vn.aoi.onii.commands.sub.*;
 import vn.aoi.onii.database.Database;
 import vn.aoi.onii.listeners.ChatListener;
-import vn.aoi.onii.listeners.QuestListener;
 import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.quest.QuestManager;
+import vn.aoi.onii.quest.*;
 
 public class Main extends JavaPlugin {
 
