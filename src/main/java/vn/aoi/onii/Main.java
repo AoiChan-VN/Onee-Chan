@@ -64,16 +64,14 @@ public class Main extends JavaPlugin {
         CommandManager manager = new CommandManager();
 
         manager.register(new HelpCommand());
+        manager.registry(new InfoCommand());
 
         PluginCommand cmd = getCommand("aoi");
 
         if (cmd == null) {
-            getLogger().severe("Command 'aoi' not found!");
-            return;
+            cmd.setExecutor(manager);
+            cmd.setTabCompleter(manager);
         }
-
-        cmd.setExecutor(manager);
-        cmd.setTabCompleter(manager);
     }
     
     private void registerListeners() {
