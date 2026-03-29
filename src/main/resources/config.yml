@@ -1,16 +1,1 @@
-settings:
-  debug: false
 
-realm:
-  break:
-    base-chance: 0.7
-    fail-lose-exp: 0.3
-
-skill:
-  cooldown: 5 # seconds
-
-economy:
-  currency-name: "Linh Thạch"
-
-chat:
-  format: "[ %realm% ] %player%: %message%" 
