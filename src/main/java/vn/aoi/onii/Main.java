@@ -65,6 +65,7 @@ public class Main extends JavaPlugin {
     CommandManager manager = new CommandManager();
 
     // đăng ký subcommands
+        
     manager.register(new HelpCommand());
     manager.register(new InfoCommand());
         
@@ -74,6 +75,7 @@ public class Main extends JavaPlugin {
         cmd.setExecutor(manager);
         cmd.setTabCompleter(manager);
     }
+}
         
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(
