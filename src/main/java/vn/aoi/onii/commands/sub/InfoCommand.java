@@ -41,11 +41,11 @@ public class InfoCommand extends AbstractCommand {
 
         sender.sendMessage("§6═══════ 《 THÔNG TIN 》 ═══════");
         sender.sendMessage("" + PlayerData data = new PlayerData(uuid, name);
-        sender.sendMessage("§aTu vi:" + data.setRealm(Realm.valueOf(rs.getString("realm")));
-        sender.sendMessage("" + data.setStage(Stage.valueOf(rs.getString("stage")));
-        sender.sendMessage("" + data.setSect(rs.getString("sect"));
-        sender.sendMessage("" + data.setTechnique(rs.getString("technique"));
-        sender.sendMessage("" + data.setExp(rs.getInt("exp"));
+        sender.sendMessage("§aTu vi:" + data.setRealm(Realm.valueOf(rs.getString("realm");
+        sender.sendMessage("" + data.setStage(Stage.valueOf(rs.getString("stage");
+        sender.sendMessage("" + data.setSect(rs.getString("sect");
+        sender.sendMessage("" + data.setTechnique(rs.getString("technique");
+        sender.sendMessage("" + data.setExp(rs.getInt("exp");
         sender.sendMessage("§6═══════════════════════════");
 
         return true;
