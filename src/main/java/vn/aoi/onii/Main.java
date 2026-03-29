@@ -70,7 +70,7 @@ public class Main extends JavaPlugin {
             cmd.setExecutor(manager);
             cmd.setTabCompleter(manager);
         } else {
-        getLogger().server("Command 'aoi' not found in plugin.yml!");
+            getLogger().severe("Command 'aoi' not found in plugin.yml!");
     }
     
     private void registerListeners() {
