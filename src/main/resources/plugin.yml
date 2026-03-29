@@ -6,11 +6,3 @@ api-version: 1.21
 commands:
   aoi:
     description: Main command
-    usage: /aoi
-    permission: aoi.use
-
-permissions:
-  aoi.use:
-    default: true
-  aoi.admin:
-    default: op
