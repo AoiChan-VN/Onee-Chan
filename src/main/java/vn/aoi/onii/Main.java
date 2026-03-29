@@ -61,6 +61,7 @@ public class Main extends JavaPlugin {
     }
     
     private void registerCommands() {
+        
     CommandManager manager = new CommandManager();
 
     // đăng ký subcommands
@@ -73,7 +74,7 @@ public class Main extends JavaPlugin {
         cmd.setExecutor(manager);
         cmd.setTabCompleter(manager);
     }
-    
+        
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(
                 new ChatListener(playerManager), this
