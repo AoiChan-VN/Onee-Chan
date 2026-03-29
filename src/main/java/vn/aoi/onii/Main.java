@@ -5,7 +5,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import vn.aoi.onii.commands.core.SubCommand;
+import vn.aoi.onii.commands.core.CommandManager;
 import vn.aoi.onii.commands.sub.*;
 import vn.aoi.onii.database.Database;
 import vn.aoi.onii.listeners.ChatListener;
