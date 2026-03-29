@@ -49,8 +49,18 @@ public class Main extends JavaPlugin {
 
     private void initDatabase() {
         database = new Database(this);
-        database.connect();
-        database.createTable();
+
+        getServer().getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                database.connect();
+                database.createTable();
+                getLogger().info("Database connected!");
+            } catch (Exception e) {
+                getLogger().severe("Database failed!");
+                e.printStackTrace();
+                getServer().getPluginManager().disablePlugin(this);
+            }
+        });
     }
 
     private void initManagers() {
