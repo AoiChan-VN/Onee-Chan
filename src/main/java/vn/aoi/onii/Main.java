@@ -59,23 +59,19 @@ public class Main extends JavaPlugin {
         playerManager = new PlayerManager(database);
         questManager = new QuestManager();
     }
-
+    
     private void registerCommands() {
-
     CommandManager manager = new CommandManager();
 
     // đăng ký subcommands
-    manager.register(new HelpCommand()); 
-
+    manager.register(new HelpCommand());
+    manager.register(new InfoCommand());
+        
     PluginCommand cmd = getCommand("aoi");
 
-    if (cmd == null) {
-        getLogger().severe("Command 'aoi' not found!");
-        return;
-    }
-
-    cmd.setExecutor(manager);
-    cmd.setTabCompleter(manager);
+    if (cmd != null)) {
+        cmd.setExecutor(manager);
+        cmd.setTabCompleter(manager);
     }
     
     private void registerListeners() {
