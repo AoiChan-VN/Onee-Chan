@@ -61,6 +61,10 @@ public class Main extends JavaPlugin {
     }
 
     private void registerCommands() {
+        CommandManager manager = new CommandManager();
+
+        manager.register(new HelpCommand());
+
         PluginCommand cmd = getCommand("aoi");
 
         if (cmd == null) {
@@ -68,10 +72,9 @@ public class Main extends JavaPlugin {
             return;
         }
 
-        cmd.setExecutor(new AoiCommand(playerManager, questManager));
-        cmd.setTabCompleter(new AoiTabComplete());
+        cmd.setExecutor(manager);
+        cmd.setTabCompleter(manager);
     }
-
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(
                 new ChatListener(playerManager), this
