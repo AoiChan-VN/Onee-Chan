@@ -62,7 +62,7 @@ public class Main extends JavaPlugin {
         CommandManager manager = new CommandManager();
 
         manager.register(new HelpCommand(manager));
-        manager.registry(new InfoCommand());
+        manager.register(new InfoCommand());
 
         PluginCommand cmd = getCommand("aoi");
 
