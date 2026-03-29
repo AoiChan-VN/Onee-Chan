@@ -1,8 +1,13 @@
 name: AoiChan
-main: vn.aoi.onii.Main
 version: 1.0
-api-version: 1.21
-
+main: vn.aoi.onii.Main
+api-version: '1.21'
+authors: [Aoi]
+description: Optimized Core Plugin
 commands:
-  aoi:
+  onii:
     description: Main command
+    usage: /onii
+permissions:
+  onii.admin:
+    default: op
