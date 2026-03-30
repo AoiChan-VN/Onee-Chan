@@ -23,13 +23,13 @@ public class TutienCommand implements CommandExecutor {
 
         var data = manager.get(p.getUniqueId());
 
-        if (args.length == 1 && args[0].equalsIgnoreCase("tu")) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("tuvi")) {
             service.addPower(data, 50);
             p.sendMessage("§a+50 Tu Vi | Stage: " + data.getStage());
             return true;
         }
 
-        p.sendMessage("§e/tutien tu");
+        p.sendMessage("§e/aoi tuvi");
         return true;
     }
 } 
