@@ -1,7 +1,7 @@
 package vn.aoi.onii;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import vn.aoi.onii.command.TutienCommand;
+import vn.aoi.onii.command.AoiCommand;
 import vn.aoi.onii.player.PlayerManager;
 import vn.aoi.onii.cultivation.CultivationService;
 
@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
 
         getCommand("tutien").setExecutor(new TutienCommand(playerManager, cultivationService));
 
-        getLogger().info("OniiTuTien Enabled!");
+        getLogger().info("AoiChan Enabled!");
     }
 
     public PlayerManager getPlayerManager() { return playerManager; }
