@@ -1,34 +1,36 @@
 package vn.aoi.onii;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import vn.aoi.onii.command.AoiCommand;
-import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.cultivation.CultivationService;
+import vn.aoi.onii.database.DatabaseManager;
+import vn.aoi.onii.listener.PlayerJoinListener;
+import vn.aoi.onii.command.CultivationCommand;
 
-public class Main extends JavaPlugin {
+public class AoiChan extends JavaPlugin {
 
-    private static Main instance;
-    private PlayerManager playerManager;
-    private CultivationService cultivationService;
-
-    public static Main get() {
-        return instance;
-    }
+    private static AoiChan instance;
+    private DatabaseManager database;
 
     @Override
     public void onEnable() {
         instance = this;
 
         saveDefaultConfig();
+        saveResource("messages.yml", false);
 
-        playerManager = new PlayerManager();
-        cultivationService = new CultivationService(playerManager);
+        database = new DatabaseManager(this);
+        database.init();
 
-        getCommand("aoi").setExecutor(new AoiCommand(playerManager, cultivationService));
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getCommand("tuvi").setExecutor(new CultivationCommand());
 
         getLogger().info("AoiChan Enabled!");
     }
 
-    public PlayerManager getPlayerManager() { return playerManager; }
-    public CultivationService getCultivationService() { return cultivationService; }
+    public static AoiChan getInstance() {
+        return instance;
+    }
+
+    public DatabaseManager getDatabase() {
+        return database;
+    }
 }
