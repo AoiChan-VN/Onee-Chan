@@ -1,3 +1,10 @@
-prefix: "&b[Onii]"
+prefix: "&b[Aoi]"
 messages:
   reload: "&aReloaded successfully!"
+
+database:
+  file: database.db
+
+thunder:
+  duration: 30
+  interval: 20
