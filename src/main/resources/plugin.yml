@@ -1,13 +1,13 @@
-name: AoiChan
+name: TuTien
 version: 1.0
 main: vn.aoi.onii.Main
 api-version: '1.21'
-authors: [Aoi]
-description: Optimized Core Plugin
+authors: [AoiChan]
+description: Aoi Tiên Tôn
 commands:
-  onii:
-    description: Main command
-    usage: /onii
+  aoi:
+    description: Main Command
+    usage: /aoi
 permissions:
-  onii.admin:
+  aoi.admin:
     default: op
