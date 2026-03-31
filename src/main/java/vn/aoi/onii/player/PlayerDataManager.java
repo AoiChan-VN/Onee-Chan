@@ -2,20 +2,18 @@ package vn.aoi.onii.player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.*;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.*;
 import vn.aoi.onii.Main;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerDataManager implements Listener {
 
     private final Main plugin;
-    private final HashMap<UUID, PlayerData> cache = new HashMap<>();
+    private final Map<UUID, PlayerData> cache = new HashMap<>();
 
     public PlayerDataManager(Main plugin) {
         this.plugin = plugin;
@@ -24,68 +22,69 @@ public class PlayerDataManager implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> loadPlayer(p));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> load(p));
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> savePlayer(p));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> save(p));
     }
 
-    public void loadPlayer(Player player) {
-        try {
-            Connection conn = plugin.getDatabaseManager().getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM players WHERE uuid = ?");
-            ps.setString(1, player.getUniqueId().toString());
+    @EventHandler
+    public void onKill(EntityDeathEvent e) {
+        if (e.getEntity().getKiller() == null) return;
+        Player p = e.getEntity().getKiller();
+        PlayerData d = get(p);
+        if (d == null) return;
 
+        d.addExp(20);
+    }
+
+    private void load(Player p) {
+        try {
+            PreparedStatement ps = plugin.getDatabaseManager().getConnection()
+                    .prepareStatement("SELECT * FROM players WHERE uuid=?");
+            ps.setString(1, p.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                cache.put(player.getUniqueId(), new PlayerData(
+                cache.put(p.getUniqueId(), new PlayerData(
                         rs.getString("rank"),
                         rs.getInt("level"),
                         rs.getInt("exp")
                 ));
             } else {
-                PlayerData data = new PlayerData("Phàm nhân", 1, 0);
-                cache.put(player.getUniqueId(), data);
-                savePlayer(player);
+                PlayerData d = new PlayerData("Phàm nhân", 1, 0);
+                cache.put(p.getUniqueId(), d);
+                save(p);
             }
 
-            rs.close();
-            ps.close();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void savePlayer(Player player) {
+    private void save(Player p) {
         try {
-            PlayerData data = cache.get(player.getUniqueId());
-            if (data == null) return;
+            PlayerData d = cache.get(p.getUniqueId());
+            if (d == null) return;
 
-            Connection conn = plugin.getDatabaseManager().getConnection();
-            PreparedStatement ps = conn.prepareStatement(
-                    "REPLACE INTO players(uuid, rank, level, exp) VALUES (?, ?, ?, ?)"
-            );
+            PreparedStatement ps = plugin.getDatabaseManager().getConnection()
+                    .prepareStatement("REPLACE INTO players VALUES(?,?,?,?)");
 
-            ps.setString(1, player.getUniqueId().toString());
-            ps.setString(2, data.getRank());
-            ps.setInt(3, data.getLevel());
-            ps.setInt(4, data.getExp());
-
+            ps.setString(1, p.getUniqueId().toString());
+            ps.setString(2, d.getRank());
+            ps.setInt(3, d.getLevel());
+            ps.setInt(4, d.getExp());
             ps.executeUpdate();
-            ps.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public PlayerData getData(Player player) {
-        return cache.get(player.getUniqueId());
+    public PlayerData get(Player p) {
+        return cache.get(p.getUniqueId());
     }
-} 
+}
