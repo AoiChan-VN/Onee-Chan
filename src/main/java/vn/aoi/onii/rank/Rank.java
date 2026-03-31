@@ -1,34 +1,18 @@
 package vn.aoi.onii.rank;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Rank {
-
     private final String name;
-    private final int maxLevel;
-    private final String nextRank;
+    private final int max;
+    private final String next;
     private final boolean doKiep;
+    private final Map<Integer,Integer> map=new HashMap<>();
+    private int flat;
 
-    private final Map<Integer, Integer> expMap = new HashMap<>();
-    private int flatExp;
-
-    public Rank(String name, int maxLevel, String nextRank, boolean doKiep) {
-        this.name = name;
-        this.maxLevel = maxLevel;
-        this.nextRank = nextRank;
-        this.doKiep = doKiep;
-    }
-
-    public void addLevel(int level, int exp, String phase) {
-        expMap.put(level, exp);
-    }
-
-    public int getExp(int level) {
-        return expMap.isEmpty() ? flatExp : expMap.getOrDefault(level, flatExp);
-    }
-
-    public String getNextRank() { return nextRank; }
-    public int getMaxLevel() { return maxLevel; }
-    public boolean isDoKiep() { return doKiep; } 
-}
+    public Rank(String n,int m,String nx,boolean dk){name=n;max=m;next=nx;thienKiep=dk;}
+    public void addLevel(int l,int e){map.put(l,e);}    
+    public int getExp(int l){return map.isEmpty()?flat:map.getOrDefault(l,flat);}    
+    public void setFlatExp(int f){flat=f;}    
+    public int getMax(){return max;}    
+    public String next(){return next;}    
+    public boolean isThienKiep(){return thienKiep;} }
