@@ -3,13 +3,13 @@ package vn.aoi.onii.listener;
 import org.bukkit.event.*;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.*;
-import vn.aoi.onii.AoiMain;
+import vn.aoi.onii.AoiChanPlugin;
 
 public class PlayerListener implements Listener {
 
-    private final AoiMain plugin;
+    private final AoiChanPlugin plugin;
 
-    public PlayerListener(AoiMain plugin){this.plugin=plugin;}
+    public PlayerListener(AoiChanPlugin plugin){this.plugin=plugin;}
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
@@ -27,4 +27,4 @@ public class PlayerListener implements Listener {
             plugin.getExpService().addExp(e.getEntity().getKiller(),50);
         }
     }
-} 
+}
