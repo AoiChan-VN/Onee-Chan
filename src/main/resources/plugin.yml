@@ -1,14 +1,5 @@
 name: AoiChan
-main: vn.aoi.onii.AoiChan
+main: vn.aoi.onii.Plugin
 version: 1.0
 api-version: 1.21
-author: AoiChan
-
-commands:
-  tuvi:
-    description: Xem tu vi
-    usage: /tuvi
-
-permissions:
-  aoichan.admin:
-    default: op
+authors: [AoiChan]
