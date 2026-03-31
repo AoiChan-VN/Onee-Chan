@@ -2,7 +2,7 @@ package vn.aoi.onii.player;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import vn.aoi.onii.AoiMain;
+import vn.aoi.onii.AoiChanPlugin;
 
 import java.sql.*;
 import java.util.*;
@@ -10,10 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerManager {
 
-    private final AoiMain plugin;
+    private final AoiChanPlugin plugin;
     private final Map<UUID, PlayerData> cache = new ConcurrentHashMap<>();
 
-    public PlayerManager(AoiMain plugin){this.plugin=plugin;}
+    public PlayerManager(AoiChanPlugin plugin){this.plugin=plugin;}
 
     public void load(Player p){
         Bukkit.getScheduler().runTaskAsynchronously(plugin,()->{
