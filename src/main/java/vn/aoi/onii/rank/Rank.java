@@ -31,3 +31,4 @@ public class Rank {
     public String getNextRank() { return nextRank; }
     public int getMaxLevel() { return maxLevel; }
     public boolean isDoKiep() { return doKiep; } 
+}
