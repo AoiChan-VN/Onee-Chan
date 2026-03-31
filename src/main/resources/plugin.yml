@@ -1,5 +1,5 @@
 name: AoiChan
-main: vn.aoi.onii.Plugin
+main: vn.aoi.onii.AoiMain
 version: 1.0
 api-version: 1.21
 authors: [AoiChan]
