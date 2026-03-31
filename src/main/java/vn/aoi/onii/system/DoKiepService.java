@@ -3,16 +3,16 @@ package vn.aoi.onii.system;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import vn.aoi.onii.AoiMain;
+import vn.aoi.onii.AoiChanPlugin;
 
 import java.util.Random;
 
-public class ThienKiepService {
+public class DoKiepService {
 
-    private final AoiMain plugin;
+    private final AoiChanPlugin plugin;
     private final Random random = new Random();
 
-    public ThienKiepService(AoiMain plugin){this.plugin=plugin;}
+    public DoKiepService(AoiChanPlugin plugin){this.plugin=plugin;}
 
     public void start(Player p){
         new BukkitRunnable(){
@@ -36,4 +36,4 @@ public class ThienKiepService {
             }
         }.runTaskTimer(plugin,0,20);
     }
-} 
+}
