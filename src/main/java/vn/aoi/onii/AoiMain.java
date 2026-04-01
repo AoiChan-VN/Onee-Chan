@@ -2,26 +2,29 @@ package vn.aoi.onii;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import vn.aoi.onii.command.CommandManager;
 import vn.aoi.onii.data.Database;
 import vn.aoi.onii.listener.PlayerListener;
 import vn.aoi.onii.player.PlayerManager;
 import vn.aoi.onii.rank.RankManager;
 import vn.aoi.onii.system.ExpService;
-import vn.aoi.onii.system.DoKiepService;
+import vn.aoi.onii.system.ThienKiepService;
 
-public final class AoiChanPlugin extends JavaPlugin {
+public final class AoiMain extends JavaPlugin {
 
-    private static AoiChanPlugin instance;
+    private static AoiMain instance;
     private Database database;
     private PlayerManager playerManager;
     private RankManager rankManager;
     private ExpService expService;
-    private DoKiepService doKiepService;
+    private ThienKiepService thienKiepService;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+        saveResource("message.yml", false);
 
         database = new Database(this);
         database.init();
@@ -31,23 +34,18 @@ public final class AoiChanPlugin extends JavaPlugin {
 
         playerManager = new PlayerManager(this);
         expService = new ExpService(this);
-        doKiepService = new DoKiepService(this);
+        thienKiepService = new ThienKiepService(this);
+
+        commandManager = new CommandManager(this);
+        commandManager.registerCommands();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
-
-        getLogger().info("AoiChan FULL Enabled!");
     }
 
-    @Override
-    public void onDisable() {
-        playerManager.shutdown();
-        database.close();
-    }
-
-    public static AoiChanPlugin get() { return instance; }
-    public Database getDatabase() { return database; }
-    public PlayerManager getPlayerManager() { return playerManager; }
-    public RankManager getRankManager() { return rankManager; }
-    public ExpService getExpService() { return expService; }
-    public DoKiepService getDoKiepService() { return doKiepService; }
+    public static AoiMain get(){return instance;}
+    public Database db(){return database;}
+    public PlayerManager pm(){return playerManager;}
+    public RankManager rm(){return rankManager;}
+    public ExpService exp(){return expService;}
+    public ThienKiepService tk(){return thienKiepService;}
 }
