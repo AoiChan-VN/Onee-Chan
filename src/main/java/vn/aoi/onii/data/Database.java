@@ -1,13 +1,13 @@
 package vn.aoi.onii.data;
 
-import vn.aoi.onii.AoiChanPlugin;
+import vn.aoi.onii.AoiMain;
 import java.sql.*;
 
 public class Database {
-    private final AoiChanPlugin plugin;
+    private final AoiMain plugin;
     private Connection conn;
 
-    public Database(AoiChanPlugin plugin) { this.plugin = plugin; }
+    public Database(AoiMain plugin) { this.plugin = plugin; }
 
     public void init() {
         try {
