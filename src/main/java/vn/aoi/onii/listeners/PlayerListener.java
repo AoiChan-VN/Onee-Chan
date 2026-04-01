@@ -1,7 +1,9 @@
 package vn.aoi.onii.listeners;
 
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import vn.aoi.onii.Main;
 
 public class PlayerListener implements Listener {
@@ -21,4 +23,4 @@ public class PlayerListener implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         plugin.getPlayerManager().save(e.getPlayer());
     }
-} 
+}
