@@ -14,15 +14,12 @@ public class CommandInterceptor implements CommandPreprocessor<CommandSender> {
     public void accept(CommandContext<CommandSender> context) {
 
         try {
-            Object instance = context.getCommand().getCommandExecutionHandler();
             Method method = context.getCommand().getCommandMethod();
-
             if (method == null) return;
 
             if (method.isAnnotationPresent(CommandCooldown.class)) {
 
                 CommandCooldown cd = method.getAnnotation(CommandCooldown.class);
-
                 String key = context.getSender().getName() + ":" + method.getName();
 
                 if (CooldownManager.isOnCooldown(key, cd.seconds())) {
@@ -41,4 +38,4 @@ public class CommandInterceptor implements CommandPreprocessor<CommandSender> {
             e.printStackTrace();
         }
     }
-} 
+}
