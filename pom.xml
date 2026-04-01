@@ -37,6 +37,7 @@
             <url>https://jitpack.io</url>
         </repository>
 
+        <!-- SonaType -->
         <repository>
             <id>sonatype-snapshots</id>
             <url>https://sonatype.org</url>
