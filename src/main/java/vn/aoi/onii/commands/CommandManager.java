@@ -6,6 +6,7 @@ import cloud.commandframework.meta.SimpleCommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import org.bukkit.command.CommandSender;
 import vn.aoi.onii.Main;
+import vn.aoi.onii.commands.framework.CommandInterceptor;
 import vn.aoi.onii.commands.framework.ICommandModule;
 
 import java.io.File;
@@ -26,30 +27,34 @@ public class CommandManager {
                 sender -> sender
         );
 
+        manager.registerCommandPreProcessor(new CommandInterceptor());
+
         parser = new AnnotationParser<>(
                 manager,
                 CommandSender.class,
                 parameters -> SimpleCommandMeta.empty()
         );
 
-        registerCompletions(plugin);
-        autoScanModules(plugin, "vn.aoi.onii.commands.modules");
+        autoScan(plugin);
     }
 
-    private void autoScanModules(Main plugin, String packageName) {
+    private void autoScan(Main plugin) {
         try {
-            String path = packageName.replace('.', '/');
+            String pkg = "vn.aoi.onii.commands.modules";
+            String path = pkg.replace('.', '/');
+
             Enumeration<URL> resources = plugin.getClassLoader().getResources(path);
 
             while (resources.hasMoreElements()) {
-                URL resource = resources.nextElement();
-                File folder = new File(resource.toURI());
+                File folder = new File(resources.nextElement().toURI());
 
                 for (File file : Objects.requireNonNull(folder.listFiles())) {
+
                     if (!file.getName().endsWith(".class")) continue;
 
-                    String className = packageName + "." + file.getName().replace(".class", "");
-                    Class<?> clazz = Class.forName(className);
+                    String name = pkg + "." + file.getName().replace(".class", "");
+
+                    Class<?> clazz = Class.forName(name);
 
                     if (ICommandModule.class.isAssignableFrom(clazz)) {
                         ICommandModule module = (ICommandModule)
@@ -59,22 +64,9 @@ public class CommandManager {
                     }
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void registerCompletions(Main plugin) {
-
-        manager.commandSuggestionProcessor().registerSuggestion(
-                "players",
-                (ctx, input) -> plugin.getServer().getOnlinePlayers()
-                        .stream().map(p -> p.getName()).toList()
-        );
-
-        manager.commandSuggestionProcessor().registerSuggestion(
-                "realms",
-                (ctx, input) -> plugin.getRealmManager().getRealms().keySet()
-        );
     }
 }
