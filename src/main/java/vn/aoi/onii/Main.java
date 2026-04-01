@@ -3,7 +3,7 @@ package vn.aoi.onii;
 import org.bukkit.plugin.java.JavaPlugin;
 import vn.aoi.onii.database.DatabaseManager;
 import vn.aoi.onii.player.PlayerManager;
-import vn.aoi.onii.cultivation.RealmManager;
+import vn.aoi.onii.cultivation.realms.RealmManager;
 import vn.aoi.onii.cultivation.CultivationService;
 import vn.aoi.onii.commands.CultivationCommand;
 import vn.aoi.onii.listeners.PlayerListener;
