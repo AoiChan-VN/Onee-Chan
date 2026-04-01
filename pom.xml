@@ -63,12 +63,19 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.1.0</version>
         </dependency>
-
+             
+        <!-- Cloud Paper (Hoặc cloud-bukkit nếu dùng Spigot) -->
         <dependency>
-            <groupId>com.github.MilkBowl</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
+            <groupId>org.incendo</groupId>
+            <artifactId>cloud-paper</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <!-- Cloud Annotations -->
+        <dependency>
+            <groupId>org.incendo</groupId>
+            <artifactId>cloud-annotations</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
     </dependencies>
@@ -147,6 +154,17 @@
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
                                     <shadedPattern>vn.aoi.libs.slf4j</shadedPattern>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>org.incendo.cloud</pattern>
+                                    <!-- Thay 'your.package' bằng package chính của plugin bạn -->
+                                    <shadedPattern>vn.aoi.onii.lib.cloud</shadedPattern>
+                                </relocation>
+                                     
+                                <relocation>
+                                    <pattern>io.leangen.geantyref</pattern>
+                                    <shadedPattern>vn.aoi.onii.lib.tyref</shadedPattern>
                                 </relocation>
 
                             </relocations>
