@@ -1,15 +1,15 @@
 package vn.aoi.onii.system;
 
 import org.bukkit.entity.Player;
-import vn.aoi.onii.AoiChanPlugin;
+import vn.aoi.onii.AoiMain;
 import vn.aoi.onii.player.PlayerData;
 import vn.aoi.onii.rank.Rank;
 
 public class ExpService {
 
-    private final AoiChanPlugin plugin;
+    private final AoiMain plugin;
 
-    public ExpService(AoiChanPlugin plugin){this.plugin=plugin;}
+    public ExpService(AoiMain plugin){this.plugin=plugin;}
 
     public void addExp(Player p,int amount){
         PlayerData d=plugin.getPlayerManager().get(p);
@@ -23,8 +23,8 @@ public class ExpService {
             d.addExp(-r.getExp(d.getLevel()-1));
 
             if(d.getLevel()>r.getMax()){
-                if(r.isDoKiep()){
-                    plugin.getDoKiepService().start(p);
+                if(r.isThienKiep()){
+                    plugin.getThienKiepService().start(p);
                 }else{
                     d.setRank(r.next());
                     d.setLevel(1);
