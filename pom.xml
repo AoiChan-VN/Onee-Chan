@@ -164,7 +164,6 @@
 
                                 <relocation>
                                     <pattern>org.incendo.cloud</pattern>
-                                    <!-- Thay 'your.package' bằng package chính của plugin bạn -->
                                     <shadedPattern>vn.aoi.onii.lib.cloud</shadedPattern>
                                 </relocation>
                                      
