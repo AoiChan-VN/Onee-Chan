@@ -68,16 +68,14 @@
         <dependency>
             <groupId>org.incendo</groupId>
             <artifactId>cloud-paper</artifactId>
-            <version>2.0.0-beta.11</version>
-            <scope>compile</scope>
+            <version>2.0.0-beta.10</version>
         </dependency>
 
         <!-- Cloud Annotations -->
         <dependency>
             <groupId>org.incendo</groupId>
             <artifactId>cloud-annotations</artifactId>
-            <version>2.0.0-beta.11</version>
-            <scope>compile</scope>
+            <version>2.0.0-beta.10</version>
         </dependency>
 
     </dependencies>
