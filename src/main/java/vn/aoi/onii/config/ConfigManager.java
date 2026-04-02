@@ -1,24 +1,22 @@
 package vn.aoi.onii.config;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.*;
 import vn.aoi.onii.Main;
-
 import java.io.File;
 
 public class ConfigManager {
 
     public static FileConfiguration realms, mobs, messages;
 
-    public static void init(Main plugin) {
-        realms = load(plugin, "realms.yml");
-        mobs = load(plugin, "mobs.yml");
-        messages = load(plugin, "messages.yml");
+    public static void init(Main p) {
+        realms = load(p,"realms.yml");
+        mobs = load(p,"mobs.yml");
+        messages = load(p,"messages.yml");
     }
 
-    private static FileConfiguration load(Main plugin, String name) {
-        File file = new File(plugin.getDataFolder(), name);
-        if (!file.exists()) plugin.saveResource(name, false);
-        return YamlConfiguration.loadConfiguration(file);
+    private static FileConfiguration load(Main p,String name){
+        File f = new File(p.getDataFolder(),name);
+        if(!f.exists()) p.saveResource(name,false);
+        return YamlConfiguration.loadConfiguration(f);
     }
-} 
+}
