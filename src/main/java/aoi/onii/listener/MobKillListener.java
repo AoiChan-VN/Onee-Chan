@@ -1,24 +1,29 @@
-package vn.aoi.onii.listener;
+package vn.aoi.onii.data;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
-import vn.aoi.onii.config.ConfigManager;
-import vn.aoi.onii.manager.PlayerManager;
+import org.bukkit.Bukkit;
+import vn.aoi.onii.Main;
 
-public class MobKillListener implements Listener {
+import java.sql.PreparedStatement;
 
-    @EventHandler
-    public void onKill(EntityDeathEvent e) {
-        if (e.getEntity().getKiller() == null) return;
+public class PlayerRepository {
 
-        Player player = e.getEntity().getKiller();
-        String type = e.getEntity().getType().name();
+    public static void saveAsync(PlayerData data) {
 
-        if (!ConfigManager.mobs.contains(type)) return;
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            try {
+                PreparedStatement ps = Main.getInstance().getDatabase().getConnection()
+                        .prepareStatement("UPDATE players SET realm=?, level=?, exp=? WHERE uuid=?");
 
-        int exp = ConfigManager.mobs.getInt(type);
-        PlayerManager.addExp(player, exp);
+                ps.setString(1, data.getRealm());
+                ps.setInt(2, data.getLevel());
+                ps.setInt(3, data.getExp());
+                ps.setString(4, data.getUuid().toString());
+
+                ps.executeUpdate();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
-} 
+}
