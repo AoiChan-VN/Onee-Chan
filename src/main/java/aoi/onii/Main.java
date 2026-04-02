@@ -5,6 +5,8 @@ import vn.aoi.onii.command.CommandManager;
 import vn.aoi.onii.config.ConfigManager;
 import vn.aoi.onii.data.Database;
 import vn.aoi.onii.listener.*;
+import vn.aoi.onii.manager.RealmManager;
+import vn.aoi.onii.task.AutoSaveTask;
 
 public class Main extends JavaPlugin {
 
@@ -16,6 +18,7 @@ public class Main extends JavaPlugin {
         instance = this;
 
         ConfigManager.init(this);
+        RealmManager.load();
 
         database = new Database(this);
         database.connect();
@@ -25,6 +28,8 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
         getServer().getPluginManager().registerEvents(new MobKillListener(), this);
+
+        new AutoSaveTask().runTaskTimer(this, 6000, 6000);
     }
 
     @Override
