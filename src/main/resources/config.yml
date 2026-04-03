@@ -1,1 +1,31 @@
+storage: sqlite
 
+auto-save-interval: 300
+
+mobs-exp:
+  ZOMBIE: 5
+
+realms:
+  "Phàm nhân":
+    next-rank: "Luyện khí"
+    max-level: 1
+    exp-required: 10
+
+  "Luyện khí":
+    next-rank: "Trúc cơ"
+    max-level: 9
+    levels:
+      1: { exp: 50, phase: "Sơ kỳ" }
+      2: { exp: 60, phase: "Sơ kỳ" }
+      3: { exp: 70, phase: "Sơ kỳ" }
+      4: { exp: 80, phase: "Trung kỳ" }
+      5: { exp: 90, phase: "Trung kỳ" }
+      6: { exp: 100, phase: "Trung kỳ" }
+      7: { exp: 120, phase: "Hậu kỳ" }
+      8: { exp: 140, phase: "Hậu kỳ" }
+      9: { exp: 160, phase: "Hậu kỳ" }
+
+  "Độ kiếp":
+    is-tribulation: true
+    duration: 30
+    next-rank: "Chân tiên"
