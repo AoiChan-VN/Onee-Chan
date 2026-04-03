@@ -21,7 +21,11 @@ public class CultivationService {
         this.realmManager = realmManager;
     }
 
-    // ✅ ADD EXP (FULL)
+    public RealmManager getRealmManager() {
+        return realmManager;
+    }
+
+    // ✅ ADD EXP
     public void addExp(Player player, double amount) {
         if (amount <= 0 || amount > 1000) return; // anti exploit
 
@@ -40,7 +44,7 @@ public class CultivationService {
         checkLevelUp(player, cultivator);
     }
 
-    // 🔼 LEVEL UP (FULL)
+    // 🔼 LEVEL UP
     private void checkLevelUp(Player player, Cultivator cultivator) {
         Realm realm = realmManager.getRealm(cultivator.getRealm());
         if (realm == null) return;
@@ -76,7 +80,7 @@ public class CultivationService {
         }
     }
 
-    // 🌩️ RANK UP (FULL)
+    // 🌩️ RANK UP
     private void handleRankUp(Player player, Cultivator cultivator, Realm realm) {
 
         if (realm.isTribulation()) {
