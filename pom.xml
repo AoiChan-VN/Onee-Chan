@@ -1,60 +1,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.w3.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vn.aoi</groupId>
-    <artifactId>AoiChan</artifactId>
+    <artifactId>aoi-plugin</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>AoiChan</name>
-    <description>Tu tien plugin</description>
 
-    <!-- ⚙️ PROPERTIES -->
     <properties>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
-    <!-- 📚 REPOSITORIES -->
     <repositories>
+        <!-- Spigot / Paper -->
         <repository>
-            <id>papermc</id>
+            <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
 
-        <!-- fix warning cache repo -->
+        <!-- ACF -->
         <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
-
-        <!-- JitPack -->     
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-
     </repositories>
 
-    <!-- 📦 DEPENDENCIES -->
     <dependencies>
-
         <!-- Paper API -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- HikariCP -->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
         </dependency>
 
         <!-- SQLite -->
@@ -64,91 +47,61 @@
             <version>3.45.1.0</version>
         </dependency>
 
+        <!-- HikariCP -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
+        <!-- Caffeine Cache -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ACF (Optional Command Framework) -->
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
-    <!-- 🔨 BUILD -->
     <build>
-        <finalName>AoiChan</finalName>
-
         <plugins>
-
-            <!-- 🧠 COMPILER -->
+            <!-- Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
-
                 <configuration>
-                    <release>21</release>
-                    <encoding>UTF-8</encoding>
-                    <compilerArgs>
-                        <arg>-Xlint:none</arg>
-                    </compilerArgs>
-                    <showWarnings>false</showWarnings>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
 
-            <!-- ⚔️ SHADE -->
+            <!-- Shade (build fat jar nếu cần) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.0</version>
-
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-
-                        <configuration>
-
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-
-                            <!-- 💀 CLEAN META-INF -->
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-
-                                        <exclude>module-info.class</exclude>
-                                        <exclude>META-INF/versions/**</exclude>
-
-                                        <exclude>META-INF/MANIFEST.MF</exclude>
-
-                                    </excludes>
-                                </filter>
-                            </filters>
-
-                            <!-- 🔥 RELOCATE -->
-                            <relocations>
-
-                                <relocation>
-                                    <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>vn.aoi.libs.hikari</shadedPattern>
-                                </relocation>
-
-                                <relocation>
-                                    <pattern>org.sqlite</pattern>
-                                    <shadedPattern>vn.aoi.libs.sqlite</shadedPattern>
-                                </relocation>
-
-                            </relocations>
-
-                            <!-- 🧠 FIX MANIFEST -->
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
-                            </transformers>
-
-                        </configuration>
+                        <goals><goal>shade</goal></goals>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
