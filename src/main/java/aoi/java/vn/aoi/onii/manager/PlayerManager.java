@@ -68,4 +68,8 @@ public class PlayerManager {
     public boolean isOnline(UUID uuid) {
         return onlinePlayers.containsKey(uuid);
     }
+
+    public ConcurrentHashMap<UUID, Boolean> getOnlinePlayers() {
+        return onlinePlayers;
+    }
 } 
