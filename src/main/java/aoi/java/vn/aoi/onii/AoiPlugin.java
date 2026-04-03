@@ -45,6 +45,9 @@ public class AoiPlugin extends JavaPlugin {
         this.realmManager = new RealmManager(getConfig());
         this.cultivationService = new CultivationService(playerManager, realmManager);
 
+        // ⚙️ Commands
+        getCommand("cultivation").setExecutor(new CultivationCommand(playerManager));
+
         // 🌐 API
         new AoiAPI(playerManager);
 
