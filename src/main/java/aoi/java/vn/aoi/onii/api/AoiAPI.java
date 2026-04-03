@@ -20,7 +20,6 @@ public class AoiAPI {
         return instance;
     }
 
-    // 🔍 GET DATA
     public Cultivator getCultivator(UUID uuid) {
         return playerManager.get(uuid);
     }
@@ -34,4 +33,4 @@ public class AoiAPI {
         Cultivator c = getCultivator(uuid);
         return c != null ? c.getLevel() : 0;
     }
-} 
+}
