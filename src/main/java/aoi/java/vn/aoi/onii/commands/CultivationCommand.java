@@ -30,10 +30,10 @@ public class CultivationCommand implements CommandExecutor {
             return true;
         }
 
-        player.sendMessage("§6=== TU VI ===");
+        player.sendMessage("§6=== 【THÔNG TIN】 ===");
         player.sendMessage("§eCảnh giới: §f" + c.getRealm());
-        player.sendMessage("§eCấp độ: §f" + c.getLevel());
-        player.sendMessage("§eEXP: §f" + c.getExp());
+        player.sendMessage("§eTu vi: §f" + c.getLevel());
+        player.sendMessage("§eLinh khí: §f" + c.getExp());
 
         return true;
     }
