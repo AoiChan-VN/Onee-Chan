@@ -54,7 +54,7 @@ public class AoiPlugin extends JavaPlugin {
         );
 
         Bukkit.getPluginManager().registerEvents(
-                new MobKillListener(cultivationService), this
+                new MobKillListener(cultivationService, getConfig()), this
         );
 
         // ⏱️ Auto Save Task
