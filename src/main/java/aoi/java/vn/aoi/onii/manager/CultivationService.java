@@ -16,12 +16,12 @@ public class CultivationService {
         this.playerManager = playerManager;
         this.realmManager = realmManager;
     }
-    
-    // ➕ ADD EXP
+
+    // ✅ ADD EXP (FULL)
     public void addExp(Player player, double amount) {
         if (amount <= 0 || amount > 1000) return; // anti exploit
 
-        var cultivator = playerManager.get(player.getUniqueId());
+        Cultivator cultivator = playerManager.get(player.getUniqueId());
         if (cultivator == null) return;
 
         // 🔔 CALL EVENT
@@ -35,8 +35,8 @@ public class CultivationService {
 
         checkLevelUp(player, cultivator);
     }
-    
-    // 🔼 LEVEL UP LOGIC
+
+    // 🔼 LEVEL UP (FULL)
     private void checkLevelUp(Player player, Cultivator cultivator) {
         Realm realm = realmManager.getRealm(cultivator.getRealm());
         if (realm == null) return;
@@ -58,24 +58,25 @@ public class CultivationService {
                 cultivator.setExp(cultivator.getExp() - data.getExpRequired());
                 cultivator.setLevel(level + 1);
 
-                // 🔔 EVENT
+                // 🔔 LEVEL EVENT
                 Bukkit.getPluginManager().callEvent(
                         new PlayerLevelUpEvent(
                                 player,
                                 cultivator.getRealm(),
                                 cultivator.getRealm(),
                                 cultivator.getLevel()
-                        );
-                     }
-                } else break;
-             }
-        }
+                        )
+                );
 
-    // 🌩️ RANK UP
+            } else break;
+        }
+    }
+
+    // 🌩️ RANK UP (FULL)
     private void handleRankUp(Player player, Cultivator cultivator, Realm realm) {
 
         if (realm.isTribulation()) {
-            // trigger TribulationTask ở đây
+            // TODO: hook TribulationTask ở Phase 3
             return;
         }
 
@@ -90,3 +91,4 @@ public class CultivationService {
                 new PlayerLevelUpEvent(player, oldRealm, newRealm, 1)
         );
     }
+}
