@@ -35,7 +35,7 @@ public class CultivationService {
 
         checkLevelUp(player, cultivator);
     }
-
+    
     // 🔼 LEVEL UP LOGIC
     private void checkLevelUp(Player player, Cultivator cultivator) {
         Realm realm = realmManager.getRealm(cultivator.getRealm());
