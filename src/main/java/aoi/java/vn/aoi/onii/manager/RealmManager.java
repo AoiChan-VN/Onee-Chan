@@ -59,4 +59,8 @@ public class RealmManager {
     public boolean exists(String name) {
         return realms.containsKey(name);
     }
+
+    public java.util.Set<String> getAllRealms() {
+        return realms.keySet();
+    }
 } 
