@@ -51,6 +51,10 @@ public class RealmManager {
             realms.put(key, realm);
         }
     }
+    
+    public java.util.Set<String> getAllRealms() {
+        return realms.keySet();
+    }
 
     public Realm getRealm(String name) {
         return realms.get(name);
