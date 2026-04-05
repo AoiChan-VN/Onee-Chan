@@ -2,8 +2,9 @@ package vn.aoi.onii;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import co.aikar.commands.PaperCommandManager;
 
-import vn.aoi.onii.commands.*;
+import vn.aoi.onii.commands.AoiCommand;
 import vn.aoi.onii.api.AoiAPI;
 import vn.aoi.onii.config.ConfigManager;
 import vn.aoi.onii.config.MessageManager;
