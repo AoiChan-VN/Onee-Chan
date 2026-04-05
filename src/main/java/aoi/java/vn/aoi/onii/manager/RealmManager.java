@@ -15,6 +15,10 @@ public class RealmManager {
         load(config);
     }
 
+    public java.util.Set<String> getAllRealms() {
+        return realms.keySet();
+    }
+
     private void load(FileConfiguration config) {
         ConfigurationSection section = config.getConfigurationSection("realms");
 
@@ -52,10 +56,6 @@ public class RealmManager {
         }
     }
     
-    public java.util.Set<String> getAllRealms() {
-        return realms.keySet();
-    }
-
     public Realm getRealm(String name) {
         return realms.get(name);
     }
