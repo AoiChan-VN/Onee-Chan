@@ -79,6 +79,7 @@
 
     <build>
         <plugins>
+                 
             <!-- Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,6 +88,7 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+                    <proc>full</proc>
                 </configuration>
             </plugin>
 
@@ -98,11 +100,34 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>shade</goal></goals>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                     
+                                <!-- Gộp các file Manifest và các file cùng tên thay vì ghi đè -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                             
+                                        <!-- Loại bỏ các file chữ ký số để tránh lỗi SecurityException -->
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                             
+                                        <!-- Loại bỏ module-info để tránh cảnh báo Shading -->
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/versions/9/module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
-
-</project>
