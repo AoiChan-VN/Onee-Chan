@@ -2,11 +2,12 @@ package vn.aoi.onii.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
-
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import vn.aoi.onii.commands.confirm.ConfirmManager;
+import vn.aoi.onii.commands.cooldown.CommandCooldown;
 import vn.aoi.onii.manager.CultivationService;
 import vn.aoi.onii.manager.PlayerManager;
 import vn.aoi.onii.model.Cultivator;
@@ -25,7 +26,6 @@ public class AoiCommand extends BaseCommand {
     // ================= PLAYER =================
 
     @Subcommand("info")
-    @CommandPermission("aoi.player")
     public void onInfo(Player player) {
 
         Cultivator c = playerManager.get(player.getUniqueId());
@@ -46,12 +46,14 @@ public class AoiCommand extends BaseCommand {
     @Subcommand("addexp")
     @CommandPermission("aoi.admin")
     @CommandCompletion("@players @range:1-100000")
-    public void onAddExp(CommandSender sender, String targetName, double amount) {
+    public void onAddExp(CommandSender sender, Player target, double amount) {
 
-        Player target = Bukkit.getPlayer(targetName);
-        if (target == null) {
-            sender.sendMessage("Player offline!");
-            return;
+        if (sender instanceof Player player) {
+            if (CommandCooldown.isOnCooldown("addexp", player.getUniqueId(), 3000)) {
+                long remain = CommandCooldown.getRemaining("addexp", player.getUniqueId(), 3000);
+                player.sendMessage("§cCooldown: " + (remain / 1000.0) + "s");
+                return;
+            }
         }
 
         service.addExp(target, amount);
@@ -60,13 +62,7 @@ public class AoiCommand extends BaseCommand {
 
     @Subcommand("setexp")
     @CommandPermission("aoi.admin")
-    public void onSetExp(CommandSender sender, String targetName, double amount) {
-
-        Player target = Bukkit.getPlayer(targetName);
-        if (target == null) {
-            sender.sendMessage("Player offline!");
-            return;
-        }
+    public void onSetExp(CommandSender sender, OfflinePlayer target, double amount) {
 
         var c = playerManager.get(target.getUniqueId());
         if (c != null) {
@@ -78,13 +74,8 @@ public class AoiCommand extends BaseCommand {
 
     @Subcommand("setrealm")
     @CommandPermission("aoi.admin")
-    public void onSetRealm(CommandSender sender, String targetName, String realm) {
-
-        Player target = Bukkit.getPlayer(targetName);
-        if (target == null) {
-            sender.sendMessage("Player offline!");
-            return;
-        }
+    @CommandCompletion("@players @realms")
+    public void onSetRealm(CommandSender sender, OfflinePlayer target, String realm) {
 
         var c = playerManager.get(target.getUniqueId());
         if (c != null) {
@@ -98,21 +89,43 @@ public class AoiCommand extends BaseCommand {
 
     @Subcommand("reset")
     @CommandPermission("aoi.admin")
-    public void onReset(CommandSender sender, String targetName) {
+    public void onReset(CommandSender sender, OfflinePlayer target) {
 
-        Player target = Bukkit.getPlayer(targetName);
-        if (target == null) {
-            sender.sendMessage("Player offline!");
+        if (!(sender instanceof Player player)) {
+            reset(target);
+            sender.sendMessage("§aReset (console)");
             return;
         }
 
+        ConfirmManager.request(player.getUniqueId(), () -> {
+            reset(target);
+            player.sendMessage("§aReset thành công!");
+        });
+
+        player.sendMessage("§cGõ /aoi confirm để xác nhận (10s)");
+    }
+
+    @Subcommand("confirm")
+    public void onConfirm(Player player) {
+
+        boolean ok = ConfirmManager.confirm(player.getUniqueId());
+
+        if (!ok) {
+            player.sendMessage("§cKhông có hành động hoặc đã hết hạn!");
+            return;
+        }
+
+        player.sendMessage("§aXác nhận thành công!");
+    }
+
+    // ================= INTERNAL =================
+
+    private void reset(OfflinePlayer target) {
         var c = playerManager.get(target.getUniqueId());
         if (c != null) {
             c.setRealm("Phàm nhân");
             c.setLevel(1);
             c.setExp(0);
         }
-
-        sender.sendMessage("§aReset!");
     }
-} 
+                }
