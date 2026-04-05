@@ -27,16 +27,11 @@ jobs:
 
     steps:
       - name: 🔎𝓒𝓱𝓮𝓬𝓴 𝓢𝓸𝓾𝓻𝓬𝓮
-        uses: actions/checkout@v4
-
-      - name: NODE.JS
-        uses: actions/setup-node@v4
-        with:
-         node-version: "24"
+        uses: actions/checkout@v5
 
       # Cài đặt JavaScript
       - name: ☕ ｊａｖａ
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -49,7 +44,7 @@ jobs:
       # Đóng gói file .jar
       - name: 📦 𝓤𝓹𝓵𝓸𝓪𝓻𝓭 𝓳𝓪𝓻
         if: ${{ env.ENABLE_ARTIFACT == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: kawaii
           path: target/*.jar
