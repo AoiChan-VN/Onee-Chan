@@ -10,3 +10,9 @@ commands:
   aoi:
     description: Show plugin help command
     usage: /aoi help
+
+permissions:
+  aoi.admin:
+    default: op
+  aoi.player:
+    default: true
