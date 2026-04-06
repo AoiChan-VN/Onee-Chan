@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>vn.aoi.onii</groupId>
+    <groupId>vn.aoi</groupId>
     <artifactId>kawaii</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -91,10 +91,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <!-- tắt tạo file Reduced Pom.xml ở folder gốc -->
+                            <!-- bật/tắt tạo file Reduced Pom.xml ở folder gốc -->
                             <createDependencyReducedPom>false</createDependencyReducedPom>
 
-                            <!-- 2. Tắt tạo file original-jar (Ghi đè thẳng vào file JAR chính) -->
+                            <!-- 2. bật/Tắt tạo file original-jar (Ghi đè thẳng vào file JAR chính) -->
                             <shadedArtifactAttached>false</shadedArtifactAttached>
                                  
                             <!-- Relocation: Tránh xung đột với plugin khác -->
