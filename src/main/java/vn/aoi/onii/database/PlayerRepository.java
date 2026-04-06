@@ -38,7 +38,7 @@ public class PlayerRepository {
         return CompletableFuture.supplyAsync(() -> {
             try (Connection conn = database.getConnection();
                  PreparedStatement ps = conn.prepareStatement(
-                         "SELECT * FROM players WHERE uuid = ?")) {
+                 String sql = "SELECT * FROM players WHERE uuid = ?")) {
 
                 ps.setString(1, uuid.toString());
                 ResultSet rs = ps.executeQuery();
