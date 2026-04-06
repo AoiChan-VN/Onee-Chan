@@ -12,9 +12,10 @@ import java.sql.SQLException;
 public class DatabaseManager {
 
     private final FileConfiguration config;
+    private DatabaseType type;
 
     private HikariDataSource hikari;
-    private Connection sqliteConnection;
+    private Connection sqlite;
 
     public DatabaseManager(FileConfiguration config) {
         this.config = config;
@@ -22,73 +23,70 @@ public class DatabaseManager {
 
     public void connect(File dataFolder) {
 
-        String type = config.getString("type", "SQLITE").toUpperCase();
+        this.type = DatabaseType.from(config.getString("type"));
 
         try {
-            if (type.equals("MYSQL")) {
-                setupMySQL();
-            } else {
-                setupSQLite(dataFolder);
+            switch (type) {
+                case MYSQL -> setupMySQL();
+                case SQLITE -> setupSQLite(dataFolder);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Database init failed", e);
         }
     }
-
-    // ================= MYSQL =================
 
     private void setupMySQL() {
 
         HikariConfig cfg = new HikariConfig();
 
-        String host = config.getString("mysql.host");
-        int port = config.getInt("mysql.port");
-        String db = config.getString("mysql.database");
-
-        cfg.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false");
+        cfg.setJdbcUrl("jdbc:mysql://" +
+                config.getString("mysql.host") + ":" +
+                config.getInt("mysql.port") + "/" +
+                config.getString("mysql.database") +
+                "?useSSL=false&autoReconnect=true");
 
         cfg.setUsername(config.getString("mysql.username"));
         cfg.setPassword(config.getString("mysql.password"));
 
         cfg.setMaximumPoolSize(config.getInt("mysql.pool-size", 10));
+        cfg.setMinimumIdle(2);
+        cfg.setConnectionTimeout(10000);
 
         hikari = new HikariDataSource(cfg);
     }
-
-    // ================= SQLITE =================
 
     private void setupSQLite(File dataFolder) throws SQLException {
 
         File file = new File(dataFolder, config.getString("sqlite.file"));
 
         if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception ignored) {}
+            try { file.createNewFile(); } catch (Exception ignored) {}
         }
 
-        sqliteConnection = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
+        sqlite = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
     }
-
-    // ================= GET CONNECTION =================
 
     public Connection getConnection() throws SQLException {
 
-        if (hikari != null) {
+        if (type == DatabaseType.MYSQL) {
             return hikari.getConnection();
         }
 
-        if (sqliteConnection != null && !sqliteConnection.isClosed()) {
-            return sqliteConnection;
+        if (sqlite != null && !sqlite.isClosed()) {
+            return sqlite;
         }
 
-        throw new SQLException("Database not connected!");
+        throw new SQLException("No DB connection");
+    }
+
+    public DatabaseType getType() {
+        return type;
     }
 
     public void close() {
         try {
             if (hikari != null) hikari.close();
-            if (sqliteConnection != null) sqliteConnection.close();
+            if (sqlite != null) sqlite.close();
         } catch (Exception ignored) {}
     }
 }
