@@ -2,41 +2,93 @@ package vn.aoi.onii.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SQLiteConnector {
+public class DatabaseManager {
 
-    private final HikariDataSource dataSource;
+    private final FileConfiguration config;
 
-    public SQLiteConnector(File dataFolder) {
-        if (!dataFolder.exists()) {
-            dataFolder.mkdirs();
+    private HikariDataSource hikari;
+    private Connection sqliteConnection;
+
+    public DatabaseManager(FileConfiguration config) {
+        this.config = config;
+    }
+
+    public void connect(File dataFolder) {
+
+        String type = config.getString("type", "SQLITE").toUpperCase();
+
+        try {
+            if (type.equals("MYSQL")) {
+                setupMySQL();
+            } else {
+                setupSQLite(dataFolder);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ================= MYSQL =================
+
+    private void setupMySQL() {
+
+        HikariConfig cfg = new HikariConfig();
+
+        String host = config.getString("mysql.host");
+        int port = config.getInt("mysql.port");
+        String db = config.getString("mysql.database");
+
+        cfg.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false");
+
+        cfg.setUsername(config.getString("mysql.username"));
+        cfg.setPassword(config.getString("mysql.password"));
+
+        cfg.setMaximumPoolSize(config.getInt("mysql.pool-size", 10));
+
+        hikari = new HikariDataSource(cfg);
+    }
+
+    // ================= SQLITE =================
+
+    private void setupSQLite(File dataFolder) throws SQLException {
+
+        File file = new File(dataFolder, config.getString("sqlite.file"));
+
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (Exception ignored) {}
         }
 
-        File dbFile = new File(dataFolder, "aoi.db");
-
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:sqlite:" + dbFile.getAbsolutePath());
-        config.setMaximumPoolSize(1);
-        config.setPoolName("Aoi-Hikari");
-
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-
-        this.dataSource = new HikariDataSource(config);
+        sqliteConnection = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
     }
+
+    // ================= GET CONNECTION =================
 
     public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+
+        if (hikari != null) {
+            return hikari.getConnection();
+        }
+
+        if (sqliteConnection != null && !sqliteConnection.isClosed()) {
+            return sqliteConnection;
+        }
+
+        throw new SQLException("Database not connected!");
     }
 
-    public void shutdown() {
-        if (dataSource != null && !dataSource.isClosed()) {
-            dataSource.close();
-        }
+    public void close() {
+        try {
+            if (hikari != null) hikari.close();
+            if (sqliteConnection != null) sqliteConnection.close();
+        } catch (Exception ignored) {}
     }
-} 
+}
