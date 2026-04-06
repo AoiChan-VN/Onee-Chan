@@ -17,9 +17,8 @@ public class Realm {
     private int maxLevel;
     private boolean tribulation;
 
-    private int duration; // dùng cho tribulation
+    private int duration;
 
-    // level -> exp required
     private Map<Integer, LevelData> levels;
 
     @Getter
@@ -29,6 +28,6 @@ public class Realm {
     @AllArgsConstructor
     public static class LevelData {
         private double expRequired;
-        private String phase; // Sơ, Trung, Hậu, Viên mãn
+        private String phase;
     }
 } 
