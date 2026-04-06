@@ -1,106 +1,77 @@
 package vn.aoi.onii;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 import co.aikar.commands.PaperCommandManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import vn.aoi.onii.commands.AoiCommand;
-import vn.aoi.onii.api.AoiAPI;
-import vn.aoi.onii.config.ConfigManager;
-import vn.aoi.onii.config.MessageManager;
-
-import vn.aoi.onii.database.PlayerRepository;
+import vn.aoi.onii.commands.context.*;
+import vn.aoi.onii.database.DatabaseExecutor;
 import vn.aoi.onii.database.DatabaseManager;
 import vn.aoi.onii.database.Migration;
-import vn.aoi.onii.database.DatabaseExecutor;
-
-import vn.aoi.onii.listener.ConnectionListener;
-import vn.aoi.onii.listener.MobKillListener;
+import vn.aoi.onii.database.PlayerRepository;
 import vn.aoi.onii.manager.CultivationService;
 import vn.aoi.onii.manager.PlayerManager;
 import vn.aoi.onii.manager.RealmManager;
-import vn.aoi.onii.task.SaveTask;
 
 public class AoiPlugin extends JavaPlugin {
 
     private static AoiPlugin instance;
 
     private DatabaseManager database;
-    private PlayerRepository repository;
+    private DatabaseExecutor executor;
 
     private PlayerManager playerManager;
-    private RealmManager realmManager;
     private CultivationService cultivationService;
-
-    private ConfigManager configManager;
-    private MessageManager messageManager;
+    private RealmManager realmManager;
 
     @Override
     public void onEnable() {
+
         instance = this;
 
-        // 📦 Config
-        this.configManager = new ConfigManager(this);
-        this.messageManager = new MessageManager(this);
+        saveDefaultConfig();
 
-        // 🗄️ Database
-        DatabaseManager database = new DatabaseManager(getConfig());
+        // ================= DATABASE =================
+
+        database = new DatabaseManager(getConfig());
         database.connect(getDataFolder());
-        DatabaseExecutor executor = new DatabaseExecutor();
+
+        executor = new DatabaseExecutor();
+
         Migration.init(database);
+
         PlayerRepository repository = new PlayerRepository(database, executor);
-        PlayerManager playerManager = new PlayerManager(repository);
 
-        // 🧠 Managers
-        this.playerManager = new PlayerManager(repository);
-        this.realmManager = new RealmManager(getConfig());
-        this.cultivationService = new CultivationService(playerManager, realmManager);
+        // ================= MANAGER =================
 
-        // ⚙️ Commands
-        co.aikar.commands.PaperCommandManager acf = new co.aikar.commands.PaperCommandManager(this);
+        playerManager = new PlayerManager(repository);
+        realmManager = new RealmManager(getConfig());
+        cultivationService = new CultivationService(playerManager, realmManager);
 
-        // context
-        vn.aoi.onii.commands.context.ACFContext.register(acf);
+        // ================= ACF =================
 
-        // completion
-        vn.aoi.onii.commands.context.ACFCompletion.register(acf, realmManager);
+        PaperCommandManager acf = new PaperCommandManager(this);
 
-        // command
-        acf.registerCommand(new vn.aoi.onii.commands.AoiCommand(playerManager, cultivationService));
-      
-        // 🌐 API
-        new AoiAPI(playerManager);
+        ACFContext.register(acf);
+        ACFCompletion.register(acf, realmManager);
 
-        // 🔔 Register Listeners
-        Bukkit.getPluginManager().registerEvents(
-                new ConnectionListener(playerManager), this
-        );
+        acf.registerCommand(new AoiCommand(playerManager, cultivationService));
 
-        Bukkit.getPluginManager().registerEvents(
-                new MobKillListener(cultivationService, getConfig()), this
-        );
-
-        // ⏱️ Auto Save Task
-        int interval = configManager.getAutoSaveInterval();
-
-        new SaveTask(playerManager)
-                .runTaskTimerAsynchronously(this, interval * 20L, interval * 20L);
-
-        getLogger().info("AoiChan Plugin 【ON】");
+        getLogger().info("Aoi Plugin【ON】");
     }
 
     @Override
     public void onDisable() {
-        // 💾 Save all players
-        playerManager.getOnlinePlayers().keySet()
-                .forEach(playerManager::savePlayer);
 
-        // 🔌 Close Data
-        executor.shutdown();
-        database.close();
-        database.shutdown();
+        if (executor != null) {
+            executor.shutdown();
+        }
 
-        getLogger().info("AoiChan Plugin 【OFF】");
+        if (database != null) {
+            database.close();
+        }
+
+        getLogger().info("Aoi Plugin【OFF】");
     }
 
     public static AoiPlugin get() {
@@ -118,4 +89,4 @@ public class AoiPlugin extends JavaPlugin {
     public RealmManager getRealmManager() {
         return realmManager;
     }
-} 
+}
