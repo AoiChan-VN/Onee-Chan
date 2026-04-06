@@ -19,7 +19,7 @@ public class PlayerRepository {
         try (Connection conn = database.getConnection();
              PreparedStatement ps = conn.preparedStatement(sql)) {
 
-            stmt.execute("""
+            ps.execute("""
                 CREATE TABLE IF NOT EXISTS players (
                     uuid TEXT PRIMARY KEY,
                     realm TEXT,
