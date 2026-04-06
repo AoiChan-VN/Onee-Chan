@@ -40,8 +40,16 @@ public class AoiPlugin extends JavaPlugin {
         this.messageManager = new MessageManager(this);
 
         // 🗄️ Database
-        this.database = new DatabaseManager(getDataFolder());
-        this.repository = new PlayerRepository(database);
+        DatabaseManager database = new DatabaseManager(getConfig());
+        database.connect(getDataFolder());
+
+        DatabaseExecutor executor = new DatabaseExecutor();
+
+        Migration.init(database);
+
+        PlayerRepository repository = new PlayerRepository(database, executor);
+
+        PlayerManager playerManager = new PlayerManager(repository);
 
         // 🧠 Managers
         this.playerManager = new PlayerManager(repository);
