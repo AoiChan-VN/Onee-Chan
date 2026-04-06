@@ -36,7 +36,7 @@ public class PlayerRepository {
     // 🔍 LOAD
     public CompletableFuture<Cultivator> load(UUID uuid) {
         return CompletableFuture.supplyAsync(() -> {
-            try (Connection conn = connector.getConnection();
+            try (Connection conn = database.getConnection();
                  PreparedStatement ps = conn.prepareStatement(
                          "SELECT * FROM players WHERE uuid = ?")) {
 
@@ -63,7 +63,7 @@ public class PlayerRepository {
     // 💾 SAVE / UPSERT
     public CompletableFuture<Void> save(Cultivator cultivator) {
         return CompletableFuture.runAsync(() -> {
-            try (Connection conn = connector.getConnection();
+            try (Connection conn = database.getConnection();
                  PreparedStatement ps = conn.prepareStatement("""
                         INSERT INTO players(uuid, realm, level, exp)
                         VALUES (?, ?, ?, ?)
@@ -89,7 +89,7 @@ public class PlayerRepository {
     // ❌ DELETE
     public CompletableFuture<Void> delete(UUID uuid) {
         return CompletableFuture.runAsync(() -> {
-            try (Connection conn = connector.getConnection();
+            try (Connection conn = database.getConnection();
                  PreparedStatement ps = conn.prepareStatement(
                          "DELETE FROM players WHERE uuid = ?")) {
 
