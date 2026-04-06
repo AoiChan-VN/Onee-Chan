@@ -8,16 +8,16 @@ import java.util.concurrent.CompletableFuture;
 
 public class PlayerRepository {
 
-    private final SQLiteConnector connector;
+    private final DatabaseManager database;
 
-    public PlayerRepository(SQLiteConnector connector) {
-        this.connector = connector;
+    public PlayerRepository(DatabaseManager database) {
+        this.database = database;
         init();
     }
 
     private void init() {
-        try (Connection conn = connector.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = database.getConnection();
+             PreparedStatement ps = conn.preparedStatement(sql)) {
 
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS players (
