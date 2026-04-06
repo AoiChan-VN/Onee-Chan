@@ -20,7 +20,7 @@ public class SQLiteConnector {
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:sqlite:" + dbFile.getAbsolutePath());
-        config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(1);
         config.setPoolName("Aoi-Hikari");
 
         config.addDataSourceProperty("cachePrepStmts", "true");
