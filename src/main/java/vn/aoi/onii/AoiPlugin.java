@@ -11,6 +11,8 @@ import vn.aoi.onii.config.MessageManager;
 
 import vn.aoi.onii.database.PlayerRepository;
 import vn.aoi.onii.database.DatabaseManager;
+import vn.aoi.onii.database.Migiration;
+import vn.aoi.onii.database.DatabaseExecutor;
 
 import vn.aoi.onii.listener.ConnectionListener;
 import vn.aoi.onii.listener.MobKillListener;
