@@ -5,14 +5,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import vn.aoi.onii.commands.AoiCommand;
 import vn.aoi.onii.commands.context.*;
-import vn.aoi.onii.database.DatabaseExecutor;
-import vn.aoi.onii.database.DatabaseManager;
-import vn.aoi.onii.database.Migration;
-import vn.aoi.onii.database.PlayerRepository;
-import vn.aoi.onii.manager.CultivationService;
-import vn.aoi.onii.manager.PlayerManager;
-import vn.aoi.onii.manager.RealmManager;
 import vn.aoi.onii.config.ConfigManager;
+import vn.aoi.onii.database.*;
+import vn.aoi.onii.manager.*;
 
 public class AoiPlugin extends JavaPlugin {
 
