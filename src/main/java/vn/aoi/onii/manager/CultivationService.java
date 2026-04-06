@@ -2,14 +2,13 @@ package vn.aoi.onii.manager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.Bukkit;
 
 import vn.aoi.onii.AoiPlugin;
-import vn.aoi.onii.task.TribulationTask;
 import vn.aoi.onii.api.PlayerExpGainEvent;
 import vn.aoi.onii.api.PlayerLevelUpEvent;
 import vn.aoi.onii.model.Cultivator;
 import vn.aoi.onii.model.Realm;
+import vn.aoi.onii.task.TribulationTask;
 
 public class CultivationService {
 
@@ -21,35 +20,34 @@ public class CultivationService {
         this.realmManager = realmManager;
     }
 
-    public RealmManager getRealmManager() {
-        return realmManager;
-    }
-
-    // ✅ ADD EXP
     public void addExp(Player player, double amount) {
-        if (amount <= 0 || amount > 1000) return; // anti exploit
+
+        if (amount <= 0 || amount > 1000) return;
 
         Cultivator cultivator = playerManager.get(player.getUniqueId());
         if (cultivator == null) return;
 
-        // 🔔 CALL EVENT
         PlayerExpGainEvent event = new PlayerExpGainEvent(player, amount);
         Bukkit.getPluginManager().callEvent(event);
 
         double finalAmount = event.getAmount();
         if (finalAmount <= 0) return;
 
-        cultivator.setExp(cultivator.getExp() + finalAmount);
-
-        checkLevelUp(player, cultivator);
+        Bukkit.getScheduler().runTask(AoiPlugin.get(), () -> {
+            cultivator.setExp(cultivator.getExp() + finalAmount);
+            checkLevelUp(player, cultivator);
+        });
     }
 
-    // 🔼 LEVEL UP
     private void checkLevelUp(Player player, Cultivator cultivator) {
+
         Realm realm = realmManager.getRealm(cultivator.getRealm());
         if (realm == null) return;
 
-        while (true) {
+        int safety = 0;
+
+        while (safety++ < 100) {
+
             int level = cultivator.getLevel();
 
             if (level >= realm.getMaxLevel()) {
@@ -63,10 +61,10 @@ public class CultivationService {
             if (data == null) break;
 
             if (cultivator.getExp() >= data.getExpRequired()) {
+
                 cultivator.setExp(cultivator.getExp() - data.getExpRequired());
                 cultivator.setLevel(level + 1);
 
-                // 🔔 LEVEL EVENT
                 Bukkit.getPluginManager().callEvent(
                         new PlayerLevelUpEvent(
                                 player,
@@ -80,12 +78,9 @@ public class CultivationService {
         }
     }
 
-    // 🌩️ RANK UP
     private void handleRankUp(Player player, Cultivator cultivator, Realm realm) {
 
         if (realm.isTribulation()) {
-
-            player.sendMessage("§c⚡ Thiên kiếp bắt đầu!");
 
             new TribulationTask(player, playerManager, realm.getDuration(), this)
                     .runTaskTimer(AoiPlugin.get(), 0L, 20L);
@@ -103,7 +98,9 @@ public class CultivationService {
         Bukkit.getPluginManager().callEvent(
                 new PlayerLevelUpEvent(player, oldRealm, newRealm, 1)
         );
+    }
 
-        player.sendMessage("§6Đột phá cảnh giới: " + newRealm);
+    public RealmManager getRealmManager() {
+        return realmManager;
     }
 }
