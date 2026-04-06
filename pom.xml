@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>vn.aoi.onii</groupId>
-    <artifactId>aoi-plugin</artifactId>
+    <artifactId>kawaii</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
