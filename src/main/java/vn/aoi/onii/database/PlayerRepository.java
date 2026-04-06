@@ -2,45 +2,33 @@ package vn.aoi.onii.database;
 
 import vn.aoi.onii.model.Cultivator;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerRepository {
 
-    private final DatabaseManager database;
+    private final DatabaseManager db;
+    private final DatabaseExecutor executor;
 
-    public PlayerRepository(DatabaseManager database) {
-        this.database = database;
-        init();
+    public PlayerRepository(DatabaseManager db, DatabaseExecutor executor) {
+        this.db = db;
+        this.executor = executor;
     }
 
-    private void init() {
-        try (Connection conn = database.getConnection();
-             PreparedStatement ps = conn.preparedStatement(sql)) {
+    // ================= LOAD =================
 
-            ps.execute("""
-                CREATE TABLE IF NOT EXISTS players (
-                    uuid TEXT PRIMARY KEY,
-                    realm TEXT,
-                    level INTEGER,
-                    exp DOUBLE
-                )
-            """);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // 🔍 LOAD
     public CompletableFuture<Cultivator> load(UUID uuid) {
-        return CompletableFuture.supplyAsync(() -> {
-            try (Connection conn = database.getConnection();
+        return executor.supply(() -> {
+
+            try (Connection conn = db.getConnection();
                  PreparedStatement ps = conn.prepareStatement(
-                            String sql = "SELECT * FROM players WHERE uuid = ?")) {
+                         "SELECT * FROM cultivators WHERE uuid=?")) {
 
                 ps.setString(1, uuid.toString());
+
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
@@ -52,7 +40,7 @@ public class PlayerRepository {
                             .build();
                 }
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -60,45 +48,26 @@ public class PlayerRepository {
         });
     }
 
-    // 💾 SAVE / UPSERT
-    public CompletableFuture<Void> save(Cultivator cultivator) {
-        return CompletableFuture.runAsync(() -> {
-            try (Connection conn = database.getConnection();
-                 PreparedStatement ps = conn.prepareStatement("""
-                        INSERT INTO players(uuid, realm, level, exp)
-                        VALUES (?, ?, ?, ?)
-                        ON CONFLICT(uuid) DO UPDATE SET
-                        realm = excluded.realm,
-                        level = excluded.level,
-                        exp = excluded.exp
-                 """)) {
+    // ================= SAVE =================
 
-                ps.setString(1, cultivator.getUuid().toString());
-                ps.setString(2, cultivator.getRealm());
-                ps.setInt(3, cultivator.getLevel());
-                ps.setDouble(4, cultivator.getExp());
+    public void save(Cultivator c) {
 
-                ps.executeUpdate();
+        executor.execute(() -> {
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    // ❌ DELETE
-    public CompletableFuture<Void> delete(UUID uuid) {
-        return CompletableFuture.runAsync(() -> {
-            try (Connection conn = database.getConnection();
+            try (Connection conn = db.getConnection();
                  PreparedStatement ps = conn.prepareStatement(
-                         "DELETE FROM players WHERE uuid = ?")) {
+                         "REPLACE INTO cultivators (uuid, realm, level, exp) VALUES (?, ?, ?, ?)")) {
 
-                ps.setString(1, uuid.toString());
+                ps.setString(1, c.getUuid().toString());
+                ps.setString(2, c.getRealm());
+                ps.setInt(3, c.getLevel());
+                ps.setDouble(4, c.getExp());
+
                 ps.executeUpdate();
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
-} 
+}
