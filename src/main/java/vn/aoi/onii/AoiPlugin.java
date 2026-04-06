@@ -78,7 +78,7 @@ public class AoiPlugin extends JavaPlugin {
         new SaveTask(playerManager)
                 .runTaskTimerAsynchronously(this, interval * 20L, interval * 20L);
 
-        getLogger().info("AoiChan Plugin Enabled!");
+        getLogger().info("AoiChan Plugin 【ON】");
     }
 
     @Override
@@ -90,7 +90,7 @@ public class AoiPlugin extends JavaPlugin {
         // 🔌 Close DB
         database.shutdown();
 
-        getLogger().info("AoiChan Plugin Disabled!");
+        getLogger().info("AoiChan Plugin 【OFF】");
     }
 
     public static AoiPlugin get() {
