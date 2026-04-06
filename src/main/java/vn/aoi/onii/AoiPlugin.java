@@ -17,19 +17,25 @@ public class AoiPlugin extends JavaPlugin {
 
     private static AoiPlugin instance;
 
+    private ConfigManager configManager;
+    
     private DatabaseManager database;
     private DatabaseExecutor executor;
 
     private PlayerManager playerManager;
     private CultivationService cultivationService;
     private RealmManager realmManager;
-
+    
     @Override
     public void onEnable() {
 
         instance = this;
 
         saveDefaultConfig();
+
+        // ================= CONFIG ===================
+        
+        configManager = new ConfigManager(this);
 
         // ================= DATABASE =================
 
@@ -74,8 +80,14 @@ public class AoiPlugin extends JavaPlugin {
         getLogger().info("Aoi Plugin【OFF】");
     }
 
+    // =============== GETTER ===============
+
     public static AoiPlugin get() {
         return instance;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 
     public PlayerManager getPlayerManager() {
