@@ -12,6 +12,7 @@ import vn.aoi.onii.database.PlayerRepository;
 import vn.aoi.onii.manager.CultivationService;
 import vn.aoi.onii.manager.PlayerManager;
 import vn.aoi.onii.manager.RealmManager;
+import vn.aoi.onii.config.ConfigManager;
 
 public class AoiPlugin extends JavaPlugin {
 
