@@ -28,6 +28,8 @@ realms:
       2: { exp: 350, phase: "Trung kỳ" }
       3: { exp: 450, phase: "Hậu kỳ" }
       4: { exp: 500, phase: "Viên mãn" }
+    is-tribulation: true
+    duration: 30
 
   "Kim đan":
     next-rank: "Nguyên anh"
@@ -37,6 +39,8 @@ realms:
       2: { exp: 350, phase: "Trung kỳ" }
       3: { exp: 450, phase: "Hậu kỳ" }
       4: { exp: 500, phase: "Viên mãn" }
+    is-tribulation: true
+    duration: 30
 
   "Nguyên anh":
     next-rank: "Hóa thần"
@@ -47,16 +51,132 @@ realms:
       3: { exp: 450, phase: "Hậu kỳ" }
       4: { exp: 500, phase: "Viên mãn" }
 
-  "Độ kiếp":
-    next-rank: "Chân tiên"
+  "Hóa thần":
+    next-rank: "Phản hư"
     max-level: 4
     levels:
-      1: { exp: 1000, phase: "Nhập đạo" }
-      2: { exp: 1500, phase: "Ngộ đạo" }
-      3: { exp: 2000, phase: "Dung đạo" }
-      4: { exp: 3000, phase: "Hóa đạo" }
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Phản hư":
+    next-rank: "Hợp thể"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Hợp thể":
+    next-rank: "Đại thừa"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Đại thừa":
+    next-rank: "Độ kiếp"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Độ kiếp":
+    next-rank: "Thiên tiên"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
     is-tribulation: true
     duration: 30
+
+  "Thiên tiên":
+    next-rank: "Địa tiên"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Địa tiên":
+    next-rank: "Kim tiên"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Kim tiên":
+    next-rank: "Thái ất"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Thái ất":
+    next-rank: "Đại la"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Đại la":
+    next-rank: "Hỗn nguyên"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Sơ kỳ" }
+      2: { exp: 350, phase: "Trung kỳ" }
+      3: { exp: 450, phase: "Hậu kỳ" }
+      4: { exp: 500, phase: "Viên mãn" }
+
+  "Hỗn nguyên":
+    next-rank: "Thánh nhân"
+    max-level: 4
+    levels:
+      1: { exp: 1000, phase: "Sơ kỳ" }
+      2: { exp: 1500, phase: "Trung kỳ" }
+      3: { exp: 2000, phase: "Hậu kỳ" }
+      4: { exp: 3000, phase: "Viên mãn" }
+
+  "Thánh nhân":
+    next-rank: "Đạo tổ"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Vấn thánh" }
+      2: { exp: 350, phase: "Hiển thánh" }
+      3: { exp: 450, phase: "Chân thánh" }
+      4: { exp: 500, phase: "Chí thánh" }
+
+  "Đạo tổ":
+    next-rank: "Siêu thoát"
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Tham đạo" }
+      2: { exp: 350, phase: "Chưởng đạo" }
+      3: { exp: 450, phase: "Ngự đạo" }
+      4: { exp: 500, phase: "Hợp đạo" }
+
+  "Siêu thoát":
+    max-level: 4
+    levels:
+      1: { exp: 250, phase: "Lìa trần" }
+      2: { exp: 350, phase: "Nghịch mệnh" }
+      3: { exp: 450, phase: "Vô ngã" }
+      4: { exp: 500, phase: "Vô thượng" }
 
 mobs-exp:
   ZOMBIE: 1
