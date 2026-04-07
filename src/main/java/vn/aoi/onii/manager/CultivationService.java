@@ -41,7 +41,6 @@ public class CultivationService {
 
             cultivator.setExp(cultivator.getExp() + finalAmount);
 
-            // ✅ MESSAGE EXP
             player.sendMessage(
                     config.getMessage("exp.gain",
                             "%amount%", String.valueOf(finalAmount))
