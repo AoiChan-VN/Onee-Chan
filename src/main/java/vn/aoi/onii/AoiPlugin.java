@@ -60,7 +60,12 @@ public class AoiPlugin extends JavaPlugin {
 
         acf.registerCommand(new AoiCommand(playerManager, cultivationService));
 
+        getLogger().info("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         getLogger().info("Aoi Plugin【ON】");
+        getLogger().info("Tên: " + getDescription().getName());
+        getLogger().info("Phiên bản: " + getDescription().getVersion());
+        getLogger().info("Tác giả: " + getDescription().getAuthors());
+        getLogger().info("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"); 
     }
 
     @Override
@@ -74,7 +79,10 @@ public class AoiPlugin extends JavaPlugin {
             database.close();
         }
 
+        getLogger().info("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         getLogger().info("Aoi Plugin【OFF】");
+        getLogger().info("Thanks my friend");
+        getLogger().info("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");  
     }
 
     // =============== GETTER ===============
