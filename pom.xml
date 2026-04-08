@@ -37,7 +37,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mysql<groupId>
+            <groupId>com.mysql</groupId>
             <artifacId>mysql-connector-j</artifacId>
             <version>9.1.0</version>
             <scope>compile</scope>
