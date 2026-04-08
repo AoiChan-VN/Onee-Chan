@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>AoiChan</name>
-    <description>AoiChan Plugin</description>
+    <description>Aoi-12.9.2026</description>
 
     <properties>
         <java.version>21</java.version>
