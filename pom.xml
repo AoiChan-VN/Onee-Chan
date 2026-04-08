@@ -35,27 +35,39 @@
             <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.mysql<groupId>
+            <artifacId>mysql-connector-j</artifacId>
+            <version>9.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+             
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.1.0</version>
         </dependency>
+             
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
         </dependency>
+             
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>3.1.8</version>
         </dependency>
+             
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
+             
         <dependency>
             <groupId>co.aikar</groupId>
             <artifactId>acf-paper</artifactId>
@@ -100,26 +112,36 @@
                             <!-- Relocation: Tránh xung đột với plugin khác -->
                             <relocations>
                                 <relocation>
+                                    <pattern>com.mysql</pattern>
+                                    <shadedPattern>vn.aoi.onii.libs.mysql</shadedPattern>
+                                </relocation>
+                                     
+                                <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
                                     <shadedPattern>vn.aoi.onii.libs.hikari</shadedPattern>
                                 </relocation>
+                                     
                                 <relocation>
                                     <pattern>com.github.benmanes.caffeine</pattern>
                                     <shadedPattern>vn.aoi.onii.libs.caffeine</shadedPattern>
                                 </relocation>
+                                     
                                 <relocation>
                                     <pattern>co.aikar.commands</pattern>
                                     <shadedPattern>vn.aoi.onii.libs.acf</shadedPattern>
                                 </relocation>
+                                     
                                 <relocation>
                                     <pattern>co.aikar.locales</pattern>
                                     <shadedPattern>vn.aoi.onii.libs.locales</shadedPattern>
                                 </relocation>
                             </relocations>
+                                 
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
+                                 
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
