@@ -3,7 +3,8 @@ version: 1.0
 main: vn.aoi.onii.AoiPlugin
 api-version: 1.21
 
-author: AoiChan
+authors: [AoiChan]
+website: https://github.com/AoiChan-VN/Onii
 description: Cultivation System Plugin
 
 commands:
