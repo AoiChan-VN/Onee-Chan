@@ -188,7 +188,7 @@
                                         
                                         <exclude>META-INF/LICENSE*</exclude>
                                         <exclude>META-INF/NOTICE*</exclude>
-                                        <exclude>META-INF/MF</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
                 
                                         <!-- Xóa chữ ký của các thư viện ngoài (để tránh lỗi SecurityException) -->
                                         <exclude>META-INF/*.SF</exclude>
