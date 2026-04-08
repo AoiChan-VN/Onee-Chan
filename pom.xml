@@ -176,17 +176,19 @@
                             <!-- Clean but safe -->
                             <filters>
                                 <filter>
-                                    <artifact>org.slf4j:*</artifact>
-                                    <artifact>org.xerial:sqlite-jdbc</artifact>
-                                    <artifact>com.zaxxer:HikariCP</artifact>
-                                    <artifact>com.github.aikar:acf-paper</artifact>
-                                    <artifact>com.github.ben-manes.caffeine:caffeine</artifact>
-                                    <artifact>com.google.protobuf:protobuf-java</artifact>
+                                    <!-- Lọc tất cả artifact ngoại trừ plugin của bạn -->
+                                    <artifact>*:*</artifact>
                                     <excludes>
+                                        <!-- Xóa các file module-info gây lỗi 'strong encapsulation' -->
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/versions/9/module-info.class</exclude>
+                                             
+                                        <!-- Xóa Manifest/License của thư viện ngoài (Maven sẽ giữ lại cái của plugin bạn) -->
                                         <exclude>META-INF/MANIFEST.MF</exclude>
                                         <exclude>META-INF/LICENSE*</exclude>
                                         <exclude>META-INF/NOTICE*</exclude>
-                                        <exclude>META-INF/versions/9/module-info.class</exclude>
+                
+                                        <!-- Xóa chữ ký của các thư viện ngoài (để tránh lỗi SecurityException) -->
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
