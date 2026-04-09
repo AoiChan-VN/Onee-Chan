@@ -51,14 +51,13 @@ public class AoiPlugin extends JavaPlugin {
 
         playerManager = new PlayerManager();
         realmManager = new RealmManager(configManager);
-
-        cultivationService = new CultivationService(expService);
-
-        // ================ EXP | MOB ===============
-        
-        expService = new ExpService(playerManager, realmManager, configManager);
         mobManager = new MobManager(configManager);
 
+        // =============== SERVICE ===============
+        
+        cultivationService = new CultivationService(expService);
+        expService = new ExpService(playerManager, realmManager, configManager);
+        
         // ================= ACF =================
 
         PaperCommandManager acf = new PaperCommandManager(this);
@@ -117,7 +116,8 @@ public class AoiPlugin extends JavaPlugin {
 
     public ExpService getExpService() {
         return expService;
-
+    }
+    
     public MobManager getMobManager() {
         return mobManager;
     }
