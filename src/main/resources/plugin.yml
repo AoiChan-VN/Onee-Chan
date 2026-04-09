@@ -1,5 +1,5 @@
 name: AoiChan
-version: 1.0
+version: ${project.version}
 main: vn.aoi.onii.AoiPlugin
 api-version: 1.21
 
