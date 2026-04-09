@@ -47,7 +47,7 @@ public class ConfigManager {
         realms = YamlConfiguration.loadConfiguration(realmsFile);
 
         // mobs.yml
-        mobsFile = new File(plugin.getDataFolder(), "mobs.yml";
+        mobsFile = new File(plugin.getDataFolder(), "mobs.yml");
         if (!mobsFile.exists()) {
             plugin.saveResource("mobs.yml", false);
         }
@@ -58,6 +58,7 @@ public class ConfigManager {
         config = plugin.getConfig();
         messages = YamlConfiguration.loadConfiguration(messagesFile);
         realms = YamlConfiguration.loadConfiguration(realmsFile);
+        mobs = YamlConfiguration.loadConfiguration(mobsFile);
     }
 
     public void saveRealms() {
