@@ -13,6 +13,7 @@ public class RealmManager {
 
     private final Map<String, Realm> realms = new HashMap<>();
     private final Map<String, String> originalNames = new HashMap<>();
+    
     private final ConfigManager configManager;
 
     public RealmManager(ConfigManager configManager) {
@@ -44,7 +45,7 @@ public class RealmManager {
                     .levels(levels)
                     .build();
 
-            String lowerKey = Key.toLowerCase(Locale.ROOT);
+            String lowerKey = key.toLowerCase(Locale.ROOT);
             realms.put(lowerKey, realm);
             originalNames.put(lowerKey, key);
         }
