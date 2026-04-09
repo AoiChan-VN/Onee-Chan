@@ -60,7 +60,12 @@ public class AoiPlugin extends JavaPlugin {
         expService = new ExpService(playerManager, realmManager, configManager);
         cultivationService = new CultivationService(expService);
 
-        getServer().getPluginManager().registerEvents( new MobKillListener(mobManager, cultivationService, configManager), this ); } }
+        getServer().getPluginManager().registerEvents(
+                new MobKillListener(mobManager, cultivationService, configManager),
+                this
+        );
+    }
+}
 
         // ================= ACF =================
 
