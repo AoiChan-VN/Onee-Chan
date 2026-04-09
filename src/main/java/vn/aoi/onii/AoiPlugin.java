@@ -7,7 +7,7 @@ import vn.aoi.onii.commands.AoiCommand;
 import vn.aoi.onii.commands.context.*;
 import vn.aoi.onii.database.*;
 import vn.aoi.onii.config.ConfigManager;
-import vn.aoi.onii.listener.MobkillListener;
+import vn.aoi.onii.listener.MobKillListener;
 import vn.aoi.onii.manager.*;
 import vn.aoi.onii.service.ExpService;
 
