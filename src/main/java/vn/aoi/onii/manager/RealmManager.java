@@ -4,10 +4,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import vn.aoi.onii.config.ConfigManager;
 import vn.aoi.onii.model.Realm;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RealmManager {
 
