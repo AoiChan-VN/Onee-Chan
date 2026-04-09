@@ -25,7 +25,7 @@ public class MobKillListener implements Listener {
 
         EntityType type = event.getEntityType();
 
-        double exp = config.getDouble("mobs-exp." + type.name(), 0);
+        double exp = mobManager.getExp(entity.getType());
 
         if (exp <= 0) return;
 
