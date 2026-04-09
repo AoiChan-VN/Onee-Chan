@@ -86,6 +86,10 @@ public class ConfigManager {
         return msg;
     }
 
+    public String getPrefix() {
+        return color(config.getString("prefix", ""));
+    }
+
     private String color(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
