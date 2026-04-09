@@ -9,6 +9,8 @@ import vn.aoi.onii.api.PlayerLevelUpEvent;
 import vn.aoi.onii.config.ConfigManager;
 import vn.aoi.onii.model.Cultivator;
 import vn.aoi.onii.model.Realm;
+import vn.aoi.onii.manager.PlayerManager;
+import vn.aoi.onii.manager.RealmManager;
 import vn.aoi.onii.task.TribulationTask;
 
 public class CultivationService {
