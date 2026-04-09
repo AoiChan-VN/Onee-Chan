@@ -20,15 +20,14 @@ public class MobKillListener implements Listener {
 
     @EventHandler
     public void onKill(EntityDeathEvent event) {
-        Player killer = event.getEntity().getKiller();
-        if (killer == null) return;
+        if (!(event.getEntity().getKiller() instanceof Player player)) return;
 
-        EntityType type = event.getEntityType();
-
-        double exp = config.getDouble("mobs-exp." + type.name(), 0);
-
+        double exp = mobManager.getExp(event.getEntityType());
         if (exp <= 0) return;
 
-        cultivationService.addExp(killer, exp);
+        cultivationService.addExp(player, exp);
+
+        player.sendMessage(config.getMessage("exp.gain",
+                "%amount%", String.valueOf(exp)));
     }
 }
