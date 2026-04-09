@@ -178,13 +178,3 @@ realms:
       "2": { exp: 350, phase: "Nghịch mệnh" }
       "3": { exp: 450, phase: "Vô ngã" }
       "4": { exp: 500, phase: "Vô thượng" }
-
-mobs-exp:
-  ZOMBIE: 1
-  PIG_ZOMBIE: 0.5
-  CREEPER: 1
-  SKELETON: 1
-  WITHER_SKELETON: 2
-  WITHER: 50
-  ENDERMAN: 0.5
-  ENDER_DRAGON: 100
