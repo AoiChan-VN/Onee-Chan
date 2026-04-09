@@ -12,7 +12,7 @@ import java.util.Set;
 public class RealmManager {
 
     private final Map<String, Realm> realms = new HashMap<>();
-    private final Map<String, String> originalNames = new HashMap<>();
+    private final Map<String, String> originalNames = new LinkedHashMap<>();
     
     private final ConfigManager configManager;
 
