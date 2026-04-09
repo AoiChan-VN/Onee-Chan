@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import vn.aoi.onii.api.PlayerLevelUpEvent;
-import vn.aoi.onii.manager.CultivationService;
+import vn.aoi.onii.service.CultivationService;
 import vn.aoi.onii.manager.PlayerManager;
 import vn.aoi.onii.model.Cultivator;
 
