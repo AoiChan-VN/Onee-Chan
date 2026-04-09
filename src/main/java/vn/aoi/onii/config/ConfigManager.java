@@ -15,9 +15,11 @@ public class ConfigManager {
     private FileConfiguration config;
     private FileConfiguration messages;
     private FileConfiguration realms;
+    private FileConfiguration mobs;
 
     private File messagesFile;
     private File realmsFile;
+    private File mobsFile;
 
     public ConfigManager(AoiPlugin plugin) {
         this.plugin = plugin;
@@ -43,6 +45,13 @@ public class ConfigManager {
             plugin.saveResource("realms.yml", false);
         }
         realms = YamlConfiguration.loadConfiguration(realmsFile);
+
+        // mobs.yml
+        mobsFile = new File(plugin.getDataFolder(), "mobs.yml";
+        if (!mobsFile.exists()) {
+            plugin.saveResource("mobs.yml", false);
+        }
+        mobs = YamlConfiguration.loadConfiguration(mobsFile);
     }
 
     public void reload() {
@@ -92,5 +101,9 @@ public class ConfigManager {
 
     public FileConfiguration getRealms() {
         return realms;
+    }
+
+    public FileConfiguration getMobs() {
+        return mobs;
     }
 }
