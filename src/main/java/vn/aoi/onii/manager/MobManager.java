@@ -34,7 +34,6 @@ public class MobManager {
 
                 mobExp.put(type, exp);
             } catch (IllegalArgumentException ignored) {
-                // mob sai tên ➺ bỏ qua
             }
         }
     }
