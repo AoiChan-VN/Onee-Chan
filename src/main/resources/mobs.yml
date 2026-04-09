@@ -1,1 +1,8 @@
-
+mobs-exp:
+  ZOMBIE: 1
+  SKELETON: 1
+  CREEPER: 1
+  SPIDER: 0.8
+  ENDERMAN: 2
+  WITHER: 50
+  ENDER_DRAGON: 100
