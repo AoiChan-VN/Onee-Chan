@@ -19,9 +19,11 @@ public class AoiPlugin extends JavaPlugin {
     private DatabaseManager database;
     private DatabaseExecutor executor;
 
-    private PlayerManager playerManager;
-    private CultivationService cultivationService;
     private RealmManager realmManager;
+    private PlayerManager playerManager;
+    private ExpService expService;
+    private CultivationService cultivationService;
+    private MobManager mobManager;
     
     @Override
     public void onEnable() {
@@ -47,10 +49,15 @@ public class AoiPlugin extends JavaPlugin {
 
         // ================= MANAGER =================
 
-        playerManager = new PlayerManager(repository);
+        playerManager = new PlayerManager();
         realmManager = new RealmManager(configManager);
 
-        cultivationService = new CultivationService(playerManager, realmManager, configManager);
+        cultivationService = new CultivationService(expService);
+
+        // ================ EXP | MOB ===============
+        
+        expService = new ExpService(playerManager, realmManager, configManager);
+        mobManager = new MobManager(configManager);
 
         // ================= ACF =================
 
@@ -100,11 +107,18 @@ public class AoiPlugin extends JavaPlugin {
         return playerManager;
     }
 
+    public RealmManager getRealmManager() {
+        return realmManager;
+    }
+
     public CultivationService getCultivationService() {
         return cultivationService;
     }
 
-    public RealmManager getRealmManager() {
-        return realmManager;
+    public ExpService getExpService() {
+        return expService;
+
+    public MobManager getMobManager() {
+        return mobManager;
     }
 }
