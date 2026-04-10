@@ -18,7 +18,7 @@ public class AoiCommand extends BaseCommand {
     private final PlayerManager playerManager;
     private final RealmManager realmManager;
 
-    public AoiCommand(PlayerManager playerManager, RealmManager rralmManager) {
+    public AoiCommand(PlayerManager playerManager, RealmManager realmManager) {
         this.playerManager = playerManager;
         this.realmManager = realmManager;
     }
