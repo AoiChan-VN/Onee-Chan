@@ -22,10 +22,10 @@ public class AoiPlugin extends JavaPlugin {
 
     private RealmManager realmManager;
     private PlayerManager playerManager;
-    private MobManager mobManager;
 
     private ExpService expService;
     private CultivationService cultivationService;
+    private MobManager mobManager;
     
     @Override
     public void onEnable() {
@@ -51,14 +51,15 @@ public class AoiPlugin extends JavaPlugin {
 
         // ================= MANAGER =================
 
+        realmManaget = new RealmManager(configManager);
         playerManager = new PlayerManager(repository);
-        realmManager = new RealmManager(configManager);
-        mobManager = new MobManager(configManager);
-
-        // =============== SERVICE ===============
         
         expService = new ExpService(playerManager, realmManager, configManager);
         cultivationService = new CultivationService(expService);
+
+        mobManager = new MobManager(configManager);
+
+        // register listener
 
         // ================= ACF =================
 
