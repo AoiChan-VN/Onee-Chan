@@ -8,7 +8,8 @@ import vn.aoi.onii.commands.context.*;
 import vn.aoi.onii.database.*;
 import vn.aoi.onii.config.ConfigManager;
 import vn.aoi.onii.listener.MobKillListener;
-import vn.aoi.onii.manager.*;
+import vn.aoi.onii.manager.PlayerManager;
+import vn.aoi.onii.manager.RealmManager;
 import vn.aoi.onii.service.*;
 
 public class AoiPlugin extends JavaPlugin {
