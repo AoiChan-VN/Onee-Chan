@@ -16,7 +16,7 @@ import vn.aoi.onii.service.CultivationService;
 public class AoiCommand extends BaseCommand {
 
     private final PlayerManager playerManager;
-    private final Cultivation service;
+    private final CultivationService service;
 
     public AoiCommand(PlayerManager playerManager, CultivationService service) {
         this.playerManager = playerManager;
