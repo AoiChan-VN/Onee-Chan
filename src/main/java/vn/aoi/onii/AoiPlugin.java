@@ -58,8 +58,6 @@ public class AoiPlugin extends JavaPlugin {
         expService = new ExpService(playerManager, realmManager, configManager);
         cultivationService = new CultivationService(expService);
 
-        // register listener
-
         // ================= ACF =================
 
         PaperCommandManager acf = new PaperCommandManager(this);
@@ -67,7 +65,7 @@ public class AoiPlugin extends JavaPlugin {
         ACFContext.register(acf);
         ACFCompletion.register(acf, realmManager);
 
-        acf.registerCommand(new AoiCommand(playerManager);
+        acf.registerCommand(new AoiCommand(playerManager));
  
         getLogger().info("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         getLogger().info("Aoi Plugin【ON】");
