@@ -7,8 +7,7 @@ import vn.aoi.onii.commands.AoiCommand;
 import vn.aoi.onii.commands.context.*;
 import vn.aoi.onii.database.*;
 import vn.aoi.onii.config.*;
-import vn.aoi.onii.listener.MobKillListener;
-import vn.aoi.onii.listener.ConnectionListener;
+import vn.aoi.onii.listener.*;
 import vn.aoi.onii.manager.*;
 import vn.aoi.onii.service.*;
 
@@ -64,7 +63,7 @@ public class AoiPlugin extends JavaPlugin {
             this
         );
         getServer().getPluginManager().registerEvents(
-            new connectionListener(playerManager),
+            new ConnectionListener(playerManager),
             this
         );
 
