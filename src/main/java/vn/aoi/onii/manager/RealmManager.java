@@ -38,7 +38,7 @@ public class RealmManager {
                     .nextRank(r.getString("next-rank", null))
                     .maxLevel(r.getInt("max-level", levels.size()))
                     .tribulation(r.getBoolean("is-tribulation", false))
-                    .broadcast(r.getboolean("tribulation.broadcast", false))
+                    .broadcast(r.getBoolean("tribulation.broadcast", false))
                     .strikes(r.getInt("tribulation.strikes", 3))
                     .damage(r.getDouble("tribulation.damage", 4.0))
                     .interval(r.getInt("tribulation.interval", 40))
