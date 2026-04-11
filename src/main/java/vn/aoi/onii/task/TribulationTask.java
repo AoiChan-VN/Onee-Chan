@@ -9,27 +9,29 @@ import vn.aoi.onii.api.PlayerLevelUpEvent;
 import vn.aoi.onii.manager.PlayerManager;
 import vn.aoi.onii.manager.RealmManager;
 import vn.aoi.onii.model.Cultivator;
-
-import java.util.Random;
+import vn.aoi.onii.model.Realm;
 
 public class TribulationTask extends BukkitRunnable {
 
     private final Player player;
     private final PlayerManager playerManager;
     private final RealmManager realmManager;
-    private final int totalStrikes;
     
+    private final int totalStrikes;
+    private final double damage;
     private int strikesDone = 0;
-    private final Random random = new Random();
 
-    public TribulationTask(Player player, PlayerManager playerManager, RealmManager realmManager, int strikes) {
+    public TribulationTask(Player player, 
+                          PlayerManager playerManager, 
+                          RealmManager realmManager, 
+                          Realm realmData) {
         this.player = player;
         this.playerManager = playerManager;
         this.realmManager = realmManager;
-        this.totalStrikes = strikes;
+        this.totalStrikes = realmData.getStrikes();
+        this.damage = realmData.getDamage();
 
-        // Làm trời tối sầm lại (Chỉ riêng Player này thấy)
-        // 18000 là thời điểm nửa đêm trong Minecraft
+        // Hiệu ứng bắt đầu: Trời tối cục bộ
         player.setPlayerTime(18000, false);
         player.sendMessage("§8[!] Thiên địa biến sắc, lôi kiếp đang tụ lại...");
     }
@@ -37,60 +39,50 @@ public class TribulationTask extends BukkitRunnable {
     @Override
     public void run() {
         if (!player.isOnline() || player.isDead()) {
-            endTribulation();
-            this.cancel();
+            stopTask();
             return;
         }
 
         if (strikesDone >= totalStrikes) {
             success();
-            endTribulation();
-            this.cancel();
+            stopTask();
             return;
         }
 
-        Location loc = player.getLocation();
         strikesDone++;
+        Location loc = player.getLocation();
 
-        // Sét đánh trực diện từ trên cao xuống vị trí Player
-        Location skyLoc = loc.clone();
-        skyLoc.setY(loc.getWorld().getHighestBlockYAt(loc));
-        loc.getWorld().strikeLightning(skyLoc);
+        // Sét đánh thẳng vào vị trí cao nhất trên đầu player
+        Location strikeLoc = loc.clone();
+        strikeLoc.setY(loc.getWorld().getHighestBlockYAt(loc));
+        player.getWorld().strikeLightning(strikeLoc);
 
-        // Gây sát thương tăng dần (bỏ qua giáp nếu muốn bằng cách dùng damage trực tiếp)
-        double damageAmount = 2.0 + (strikesDone * 2.0); 
-        player.damage(damageAmount);
-
-        // Âm thanh uy lực
-        player.playSound(loc, org.bukkit.Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.2f, 0.5f + (strikesDone * 0.1f));
+        // Gây sát thương tăng dần theo số đợt
+        player.damage(damage + (strikesDone * 1.5)); 
         
-        player.sendMessage("§c⚡ Đạo lôi kiếp thứ " + strikesDone + " giáng xuống!");
-        
-        // Hiệu ứng mù quáng nhẹ mỗi lần sét đánh trúng
-        player.addPotionEffect(new org.bukkit.potion.PotionEffect(
-                org.bukkit.potion.PotionEffectType.BLINDNESS, 40, 0));
+        // Âm thanh và thông báo
+        player.playSound(loc, org.bukkit.Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1f, 0.5f + (strikesDone * 0.1f));
+        player.sendMessage("§c⚡ Đạo lôi kiếp thứ " + strikesDone + "/" + totalStrikes + "!");
     }
 
     private void success() {
         Cultivator c = playerManager.get(player.getUniqueId());
         if (c == null) return;
 
-        String oldRealm = c.getRealm();
-        String nextRealm = realmManager.getRealm(oldRealm).getNextRank();
+        String old = c.getRealm();
+        Realm realmData = realmManager.getRealm(old);
+        String next = realmData.getNextRank();
 
-        c.setRealm(nextRealm);
+        c.setRealm(next);
         c.setLevel(1);
         c.setExp(0);
 
-        Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(player, oldRealm, nextRealm, 1));
-        player.sendMessage("§b⚡ Chúc mừng! Bạn đã đột phá thành công lên " + nextRealm);
-        player.playSound(player.getLocation(), org.bukkit.Sound.UI_TOAST_CHALLENGE_COMPLETE, 1f, 1f);
+        Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(player, old, next, 1));
+        player.sendMessage("§b⚡ Chúc mừng! Bạn đã vượt qua " + totalStrikes + " đạo lôi kiếp, đột phá lên " + next);
     }
 
-    private void endTribulation() {
-        // Trả lại thời gian thực của Server cho Player
-        if (player.isOnline()) {
-            player.resetPlayerTime();
-        }
+    private void stopTask() {
+        if (player.isOnline()) player.resetPlayerTime();
+        this.cancel();
     }
 }
