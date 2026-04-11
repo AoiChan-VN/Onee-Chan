@@ -1,3 +1,8 @@
+# ================================== #
+# strikes: Số lần sét đánh           #
+# damage: trừ số lượng HP            #
+# interval: khoảng cách mỗi lần sét  #
+# ================================== #
 realms:
 
   "Phàm nhân":
@@ -24,7 +29,10 @@ realms:
     next-rank: "Kim đan"
     max-level: 4
     is-tribulation: true
-    duration: 30
+    tribulation:
+      strikes: 3
+      damage: 4.0
+      interval: 40
     levels:
       "1": { exp: 250, phase: "Sơ kỳ" }
       "2": { exp: 350, phase: "Trung kỳ" }
