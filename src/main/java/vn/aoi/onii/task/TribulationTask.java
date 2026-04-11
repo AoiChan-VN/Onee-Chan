@@ -45,7 +45,6 @@ public class TribulationTask extends BukkitRunnable {
         strikesDone++;
         Location loc = player.getLocation();
         
-        // Sét đánh từ đỉnh trời xuống tọa độ X Z của player
         Location strikeLoc = loc.clone();
         strikeLoc.setY(loc.getWorld().getHighestBlockYAt(loc));
         loc.getWorld().strikeLightning(strikeLoc);
