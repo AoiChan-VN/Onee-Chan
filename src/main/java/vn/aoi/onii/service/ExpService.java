@@ -40,10 +40,9 @@ public class ExpService {
             double required = data.getExpRequired();
             if (exp < required) break;
 
-            // Kiểm tra mốc đột phá cảnh giới
             if (level >= realm.getMaxLevel()) {
                 handleRealmUp(player, cultivator, realm);
-                return; // Dừng cộng EXP để đợi độ kiếp
+                return;
             }
 
             exp -= required;
@@ -61,10 +60,16 @@ public class ExpService {
         if (realm.isTribulation()) {
             player.sendMessage(config.getMessage("tribulation.start"));
 
+            if (realm.isBroadcast()) {
+                String msg = config.getMessage("tribulation.broadcast", 
+                        "%player%", player.getName(), 
+                        "%realm%", realm.getName());
+                Bukkit.broadcastMessage(msg);
+            }
+
             new TribulationTask(player, playerManager, realmManager, realm)
                 .runTaskTimer(AoiPlugin.get(), 0L, realm.getInterval());
         } else {
-            // Lên cấp trực tiếp
             String next = realm.getNextRank();
             cultivator.setRealm(next);
             cultivator.setLevel(1);
