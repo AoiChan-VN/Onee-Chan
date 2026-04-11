@@ -52,7 +52,6 @@ public class AoiCommand extends BaseCommand {
         Cultivator c = playerManager.get(target.getUniqueId());
         if (c != null) {
             c.setExp(c.getExp() + amount);
-            // Bạn có thể thêm logic check level up tại đây nếu RealmManager có hỗ trợ
             sender.sendMessage("§aĐã thêm " + amount + " EXP cho " + target.getName());
         } else {
             sender.sendMessage("§cNgười chơi không tồn tại hoặc chưa load dữ liệu!");
@@ -61,9 +60,8 @@ public class AoiCommand extends BaseCommand {
 
     @Subcommand("setrealm")
     @CommandPermission("aoi.admin")
-    @CommandCompletion("@players @realms") // Giả định bạn đã đăng ký @realms trong ACF
     public void onSetRealm(CommandSender sender, OfflinePlayer target, String realm) {
-        // Sử dụng realmManager trực tiếp thay vì qua service
+        
         if (!realmManager.exists(realm)) {
             sender.sendMessage("§cCảnh giới này không tồn tại!");
             return;
