@@ -62,7 +62,6 @@ public class AoiPlugin extends JavaPlugin {
             new MobKillListener(mobManager, cultivationService, configManager),
             this
         );
-
         getServer().getPluginManager().registerEvents(
             new connectionListener(playerManager),
             this
