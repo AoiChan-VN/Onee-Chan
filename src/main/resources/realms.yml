@@ -1,7 +1,9 @@
 # ================================== #
+# is-tribulation: bật/tắt Lôi kiếp   #
+# broadcast: bật/tắt Thông báo       #
 # strikes: Số lần sét đánh           #
-# damage: trừ số lượng HP            #
-# interval: khoảng cách mỗi lần sét  #
+# damage: Sát thương tia sét         #
+# interval: khoảng cách mỗi lần đánh #
 # ================================== #
 realms:
 
