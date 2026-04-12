@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="Link muốn dùng để click">
-    <img src=".github/readme-images/Aoilogo.jpeg" alt="Aoi Logo" width="200">
+    <img src=".github/readme-logo/Aoi-Logo.mp4" alt="Aoi Logo" width="200">
   </a>
 </p>
 
@@ -29,12 +29,6 @@ https://github.com/AoiChan-VN/Onii/releases
 🔄 Khởi động lại Server
 </div>
 🍀
-  
-<p align="center">
-  <kbd><b><a href="./.github/CONTRIBUTING.md"> 🤝 HƯỚNG DẪN ĐÓNG GÓP </a></b></kbd>
-  &nbsp;&nbsp;
-  <kbd><b><a href="./.github/SECURITY.md"> 🛡️ CHÍNH SÁCH BẢO MẬT </a></b></kbd>
-</p>
 
 <p align="center">
   <sub> <i>Cảm ơn anh đã quan tâm đến dự án <b>AoiChan</b>! 🥀</i> </sub>
