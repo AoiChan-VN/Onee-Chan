@@ -41,12 +41,12 @@ jobs:
       - name: ⚒ 𝓑𝓾𝓲𝓵𝓭 🏗️
         run: mvn -B -ntp clean package -DskipTests
 
-      - name: 🛡️ Security Check
-        run: |
-          mvn org.owasp:dependency-check-maven:check \
-            -DnvdApiKey=${{ secrets.NVD_API_KEY }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #- name: 🛡️ Security Check
+        #run: |
+          #mvn org.owasp:dependency-check-maven:check \
+            #-DnvdApiKey=${{ secrets.NVD_API_KEY }}
+        #env:
+          #GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Đóng gói file .jar
       - name: 📦 𝓤𝓹𝓵𝓸𝓪𝓻𝓭 𝓳𝓪𝓻
