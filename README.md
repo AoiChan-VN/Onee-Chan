@@ -4,9 +4,9 @@
 👅
 <div>
 
-<a href=>
-  <img src=".github/readme-images/aoilogo.png" alt="Onii" width="200">
-</a>
+<p align="center">
+  <img src=".github/readme-images/Aoilogo.jpeg" alt="Aoi Logo" width="200">
+</p>
 
 💎 Plugins:【👻AoiChan💦】
 
