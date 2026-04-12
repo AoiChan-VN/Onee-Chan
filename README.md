@@ -4,16 +4,16 @@
 👅
 <div>
 
-<p align="center">
-  <a href="Link muốn dùng để click">
-    <img src=".github/readme-logo/Aoi-Logo.mp4" alt="Aoi Logo" width="200">
-  </a>
-</p>
+![🏠 GitHub](https://img.shields.io/badge/GitHub-Repo-black?style=for-the-badge&logo=github)
+
 
 [![◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡【👻】](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml/badge.svg)](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml)
 
+
 <p align="center">
-  🍀 https://aoichan-vn.github.io/Onii/
+  <a href="https://aoichan-vn.github.io/Onii/">
+    <img src=".github/readme-logo/Aoi-Logo.mp4" alt="Aoi Logo" width="200">
+  </a>
 </p>
 
 <p align="center">
