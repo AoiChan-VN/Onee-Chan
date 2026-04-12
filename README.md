@@ -28,3 +28,13 @@ https://github.com/AoiChan-VN/Onii/releases
 <div align="center">
 🔄 Khởi động lại Server
 </div>
+
+<p align="center">
+  <a href="./.github/CONTRIBUTING.md">
+    <code><b> [ 🤝 Hướng dẫn đóng góp ] </b></code>
+  </a>
+  &nbsp;&nbsp;
+  <a href="./.github/SECURITY.md">
+    <code><b> [ 🛡️ Chính sách bảo mật ] </b></code>
+  </a>
+</p>
