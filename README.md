@@ -12,7 +12,9 @@
 
 [![◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡【👻】](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml/badge.svg)](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml)
 
-🍀 [![docs](https://aoichan-vn.github.io/Onii/)]
+<p align="center">
+  🍀 https://aoichan-vn.github.io/Onii/
+</p>
 
 <p align="center">
   <sub> <i>Cảm ơn anh đã quan tâm đến dự án <b>AoiChan</b>! 🥀</i> </sub>
