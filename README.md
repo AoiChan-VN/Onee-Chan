@@ -10,7 +10,7 @@
   </a>
 </p>
 
-![Build Status](https://github.com)
+[![◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡【👻】](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml/badge.svg)](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml)
 
 💎 Plugins:【👻AoiChan💦】
 
