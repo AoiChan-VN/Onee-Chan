@@ -1,8 +1,12 @@
-# 🌌 Aoi Cultivation Plugin
+# 🌿☘🌿
 
-Chào mừng đến với hệ thống tu tiên!
+[![🏠 GitHub](https://img.shields.io/badge/GitHub-Repo-black?style=for-the-badge&logo=github)](https://github.com/AoiChan-VN/Onii)
 
-## 🚀 Bắt đầu nhanh
+---
+
+[🏠 Home](https://aoichan-vn.github.io/Onii/)
+
+## 🚀 Thiết yếu
 - [Cài đặt](getting-started.md)
 - [Commands](commands.md)
 - [Permissions](permissions.md)
