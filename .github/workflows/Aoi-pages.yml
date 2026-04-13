@@ -1,5 +1,8 @@
 name: ◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡【📒】
 
+env:
+  ENABLE_ARTIFACT: false
+  
 on:
   push:
     branches: ["main"]
@@ -34,6 +37,7 @@ jobs:
           destination: ./_site
 
       - name: Upload artifact
+        if: ${{ env.ENABLE_ARTIFACT == 'true' }}
         uses: actions/upload-pages-artifact@v3
 
   deploy:
