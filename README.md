@@ -11,7 +11,7 @@
 
 
 <p align="center">
-  <a href="https://aoichan-vn.github.io/Onii/">
+  <a href="https://aoichan-vn.github.io/Aoi/">
     <img src=".github/readme-logo/Logo.gif" alt="Aoi Logo" width="200">
   </a>
 </p>
