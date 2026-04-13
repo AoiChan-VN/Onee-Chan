@@ -18,15 +18,15 @@ on:
       
     #workflow_dispatch:
 
+permissions:
+  actions: write
+  contents: read
+  
 jobs:
   build:
     name: ◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡
     runs-on: ubuntu-latest
-
-    permissions:
-      actions: write
-      contents: read
-
+    
     steps:
       - name: 🔎𝓒𝓱𝓮𝓬𝓴 𝓢𝓸𝓾𝓻𝓬𝓮
         uses: actions/checkout@v5
