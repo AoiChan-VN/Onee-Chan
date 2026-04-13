@@ -1,0 +1,12 @@
+type: SQLITE
+
+sqlite:
+  file: data.db
+
+mysql:
+  host: localhost
+  port: 3306
+  database: onii
+  username: root
+  password: password
+  pool-size: 10 
