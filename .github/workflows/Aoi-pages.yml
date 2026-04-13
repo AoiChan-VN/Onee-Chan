@@ -5,7 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "docs/**"
-  workflow_dispatch:
+  #workflow_dispatch:
 
 permissions:
   contents: read
