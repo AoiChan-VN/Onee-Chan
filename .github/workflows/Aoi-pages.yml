@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: Aoi Docs
 
 on:
   push:
