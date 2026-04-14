@@ -6,10 +6,6 @@
 
 ![🏠 GitHub](https://img.shields.io/badge/GitHub-Repo-black?style=for-the-badge&logo=github)
 
-
-[![◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡【👻】](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml/badge.svg)](https://github.com/AoiChan-VN/Onii/actions/workflows/Aoi-build.yml)
-
-
 <p align="center">
   <a href="https://aoichan-vn.github.io/Aoi/">
     <img src=".github/readme-logo/Logo.gif" alt="Aoi Logo" width="200">
