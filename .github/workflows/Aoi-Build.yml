@@ -23,7 +23,7 @@ permissions:
   contents: read
   
 jobs:
-  build:
+  aoichan:
     name: ◡🥀𝓐𝓸𝓲𝓒𝓱𝓪𝓷🥀◡
     runs-on: ubuntu-latest
     
