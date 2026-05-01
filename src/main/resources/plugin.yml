@@ -4,7 +4,8 @@ main: vn.aoi.onii.AoiPlugin
 api-version: 1.21
 
 authors: [AoiChan]
-website: https://github.com/AoiChan-VN/Onii
+github: https://github.com/AoiChan-VN/Onii
+website: https://aoichan-vn.github.io/Website/
 
 commands:
   aoi:
