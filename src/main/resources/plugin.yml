@@ -1,0 +1,21 @@
+name: CultivationPlugin
+version: 1.0.0
+main: vn.aoi.cultivation.CultivationPlugin
+api-version: 1.20
+author: Aoi
+description: Hệ thống tu tiên toàn diện - economy, realms, drops, rewards, anti-dupe secure pipeline
+
+commands:
+  cultivation:
+    description: Main command for Cultivation system
+    usage: /cultivation
+    aliases: [cult, cp]
+
+permissions:
+  cultivation.admin:
+    description: Full admin access
+    default: op
+
+  cultivation.use:
+    description: Basic usage permission
+    default: true 
