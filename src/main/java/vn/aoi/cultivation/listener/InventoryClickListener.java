@@ -3,6 +3,9 @@ package vn.aoi.cultivation.listener;
 import vn.aoi.cultivation.core.security.ClickCooldownManager;
 import vn.aoi.cultivation.core.security.TransactionGuard;
 import vn.aoi.cultivation.gui.holder.CustomInventoryHolder;
+import vn.aoi.cultivation.gui.menu.ShopMenu;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,59 +17,149 @@ public class InventoryClickListener implements Listener {
 
     private final ClickCooldownManager clickCooldownManager;
     private final TransactionGuard transactionGuard;
+    private final ShopMenu shopMenu;
 
-    public InventoryClickListener(ClickCooldownManager clickCooldownManager,
-                                  TransactionGuard transactionGuard) {
+    public InventoryClickListener(
+            ClickCooldownManager clickCooldownManager,
+            TransactionGuard transactionGuard,
+            ShopMenu shopMenu
+    ) {
         this.clickCooldownManager = clickCooldownManager;
         this.transactionGuard = transactionGuard;
+        this.shopMenu = shopMenu;
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
 
-        // 🧱 FIRST LINE DEFENSE - NULL SAFETY
         event.setCancelled(true);
 
-        if (event.getWhoClicked() == null) return;
-        if (!(event.getWhoClicked() instanceof Player player)) return;
+        if (!(event.getWhoClicked() instanceof Player player)) {
+            return;
+        }
 
         Inventory clickedInventory = event.getClickedInventory();
-        if (clickedInventory == null) return;
 
-        ItemStack item = event.getCurrentItem();
-        if (item == null) return;
+        if (clickedInventory == null) {
+            return;
+        }
 
-        // 🧬 HOLDER VALIDATION (ANTI TITLE SPOOF)
+        ItemStack clickedItem = event.getCurrentItem();
+
+        if (clickedItem == null) {
+            return;
+        }
+
         if (!(clickedInventory.getHolder() instanceof CustomInventoryHolder holder)) {
             return;
         }
 
-        // 🕒 CLICK COOLDOWN CHECK (ANTI AUTOCLICK / MACRO)
         if (!clickCooldownManager.allowClick(player.getUniqueId())) {
-            player.sendMessage("§c[System] Bạn click quá nhanh!");
             return;
         }
 
-        // ⚔️ TRANSACTION SAFETY LAYER (ANTI RACE CONDITION)
-        transactionGuard.runAtomic(player, () -> {
+        String guiId = holder.getGuiId();
 
-            String guiId = holder.getGuiId();
+        switch (guiId) {
 
-            // 🔀 ROUTING LOGIC (placeholder for menu system)
-            switch (guiId) {
+            case "main_menu":
+                handleMainMenuClick(
+                        player,
+                        clickedItem
+                );
+                break;
 
-                case "main_menu" -> {
-                    player.sendMessage("§a[Main Menu] Click processed safely.");
-                }
+            case ShopMenu.GUI_ID:
+                handleShopMenuClick(
+                        player,
+                        clickedItem
+                );
+                break;
 
-                case "shop_menu" -> {
-                    player.sendMessage("§e[Shop] Transaction ready.");
-                }
-
-                default -> {
-                    player.sendMessage("§7[System] Unknown GUI.");
-                }
-            }
-        });
+            default:
+                break;
+        }
     }
-} 
+
+    private void handleMainMenuClick(
+            Player player,
+            ItemStack item
+    ) {
+
+        Material material = item.getType();
+
+        if (material == Material.EMERALD) {
+
+            shopMenu.open(player);
+        }
+    }
+
+    private void handleShopMenuClick(
+            Player player,
+            ItemStack item
+    ) {
+
+        Material material = item.getType();
+
+        if (material == Material.BARRIER) {
+
+            player.closeInventory();
+            return;
+        }
+
+        if (material == Material.EMERALD) {
+
+            transactionGuard.runAtomic(
+                    player,
+                    () -> executePurchase(
+                            player,
+                            Material.EMERALD,
+                            1
+                    )
+            );
+
+            return;
+        }
+
+        if (material == Material.DIAMOND) {
+
+            transactionGuard.runAtomic(
+                    player,
+                    () -> executePurchase(
+                            player,
+                            Material.DIAMOND,
+                            1
+                    )
+            );
+
+            return;
+        }
+
+        if (material == Material.NETHER_STAR) {
+
+            transactionGuard.runAtomic(
+                    player,
+                    () -> executePurchase(
+                            player,
+                            Material.NETHER_STAR,
+                            1
+                    )
+            );
+        }
+    }
+
+    private void executePurchase(
+            Player player,
+            Material material,
+            int amount
+    ) {
+
+        ItemStack reward =
+                new ItemStack(
+                        material,
+                        amount
+                );
+
+        player.getInventory().addItem(reward);
+    }
+}
