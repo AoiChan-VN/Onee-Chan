@@ -1,11 +1,14 @@
 package vn.aoi.cultivation;
 
+import vn.aoi.cultivation.config.ConfigManager;
 import vn.aoi.cultivation.core.security.AntiDupeManager;
 import vn.aoi.cultivation.core.security.ClickCooldownManager;
 import vn.aoi.cultivation.core.security.TransactionGuard;
+import vn.aoi.cultivation.gui.menu.ShopMenu;
 import vn.aoi.cultivation.listener.InventoryClickListener;
 import vn.aoi.cultivation.listener.InventoryCloseListener;
 import vn.aoi.cultivation.listener.PlayerJoinListener;
+import vn.aoi.cultivation.service.ShopService;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,26 +21,34 @@ public final class CultivationPlugin extends JavaPlugin {
 
     private static CultivationPlugin instance;
 
+    private ConfigManager configManager;
+
     private ClickCooldownManager clickCooldownManager;
     private AntiDupeManager antiDupeManager;
     private TransactionGuard transactionGuard;
+
+    private ShopService shopService;
+    private ShopMenu shopMenu;
 
     @Override
     public void onEnable() {
 
         instance = this;
 
-        saveDefaultConfig();
+        initializeConfiguration();
 
         initializeManagers();
+
+        initializeServices();
+
         registerListeners();
 
-        getLogger().info("======================================");
-        getLogger().info(" CultivationPlugin enabled");
-        getLogger().info(" Security Layer: ACTIVE");
-        getLogger().info(" AntiDupe Layer: ACTIVE");
-        getLogger().info(" Transaction Layer: ACTIVE");
-        getLogger().info("======================================");
+        getLogger().info("=================================");
+        getLogger().info("CultivationPlugin Enabled");
+        getLogger().info("Configuration Loaded");
+        getLogger().info("Security Layer Loaded");
+        getLogger().info("Shop Layer Loaded");
+        getLogger().info("=================================");
     }
 
     @Override
@@ -61,19 +72,46 @@ public final class CultivationPlugin extends JavaPlugin {
 
         instance = null;
 
-        getLogger().info("CultivationPlugin disabled safely.");
+        getLogger().info("CultivationPlugin Disabled");
+    }
+
+    private void initializeConfiguration() {
+
+        configManager =
+                new ConfigManager(this);
+
+        configManager.load();
     }
 
     private void initializeManagers() {
 
-        this.clickCooldownManager = new ClickCooldownManager();
-        this.antiDupeManager = new AntiDupeManager();
-        this.transactionGuard = new TransactionGuard(this);
+        clickCooldownManager =
+                new ClickCooldownManager();
+
+        antiDupeManager =
+                new AntiDupeManager();
+
+        transactionGuard =
+                new TransactionGuard(this);
+    }
+
+    private void initializeServices() {
+
+        shopService =
+                new ShopService(
+                        configManager.getShopConfig()
+                );
+
+        shopMenu =
+                new ShopMenu(
+                        antiDupeManager
+                );
     }
 
     private void registerListeners() {
 
-        PluginManager pluginManager = Bukkit.getPluginManager();
+        PluginManager pluginManager =
+                Bukkit.getPluginManager();
 
         pluginManager.registerEvents(
                 new InventoryClickListener(
@@ -104,6 +142,14 @@ public final class CultivationPlugin extends JavaPlugin {
 
     public static CultivationPlugin getInstance() {
         return instance;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    public ShopService getShopService() {
+        return shopService;
     }
 
     public ClickCooldownManager getClickCooldownManager() {
