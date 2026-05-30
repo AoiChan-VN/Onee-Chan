@@ -1,0 +1,20 @@
+fireball:
+  category: CONG_KICH
+  tier: PHAM
+  energyCost: 20
+  cooldownTicks: 40
+  damage: 8
+
+blink:
+  category: THAN_PHAP
+  tier: LINH
+  energyCost: 15
+  cooldownTicks: 60
+  range: 8
+
+heal_touch:
+  category: HO_TRO
+  tier: LINH
+  energyCost: 25
+  cooldownTicks: 80
+  heal: 10 
