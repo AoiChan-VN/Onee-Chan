@@ -17,6 +17,10 @@ public final class ConfigManager {
     private File mobRewardsFile;
     private File shopsFile;
 
+    private File menusFolder;
+    private File mainMenuFile;
+    private File shopMenuFile;
+
     private YamlConfiguration config;
     private YamlConfiguration messages;
     private YamlConfiguration realms;
@@ -25,6 +29,9 @@ public final class ConfigManager {
     private YamlConfiguration shops;
 
     private ShopConfig shopConfig;
+
+    private MenuConfig mainMenuConfig;
+    private MenuConfig shopMenuConfig;
 
     public ConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -59,6 +66,40 @@ public final class ConfigManager {
         saveIfMissing("mob_drops.yml");
         saveIfMissing("mob_rewards.yml");
         saveIfMissing("shops.yml");
+
+        createMenuDefaults();
+    }
+
+    private void createMenuDefaults() {
+
+        menusFolder =
+                new File(
+                        plugin.getDataFolder(),
+                        "menus"
+                );
+
+        if (!menusFolder.exists()) {
+            menusFolder.mkdirs();
+        }
+
+        saveMenuIfMissing("main_menu.yml");
+        saveMenuIfMissing("shop_menu.yml");
+    }
+
+    private void saveMenuIfMissing(String fileName) {
+
+        File file =
+                new File(
+                        menusFolder,
+                        fileName
+                );
+
+        if (!file.exists()) {
+            plugin.saveResource(
+                    "menus/" + fileName,
+                    false
+            );
+        }
     }
 
     private void saveIfMissing(String fileName) {
@@ -70,7 +111,10 @@ public final class ConfigManager {
                 );
 
         if (!file.exists()) {
-            plugin.saveResource(fileName, false);
+            plugin.saveResource(
+                    fileName,
+                    false
+            );
         }
     }
 
@@ -112,23 +156,53 @@ public final class ConfigManager {
                         "shops.yml"
                 );
 
+        menusFolder =
+                new File(
+                        plugin.getDataFolder(),
+                        "menus"
+                );
+
+        mainMenuFile =
+                new File(
+                        menusFolder,
+                        "main_menu.yml"
+                );
+
+        shopMenuFile =
+                new File(
+                        menusFolder,
+                        "shop_menu.yml"
+                );
+
         config =
-                YamlConfiguration.loadConfiguration(configFile);
+                YamlConfiguration.loadConfiguration(
+                        configFile
+                );
 
         messages =
-                YamlConfiguration.loadConfiguration(messagesFile);
+                YamlConfiguration.loadConfiguration(
+                        messagesFile
+                );
 
         realms =
-                YamlConfiguration.loadConfiguration(realmsFile);
+                YamlConfiguration.loadConfiguration(
+                        realmsFile
+                );
 
         mobDrops =
-                YamlConfiguration.loadConfiguration(mobDropsFile);
+                YamlConfiguration.loadConfiguration(
+                        mobDropsFile
+                );
 
         mobRewards =
-                YamlConfiguration.loadConfiguration(mobRewardsFile);
+                YamlConfiguration.loadConfiguration(
+                        mobRewardsFile
+                );
 
         shops =
-                YamlConfiguration.loadConfiguration(shopsFile);
+                YamlConfiguration.loadConfiguration(
+                        shopsFile
+                );
     }
 
     private void validate() {
@@ -162,6 +236,18 @@ public final class ConfigManager {
                 shops,
                 "shops.yml not loaded"
         );
+
+        if (!mainMenuFile.exists()) {
+            throw new IllegalStateException(
+                    "menus/main_menu.yml not found"
+            );
+        }
+
+        if (!shopMenuFile.exists()) {
+            throw new IllegalStateException(
+                    "menus/shop_menu.yml not found"
+            );
+        }
     }
 
     private void loadConfigurations() {
@@ -169,6 +255,16 @@ public final class ConfigManager {
         shopConfig =
                 new ShopConfig(
                         shopsFile
+                );
+
+        mainMenuConfig =
+                new MenuConfig(
+                        mainMenuFile
+                );
+
+        shopMenuConfig =
+                new MenuConfig(
+                        shopMenuFile
                 );
     }
 
@@ -198,5 +294,13 @@ public final class ConfigManager {
 
     public ShopConfig getShopConfig() {
         return shopConfig;
+    }
+
+    public MenuConfig getMainMenuConfig() {
+        return mainMenuConfig;
+    }
+
+    public MenuConfig getShopMenuConfig() {
+        return shopMenuConfig;
     }
 } 
