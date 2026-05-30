@@ -1,0 +1,56 @@
+name: Cultivation
+version: '${version}'
+main: vn.aoi.cultivation.CultivationPlugin
+description: "Tu Tiên - Cultivation Plugin cho máy chủ Minecraft Việt Nam"
+api-version: '1.21'
+load: POSTWORLD
+authors:
+  - AoiDev
+website: https://github.com/Onii/cultivation
+bootstrapper: vn.aoi.cultivation.bootstrap.CultivationBootstrap
+
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    Vault:
+      load: BEFORE
+      required: false
+    WorldGuard:
+      load: BEFORE
+      required: false
+
+commands:
+  tu:
+    description: "Lệnh tu luyện chính"
+    aliases: [ cultivation, tutien, tt, tulo ]
+    permission: cultivation.use
+    usage: "/<command> help"
+  sect:
+    description: "Quản lý Tông Môn"
+    aliases: [ tongmon, tm, tong ]
+    permission: cultivation.sect.use
+    usage: "/<command> help"
+
+permissions:
+  cultivation.use:
+    description: "Sử dụng plugin tu tiên"
+    default: true
+  cultivation.admin:
+    description: "Quyền admin tu tiên"
+    default: op
+    children:
+      cultivation.use: true
+  cultivation.sect.use:
+    description: "Sử dụng lệnh tông môn"
+    default: true
+  cultivation.sect.create:
+    description: "Tạo tông môn"
+    default: true
+  cultivation.bypass.tribulation:
+    description: "Bỏ qua Thiên Kiếp (admin)"
+    default: false
+  cultivation.bypass.requirements:
+    description: "Bỏ qua yêu cầu đột phá (admin)"
+    default: false 
