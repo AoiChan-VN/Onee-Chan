@@ -3,15 +3,9 @@ package vn.aoi.cultivation.service;
 import vn.aoi.cultivation.config.ShopConfig;
 import vn.aoi.cultivation.config.ShopConfig.ShopItem;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
+import java.util.Map;
 
 public final class ShopService {
 
@@ -22,68 +16,34 @@ public final class ShopService {
     }
 
     public Collection<ShopItem> getShopItems() {
-        return shopConfig.getShopItems().values();
+
+        return Collections.unmodifiableCollection(
+                shopConfig.getShopItems().values()
+        );
     }
 
     public ShopItem getShopItem(String id) {
+
+        if (id == null) {
+            return null;
+        }
+
         return shopConfig.getItem(id);
     }
 
-    public ItemStack createDisplayItem(ShopItem shopItem) {
+    public boolean contains(String id) {
 
-        Material material = shopItem.getMaterial();
-
-        ItemStack item =
-                new ItemStack(
-                        material,
-                        Math.max(1, shopItem.getAmount())
-                );
-
-        ItemMeta meta = item.getItemMeta();
-
-        if (meta == null) {
-            return item;
+        if (id == null) {
+            return false;
         }
 
-        meta.setDisplayName(
-                colorize(
-                        shopItem.getDisplayName()
-                )
-        );
-
-        List<String> lore = new ArrayList<>();
-
-        lore.add("§7Giá mua: §a" + shopItem.getBuyPrice());
-        lore.add("§7Giá bán: §c" + shopItem.getSellPrice());
-
-        meta.setLore(lore);
-
-        meta.addItemFlags(
-                ItemFlag.HIDE_ATTRIBUTES
-        );
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    public ItemStack createRewardItem(ShopItem shopItem) {
-
-        return new ItemStack(
-                shopItem.getMaterial(),
-                Math.max(1, shopItem.getAmount())
-        );
-    }
-
-    public boolean containsItem(String id) {
         return shopConfig.contains(id);
     }
 
-    private String colorize(String text) {
+    public Map<String, ShopItem> getShopItemMap() {
 
-        return ChatColor.translateAlternateColorCodes(
-                '&',
-                text
+        return Collections.unmodifiableMap(
+                shopConfig.getShopItems()
         );
     }
-} 
+}
