@@ -1,8 +1,8 @@
 package vn.aoi.cultivation.core.security;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
@@ -11,70 +11,73 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AntiDupeManager {
 
     /**
-     * Lưu trạng thái snapshot inventory theo UUID
-     * Dùng để phát hiện thay đổi bất thường khi đóng GUI
+     * Snapshot inventory theo UUID
      */
-    private final Map<UUID, ItemStack[]> inventorySnapshot = new ConcurrentHashMap<>();
+    private final Map<UUID, ItemStack[]> inventorySnapshots = new ConcurrentHashMap<>();
 
     /**
-     * Đánh dấu player đang trong phiên GUI giao dịch
+     * Session GUI đang hoạt động
      */
-    private final Map<UUID, Boolean> activeSession = new ConcurrentHashMap<>();
+    private final Map<UUID, Boolean> activeSessions = new ConcurrentHashMap<>();
 
     /**
-     * Bắt đầu session giao dịch / GUI
+     * Bắt đầu session
      */
     public void startSession(Player player, Inventory inventory) {
+
         UUID uuid = player.getUniqueId();
 
-        activeSession.put(uuid, true);
-        inventorySnapshot.put(uuid, inventory.getContents().clone());
+        inventorySnapshots.put(
+                uuid,
+                deepCloneContents(inventory.getContents())
+        );
+
+        activeSessions.put(uuid, Boolean.TRUE);
     }
 
     /**
-     * Kết thúc session giao dịch
+     * Kết thúc session
      */
     public void endSession(Player player) {
+
         UUID uuid = player.getUniqueId();
 
-        activeSession.remove(uuid);
-        inventorySnapshot.remove(uuid);
+        inventorySnapshots.remove(uuid);
+        activeSessions.remove(uuid);
     }
 
     /**
-     * Kiểm tra có đang trong session không
+     * Kiểm tra session
      */
     public boolean isInSession(Player player) {
-        return activeSession.getOrDefault(player.getUniqueId(), false);
+        return activeSessions.containsKey(player.getUniqueId());
     }
 
     /**
-     * Phát hiện thay đổi inventory bất thường (dupe attempt detection)
+     * Phát hiện chỉnh sửa inventory bất thường
      */
-    public boolean detectTamper(Player player, Inventory current) {
+    public boolean detectTamper(Player player, Inventory inventory) {
+
         UUID uuid = player.getUniqueId();
 
-        ItemStack[] snapshot = inventorySnapshot.get(uuid);
-        if (snapshot == null) return false;
+        ItemStack[] snapshot = inventorySnapshots.get(uuid);
 
-        ItemStack[] now = current.getContents();
-
-        if (snapshot.length != now.length) {
-            return true; // inventory structure tampered
+        if (snapshot == null) {
+            return false;
         }
 
-        for (int i = 0; i < snapshot.length; i++) {
+        ItemStack[] current = inventory.getContents();
 
-            ItemStack before = snapshot[i];
-            ItemStack after = now[i];
+        if (snapshot.length != current.length) {
+            return true;
+        }
 
-            if (before == null && after == null) continue;
+        for (int slot = 0; slot < snapshot.length; slot++) {
 
-            if (before == null || after == null) {
-                return true;
-            }
+            ItemStack original = snapshot[slot];
+            ItemStack now = current[slot];
 
-            if (!before.isSimilar(after) || before.getAmount() != after.getAmount()) {
+            if (!isSameItem(original, now)) {
                 return true;
             }
         }
@@ -83,31 +86,80 @@ public class AntiDupeManager {
     }
 
     /**
-     * Force rollback inventory về snapshot (anti-dupe recovery)
+     * Rollback inventory
      */
     public void rollback(Player player, Inventory inventory) {
+
         UUID uuid = player.getUniqueId();
 
-        ItemStack[] snapshot = inventorySnapshot.get(uuid);
-        if (snapshot == null) return;
+        ItemStack[] snapshot = inventorySnapshots.get(uuid);
 
-        inventory.setContents(snapshot.clone());
+        if (snapshot == null) {
+            return;
+        }
+
+        inventory.setContents(
+                deepCloneContents(snapshot)
+        );
     }
 
     /**
-     * Cleanup memory
+     * Cleanup player
      */
     public void clear(Player player) {
+
         UUID uuid = player.getUniqueId();
-        inventorySnapshot.remove(uuid);
-        activeSession.remove(uuid);
+
+        inventorySnapshots.remove(uuid);
+        activeSessions.remove(uuid);
     }
 
     /**
-     * Emergency wipe toàn bộ session (shutdown safety)
+     * Shutdown cleanup
      */
     public void clearAll() {
-        inventorySnapshot.clear();
-        activeSession.clear();
+
+        inventorySnapshots.clear();
+        activeSessions.clear();
     }
-} 
+
+    /**
+     * Deep clone ItemStack[]
+     */
+    private ItemStack[] deepCloneContents(ItemStack[] source) {
+
+        ItemStack[] cloned = new ItemStack[source.length];
+
+        for (int i = 0; i < source.length; i++) {
+
+            ItemStack item = source[i];
+
+            cloned[i] = item == null
+                    ? null
+                    : item.clone();
+        }
+
+        return cloned;
+    }
+
+    /**
+     * So sánh item an toàn
+     */
+    private boolean isSameItem(ItemStack first,
+                               ItemStack second) {
+
+        if (first == null && second == null) {
+            return true;
+        }
+
+        if (first == null || second == null) {
+            return false;
+        }
+
+        if (!first.isSimilar(second)) {
+            return false;
+        }
+
+        return first.getAmount() == second.getAmount();
+    }
+}
