@@ -26,23 +26,37 @@ commands:
     description: "Lệnh tu luyện chính"
     aliases: [cultivation, tutien, tt, tulo]
     permission: cultivation.use
+    usage: "/<command> help"
 
   sect:
     description: "Quản lý Tông Môn"
     aliases: [tongmon, tm, tong]
     permission: cultivation.sect.use
+    usage: "/<command> help"
 
 permissions:
   cultivation.use:
+    description: "Quyền hạn player"
     default: true
 
   cultivation.admin:
+    description: "Quyền hạn admin"
     default: op
     children:
       cultivation.use: true
 
+  cultivation.sect.create:
+    description: "Tạo tông môn"
+    default: true
+
   cultivation.sect.use:
+    description: "Sử dụng lệnh tông môn"
     default: true
 
   cultivation.bypass.tribulation:
+    description: "Bỏ qua thiên kiếp (admin)"
+    default: false
+
+  cultivation.bypass.requirements:
+    description: "Bỏ qua yêu cầu đột phá (admin)"
     default: false
