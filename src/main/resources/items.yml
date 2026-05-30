@@ -1,0 +1,12 @@
+elixir_minor:
+  rarity: LINH
+  expBoost: 1.5
+  durationTicks: 600
+
+spirit_crystal_small:
+  rarity: THUONG
+  energyRestore: 30
+
+talisman_lightning:
+  rarity: QUY
+  damage: 15 
