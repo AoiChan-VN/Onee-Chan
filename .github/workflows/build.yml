@@ -1,0 +1,167 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# Cultivation — CI/CD Pipeline
+# Triggers: push to main/master/develop, pull requests, and version tags (vX.Y.Z)
+#
+# Jobs:
+#   build   → compile sources, produce shadow JAR, upload artifact
+#   release → publish to GitHub Releases on version tag push
+# ══════════════════════════════════════════════════════════════════════════════
+
+name: Build Cultivation Plugin
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+    tags:
+      - 'v*.*.*'           # e.g. v1.0.0, v1.2.3-SNAPSHOT
+  pull_request:
+    branches:
+      - main
+      - master
+
+# Cancel any in-progress run for the same branch/tag when a new commit arrives.
+# Prevents wasted CI minutes on stale builds.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# JOB: build
+# ──────────────────────────────────────────────────────────────────────────────
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    # Minimum required permissions — principle of least privilege
+    permissions:
+      contents: read
+
+    # Expose the final JAR name to the release job via outputs
+    outputs:
+      jar-name: ${{ steps.jar-info.outputs.jar-name }}
+
+    steps:
+      # 1 ── Checkout source code ──────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2 ── Validate Gradle wrapper (security: ensures gradlew was not tampered)
+      - name: Validate Gradle wrapper checksum
+        uses: gradle/actions/wrapper-validation@v3
+
+      # 3 ── Set up JDK 21 (Eclipse Temurin / Adoptium) ────────────────────────
+      #      'cache: gradle' caches ~/.gradle/caches and ~/.gradle/wrapper
+      #      to avoid re-downloading dependencies on every run.
+      - name: Set up Java 21 (Eclipse Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      # 4 ── Ensure gradlew is executable (git may strip execute bit on Windows) ─
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # 5 ── Print runtime info for debugging CI failures ──────────────────────
+      - name: Print environment info
+        run: |
+          java -version
+          ./gradlew --version --no-daemon
+
+      # 6 ── Compile and produce the shadow (fat) JAR ──────────────────────────
+      #      --no-daemon  : avoids leaving a daemon process in the container
+      #      --stacktrace : prints full stack trace on build failure
+      #      -Dfile.encoding : ensures Vietnamese characters in sources compile correctly
+      - name: Build with Gradle (shadowJar)
+        run: |
+          ./gradlew build \
+            --no-daemon   \
+            --stacktrace  \
+            -Dfile.encoding=UTF-8
+        env:
+          # Give the Gradle JVM enough heap for Paper API resolution
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx2g -Dfile.encoding=UTF-8"
+
+      # 7 ── Verify the shadow JAR was actually produced ───────────────────────
+      #      Fails the build loudly if the JAR is missing (e.g. jar task disabled
+      #      without shadowJar running) rather than silently uploading nothing.
+      - name: Verify & report output JAR
+        id: jar-info
+        run: |
+          JAR=$(find build/libs -maxdepth 1 -name "Cultivation-*.jar" | head -1)
+
+          if [ -z "$JAR" ]; then
+            echo "::error::Shadow JAR not found in build/libs/ — shadowJar task may not have run"
+            exit 1
+          fi
+
+          SIZE=$(du -sh "$JAR" | cut -f1)
+          JAR_NAME=$(basename "$JAR")
+
+          echo "jar-name=$JAR_NAME" >> "$GITHUB_OUTPUT"
+          echo "::notice title=Build Success::Output: $JAR_NAME  ($SIZE)"
+          echo ""
+          echo "── build/libs contents ──"
+          ls -lh build/libs/
+
+      # 8 ── Upload JAR as a workflow artifact ─────────────────────────────────
+      #      Retained for 30 days. The release job downloads this artifact.
+      - name: Upload plugin JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cultivation-${{ github.sha }}
+          path: build/libs/Cultivation-*.jar
+          retention-days: 30
+          if-no-files-found: error   # Hard-fail if glob matches nothing
+
+# ──────────────────────────────────────────────────────────────────────────────
+# JOB: release
+# Runs only on version tag pushes (e.g. git tag v1.0.0 && git push --tags).
+# ──────────────────────────────────────────────────────────────────────────────
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build                                    # Must pass build first
+    if: startsWith(github.ref, 'refs/tags/v')       # Only on version tags
+
+    permissions:
+      contents: write    # Required to create GitHub Releases and upload assets
+
+    steps:
+      # 1 ── Download the JAR produced by the build job ────────────────────────
+      - name: Download built JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: Cultivation-${{ github.sha }}
+          path: ./artifacts
+
+      # 2 ── List downloaded files (sanity check) ──────────────────────────────
+      - name: Verify downloaded artifact
+        run: |
+          echo "── artifacts/ ──"
+          ls -lh ./artifacts/
+
+      # 3 ── Create GitHub Release and attach the JAR ──────────────────────────
+      #      - generate_release_notes: auto-generates changelog from merged PRs
+      #      - prerelease: true if tag contains SNAPSHOT, beta, or alpha
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Cultivation ${{ github.ref_name }}"
+          files: ./artifacts/Cultivation-*.jar
+          generate_release_notes: true
+          draft: false
+          prerelease: >-
+            ${{
+              contains(github.ref_name, 'SNAPSHOT') ||
+              contains(github.ref_name, 'beta')     ||
+              contains(github.ref_name, 'alpha')    ||
+              contains(github.ref_name, 'rc')
+            }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
