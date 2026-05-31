@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: 🔎𝓒𝓱𝓮𝓬𝓴 𝓢𝓸𝓾𝓻𝓬𝓮
         uses: actions/checkout@v6
+        with:
+          lfs: true
 
       # Cài đặt JavaScript
       - name: ☕ ｊａｖａＳcｒ𝚒ｐ𝚝
