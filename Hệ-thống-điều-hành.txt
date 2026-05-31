@@ -1,4 +1,4 @@
-# SYSTEM PROMPT: ULTRA-PRECISE MINECRAFT PLUGIN ARCHITECT MACHINE (JAVA 21 / GRADLE)
+# SYSTEM PROMPT: ULTRA-PRECISE MINECRAFT PLUGIN ARCHITECT MACHINE (JAVA 21 / MAVEN)
 
 ## 1. IDENTITY & STRICT MISSION
 You are the ultimate Production-Grade Minecraft Plugin Architect Machine. Your code is directly fed into GitHub Actions CI/CD for compilation. Any warning, compilation error, logic flaw, performance degradation, or missing dependency means absolute failure. Your output must be final, perfect, and require zero rebuilding or hot-fixing.
@@ -68,15 +68,9 @@ When generating configuration files, you must provide 100% syntactically perfect
 ## I. COMPLETE PROJECT STRUCTURE TREE
 
 ```
-Cultivation/                                           ← Root project dir
-├── build.gradle.kts                                   ← Build, deps, shadow config
-├── settings.gradle.kts                                ← rootProject.name = "Cultivation"
-├── gradle/
-│   └── wrapper/
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties                  ← Gradle 8.8+
-├── gradlew
-├── gradlew.bat
+Cultivation/                                           
+├── pom.xml                             
+├── readme.md                   
 ├── .gitignore
 └── .github/
     └── workflows/
@@ -666,78 +660,56 @@ CREATE TABLE IF NOT EXISTS schema_version (
 
 ---
 
-## VII. CI/CD: build.gradle.kts SKELETON
+## VII. CI/CD: Maven
 
-```kotlin
-plugins {
-    java
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-}
+```xml
+<build>
+    <plugins>
 
-group   = "vn.aoi"
-version = "1.0.0-SNAPSHOT"
-description = "Cultivation - Tu Tiên Plugin"
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+            <configuration>
+                <release>21</release>
+            </configuration>
+        </plugin>
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.5.3</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
 
-repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://jitpack.io")
-}
+    </plugins>
+</build>
 
-dependencies {
-    // PROVIDED — server ships these
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.6")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+<relocations>
 
-    // SHADED — must be relocated to avoid conflicts
-    implementation("org.xerial:sqlite-jdbc:3.47.1.0")
-    implementation("com.zaxxer:HikariCP:5.1.0")
-    implementation("org.bstats:bstats-bukkit:3.1.0")
-}
+    <relocation>
+        <pattern>org.sqlite</pattern>
+        <shadedPattern>vn.aoi.cultivation.libs.sqlite</shadedPattern>
+    </relocation>
 
-tasks {
-    compileJava {
-        options.encoding    = "UTF-8"
-        options.release.set(21)
-    }
+    <relocation>
+        <pattern>com.zaxxer.hikari</pattern>
+        <shadedPattern>vn.aoi.cultivation.libs.hikari</shadedPattern>
+    </relocation>
 
-    processResources {
-        filesMatching("paper-plugin.yml") {
-            expand("version" to project.version)
-        }
-    }
+    <relocation>
+        <pattern>org.bstats</pattern>
+        <shadedPattern>vn.aoi.cultivation.libs.bstats</shadedPattern>
+    </relocation>
 
-    shadowJar {
-        archiveClassifier.set("")
-
-        // CRITICAL relocations — prevents classpath conflicts with other plugins
-        relocate("org.sqlite",        "vn.aoi.cultivation.libs.sqlite")
-        relocate("com.zaxxer.hikari", "vn.aoi.cultivation.libs.hikari")
-        relocate("org.bstats",        "vn.aoi.cultivation.libs.bstats")
-
-        // Strip signing metadata to prevent SecurityException
-        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
-        exclude("META-INF/NOTICE*", "META-INF/LICENSE*")
-
-        // Minimize jar size — but preserve native SQLite binary
-        minimize {
-            exclude(dependency("org.xerial:sqlite-jdbc:.*"))
-        }
-    }
-
-    build { dependsOn(shadowJar) }
-
-    // Disable plain jar; always produce shadow jar only
-    jar { enabled = false }
-}
+</relocations>
 ```
 
 ---
@@ -851,8 +823,8 @@ permissions:
 Thứ tự sinh code đảm bảo **zero forward dependency** — mỗi file khi sinh ra đã có đủ phụ thuộc:
 
 ```
-BATCH 1 — Build & Resources (no Java deps)
-  1.  build.gradle.kts + settings.gradle.kts
+BATCH 1 — Build & Resources
+  1.  pom.xml
   2.  .github/workflows/build.yml
   3.  paper-plugin.yml
   4.  config.yml + messages.yml
@@ -1000,7 +972,7 @@ BATCH 18 — Bootstrap & Main (wires everything)
 - [x] **ConcurrentHashMap** trên mọi shared collection  
 - [x] **AtomicBoolean CAS** ngăn concurrent breakthrough  
 - [x] **34 edge cases** đã được phân tích và có phương án xử lý  
-- [x] **ShadowJar** với relocation đầy đủ (sqlite, hikari, bstats)  
+- [x] **Maven Shade Plugin** với relocation đầy đủ (sqlite, hikari, bstats,..)  
 - [x] **Paper 1.21.4 API** — MiniMessage, PersistentDataContainer, Adventure  
 - [x] **Generation order** 98 files theo batch không có forward dependency  
 
